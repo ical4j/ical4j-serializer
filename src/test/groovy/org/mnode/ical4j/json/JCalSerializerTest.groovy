@@ -35,6 +35,6 @@ class JCalSerializerTest extends Specification {
         String serialized = mapper.writeValueAsString(calendar)
 
         then: 'serialized string matches expected value'
-        serialized == '["vcalendar",[["prodid",{},"string","-//Ben Fortuna//iCal4j 1.0//EN"],["version",{},"string","2.0"],["uid",{},"string","123"]],[["VEVENT",[["uid",{},"string","1"],["dtstart",{"value":"DATE"},"date","20090810"]],[]],["VEVENT",[["uid",{},"string","2"],["dtstart",{"value":"DATE"},"date","20100810"]],[]]]]'
+        serialized == '["vcalendar",[["prodid",{},"text","-//Ben Fortuna//iCal4j 1.0//EN"],["version",{},"text","2.0"],["uid",{},"text","123"]],[["VEVENT",[["uid",{},"text","1"],["dtstart",{"value":"DATE"},"date-time","20090810"]],[]],["VEVENT",[["uid",{},"text","2"],["dtstart",{"value":"DATE"},"date-time","20100810"]],[]]]]'
     }
 }
