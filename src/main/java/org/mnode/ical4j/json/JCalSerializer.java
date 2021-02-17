@@ -97,7 +97,7 @@ public class JCalSerializer extends StdSerializer<Calendar> {
             case "PRODID":
             case "VERSION":
             case "UID":
-                return "date";
+                return "string";
         }
         throw new IllegalArgumentException("Unknown property type");
     }
