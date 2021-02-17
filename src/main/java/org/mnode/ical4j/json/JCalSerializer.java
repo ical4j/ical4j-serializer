@@ -95,13 +95,62 @@ public class JCalSerializer extends StdSerializer<Calendar> {
 
     private String getPropertyType(Property property) {
         switch (property.getName()) {
-            case "DTSTAMP":
-            case "DTSTART":
-                return "date";
+            case "CALSCALE":
+            case "METHOD":
             case "PRODID":
             case "VERSION":
+            case "CATEGORIES":
+            case "CLASS":
+            case "COMMENT":
+            case "DESCRIPTION":
+            case "LOCATION":
+            case "RESOURCES":
+            case "STATUS":
+            case "SUMMARY":
+            case "TRANSP":
+            case "TZID":
+            case "TZNAME":
+            case "CONTACT":
+            case "RELATED-TO":
             case "UID":
-                return "string";
+            case "ACTION":
+            case "REQUEST-STATUS":
+                return "text";
+            case "ATTACH":
+                return "binary";
+            case "GEO":
+                return "float";
+            case "PERCENT-COMPLETE":
+            case "PRIORITY":
+            case "REPEAT":
+            case "SEQUENCE":
+                return "integer";
+            case "COMPLETED":
+            case "DTEND":
+            case "DUE":
+            case "DTSTAMP":
+            case "DTSTART":
+            case "DURATION":
+            case "RECURRENCE-ID":
+            case "EXDATE":
+            case "RDATE":
+            case "TRIGGER":
+            case "CREATED":
+            case "LAST-MODIFIED":
+                return "date-time";
+            case "FREEBUSY":
+                return "period";
+            case "TZOFFSETFROM":
+            case "TZOFFSETTO":
+                return "utc-offset";
+            case "TZURL":
+            case "URL":
+                return "uri";
+            case "ATTENDEE":
+            case "ORGANIZER":
+                return "cal-address";
+            case "RRULE":
+                return "recur";
         }
         throw new IllegalArgumentException("Unknown property type");
     }

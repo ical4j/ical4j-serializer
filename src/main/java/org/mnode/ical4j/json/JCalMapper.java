@@ -1,7 +1,6 @@
 package org.mnode.ical4j.json;
 
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
@@ -59,7 +58,7 @@ public class JCalMapper extends StdDeserializer<Calendar> {
 
     private Component parseComponent(JsonParser p) throws IOException, URISyntaxException {
         assertCurrentToken(p, JsonToken.START_ARRAY);
-        ComponentBuilder componentBuilder = new ComponentBuilder().factories(componentFactories);
+        ComponentBuilder<?> componentBuilder = new ComponentBuilder<>().factories(componentFactories);
         componentBuilder.name(p.nextTextValue());
         // component properties..
         assertNextToken(p, JsonToken.START_ARRAY);
