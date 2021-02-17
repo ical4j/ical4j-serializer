@@ -12,17 +12,17 @@ public class JSGroupBuilder extends AbstractJSCalendarBuilder {
 
     private String source;
 
-    JSGroupBuilder uid(String uid) {
+    public JSGroupBuilder uid(String uid) {
         this.uid = uid;
         return this;
     }
 
-    JSGroupBuilder prodId(String prodId) {
+    public JSGroupBuilder prodId(String prodId) {
         this.prodId = prodId;
         return this;
     }
 
-    JsonNode build() {
+    public JsonNode build() {
         ObjectMapper mapper = new ObjectMapper();
 
         ObjectNode jsEvent = mapper.createObjectNode();
