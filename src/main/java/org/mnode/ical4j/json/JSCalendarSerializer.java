@@ -55,7 +55,8 @@ public class JSCalendarSerializer extends StdSerializer<Calendar> {
 
     private JsonNode buildJSEvent(Calendar calendar) throws ConstraintViolationException {
         JSEventBuilder builder = new JSEventBuilder()
-                .uid(calendar.getProperties().getRequired(Property.UID).getValue());
+                .uid(calendar.getComponents().getRequired(Component.VEVENT)
+                        .getProperties().getRequired(Property.UID).getValue());
         return builder.build();
     }
 
