@@ -42,6 +42,10 @@ public class JCalSerializer extends StdSerializer<Calendar> {
         vcalendar.add(vcalprops);
 
         ArrayNode vcalcomponents = mapper.createArrayNode();
+        for (Component c : calendar.getComponents().getAll()) {
+            vcalcomponents.add(buildComponentArray(c));
+        }
+        vcalendar.add(vcalcomponents);
 
         return vcalendar;
     }
