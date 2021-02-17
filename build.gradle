@@ -1,0 +1,25 @@
+apply plugin: 'java'
+apply plugin: 'java-library'
+apply plugin: 'groovy'
+
+repositories {
+    mavenCentral()
+}
+
+//sourceCompatibility = 1.8
+//targetCompatibility = 1.8
+
+dependencies {
+    api "org.mnode.ical4j:ical4j:$ical4jVersion",
+        "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
+
+    testCompile "org.codehaus.groovy:groovy:$groovyVersion"
+
+    testImplementation platform("org.spockframework:spock-bom:2.0-M4-groovy-3.0"),
+        "org.spockframework:spock-core",
+        "org.slf4j:slf4j-log4j12:$slf4jVersion"
+}
+
+test {
+    useJUnitPlatform()
+}
