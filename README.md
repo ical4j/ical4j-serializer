@@ -20,4 +20,43 @@ dependencies includes:
 
 ## Usage
 
-TBD.
+### Serialization
+
+#### jCal JSON format:
+
+```java
+Calendar calendar = ...;
+
+SimpleModule module = new SimpleModule();
+module.addSerializer(Calendar.class, new JCalSerializer());
+ObjectMapper mapper = new ObjectMapper();
+mapper.registerModule(module);
+
+String serialized = mapper.writeValueAsString(calendar);
+```
+
+#### JSCalendar JSON format:
+
+```java
+Calendar calendar = ...;
+
+SimpleModule module = new SimpleModule();
+module.addSerializer(Calendar.class, new JSCalendarSerializer());
+ObjectMapper mapper = new ObjectMapper();
+mapper.registerModule(module);
+
+String serialized = mapper.writeValueAsString(calendar);
+```
+
+### Deserialization
+
+```java
+String json = ...;
+
+SimpleModule module = new SimpleModule();
+module.addDeserializer(Calendar.class, new JCalMapper())
+ObjectMapper mapper = new ObjectMapper();
+mapper.registerModule(module);
+
+Calendar calendar = mapper.readValue(json, Calendar.class);
+```
