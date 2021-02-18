@@ -54,7 +54,7 @@ public class JCalSerializer extends StdSerializer<Calendar> {
         ObjectMapper mapper = new ObjectMapper();
 
         ArrayNode cArray = mapper.createArrayNode();
-        cArray.add(component.getName());
+        cArray.add(component.getName().toLowerCase());
 
         ArrayNode componentprops = mapper.createArrayNode();
         for (Property p : component.getProperties().getAll()) {
