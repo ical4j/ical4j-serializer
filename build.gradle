@@ -30,6 +30,15 @@ test {
     useJUnitPlatform()
 }
 
+javadoc {
+    options {
+        links 'https://docs.oracle.com/en/java/javase/11/docs/api/',
+            'http://ical4j.github.io/docs/ical4j/api/4.0.0-alpha6/',
+            'http://fasterxml.github.io/jackson-core/javadoc/2.12/',
+            'http://fasterxml.github.io/jackson-databind/javadoc/2.12/'
+    }
+}
+
 task javadocJar(type: Jar, dependsOn: javadoc) {
     archiveClassifier.set('javadoc')
     from 'build/docs/javadoc'
