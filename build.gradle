@@ -1,0 +1,112 @@
+plugins {
+    id 'java'
+    id 'groovy'
+    id "biz.aQute.bnd.builder" version "5.1.2"
+    id 'java-library'
+    id 'maven-publish'
+    id 'signing'
+    id 'pl.allegro.tech.build.axion-release' version '1.10.2'
+}
+
+repositories {
+    mavenCentral()
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    api "org.mnode.ical4j:ical4j:$ical4jVersion",
+        "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
+
+    testCompile "org.codehaus.groovy:groovy:$groovyVersion"
+
+    testImplementation platform("org.spockframework:spock-bom:2.0-M4-groovy-3.0"),
+        "org.spockframework:spock-core",
+        "org.slf4j:slf4j-log4j12:$slf4jVersion"
+}
+
+test {
+    useJUnitPlatform()
+}
+
+javadoc {
+    options {
+        links 'https://docs.oracle.com/en/java/javase/11/docs/api/',
+            'http://ical4j.github.io/docs/ical4j/api/4.0.0-alpha6/',
+            'http://fasterxml.github.io/jackson-core/javadoc/2.12/',
+            'http://fasterxml.github.io/jackson-databind/javadoc/2.12/'
+    }
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    archiveClassifier.set('javadoc')
+    from 'build/docs/javadoc'
+}
+
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allSource
+    archiveClassifier.set('sources')
+}
+
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+
+group = 'org.mnode.ical4j'
+description = 'Custom marshalling between iCal4j objects and JSON formats'
+version = scmVersion.version
+
+publishing {
+    publications {
+        ical4j_json(MavenPublication) {
+            from components.java
+            artifact javadocJar
+            artifact sourcesJar
+            pom.withXml {
+                asNode().appendNode('name', project.name)
+                asNode().appendNode('description', project.description)
+                asNode().appendNode('url', 'http://ical4j.github.io')
+
+                def scmNode = asNode().appendNode('scm')
+                scmNode.appendNode('url', 'https://github.com/ical4j/ical4j-json')
+                scmNode.appendNode('connection', 'scm:git@github.com:ical4j/ical4j-json.git')
+                scmNode.appendNode('developerConnection', 'scm:git@github.com:ical4j/ical4j-json.git')
+
+                def licenseNode = asNode().appendNode('licenses').appendNode('license')
+                licenseNode.appendNode('name', 'iCal4j - License')
+                licenseNode.appendNode('url', 'https://raw.githubusercontent.com/ical4j/ical4j/master/LICENSE')
+                licenseNode.appendNode('distribution', 'repo')
+
+                def developerNode = asNode().appendNode('developers').appendNode('developer')
+                developerNode.appendNode('id', 'fortuna')
+                developerNode.appendNode('name', 'Ben Fortuna')
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            name = "OSSRH"
+            url = version.endsWith('SNAPSHOT') ? "https://oss.sonatype.org/content/repositories/snapshots/" : "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+            credentials {
+                username = System.getenv("MAVEN_USERNAME")
+                password = System.getenv("MAVEN_PASSWORD")
+            }
+        }
+//        maven {
+//            name = "GitHubPackages"
+//            url = uri("https://maven.pkg.github.com/ical4j/ical4j")
+//            credentials {
+//                username = System.getenv("GPR_USERNAME")
+//                password = System.getenv("GPR_TOKEN")
+//            }
+//        }
+    }
+}
+
+signing {
+    required = true
+    sign publishing.publications.ical4j_json
+}
