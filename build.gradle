@@ -45,6 +45,10 @@ artifacts {
     archives sourcesJar
 }
 
+group = 'org.mnode.ical4j'
+description = 'Custom marshalling between iCal4j objects and JSON formats'
+version = scmVersion.version
+
 publishing {
     publications {
         ical4j_json(MavenPublication) {
@@ -76,20 +80,20 @@ publishing {
     repositories {
         maven {
             name = "OSSRH"
-            url = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+            url = version.endsWith('SNAPSHOT') ? "https://oss.sonatype.org/content/repositories/snapshots/" : "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
             credentials {
                 username = System.getenv("MAVEN_USERNAME")
                 password = System.getenv("MAVEN_PASSWORD")
             }
         }
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/ical4j/ical4j")
-            credentials {
-                username = System.getenv("GPR_USERNAME")
-                password = System.getenv("GPR_TOKEN")
-            }
-        }
+//        maven {
+//            name = "GitHubPackages"
+//            url = uri("https://maven.pkg.github.com/ical4j/ical4j")
+//            credentials {
+//                username = System.getenv("GPR_USERNAME")
+//                password = System.getenv("GPR_TOKEN")
+//            }
+//        }
     }
 }
 
@@ -97,7 +101,3 @@ signing {
     required = true
     sign publishing.publications.ical4j_json
 }
-
-group = 'org.mnode.ical4j'
-description = 'Custom marshalling between iCal4j objects and JSON formats'
-version = scmVersion.version
