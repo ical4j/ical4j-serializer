@@ -14,9 +14,11 @@ import net.fortuna.ical4j.model.Property;
 import net.fortuna.ical4j.model.component.VEvent;
 import net.fortuna.ical4j.model.component.VTimeZone;
 import net.fortuna.ical4j.model.component.VToDo;
+import net.fortuna.ical4j.model.parameter.Value;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 public class JCalSerializer extends StdSerializer<Calendar> {
 
@@ -94,6 +96,12 @@ public class JCalSerializer extends StdSerializer<Calendar> {
     }
 
     private String getPropertyType(Property property) {
+        // handle property type overrides via VALUE param..
+        Optional<Value> value = property.getParameters().getFirst(Parameter.VALUE);
+        if (value.isPresent()) {
+            return value.get().getValue().toLowerCase();
+        }
+
         switch (property.getName()) {
             case "CALSCALE":
             case "METHOD":
@@ -115,9 +123,8 @@ public class JCalSerializer extends StdSerializer<Calendar> {
             case "UID":
             case "ACTION":
             case "REQUEST-STATUS":
+            case "NAME":
                 return "text";
-            case "ATTACH":
-                return "binary";
             case "GEO":
                 return "float";
             case "PERCENT-COMPLETE":
@@ -145,6 +152,9 @@ public class JCalSerializer extends StdSerializer<Calendar> {
                 return "utc-offset";
             case "TZURL":
             case "URL":
+            case "ATTACH":
+            case "IMAGE":
+            case "SOURCE":
                 return "uri";
             case "ATTENDEE":
             case "ORGANIZER":
