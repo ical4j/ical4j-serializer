@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import net.fortuna.ical4j.model.*;
 import net.fortuna.ical4j.model.component.CalendarComponent;
 import net.fortuna.ical4j.model.component.VEvent;
+import net.fortuna.ical4j.model.parameter.Value;
 import net.fortuna.ical4j.model.property.ProdId;
 import net.fortuna.ical4j.model.property.Uid;
 import net.fortuna.ical4j.model.property.Version;
@@ -88,8 +89,24 @@ public class JCalMapper extends StdDeserializer<Calendar> {
                 throw new IllegalArgumentException(e);
             }
         }
+
         // propertyType
-        p.nextTextValue();
+        String propertyType = p.nextTextValue();
+        switch (propertyType) {
+            case "binary":
+                propertyBuilder.parameter(Value.BINARY);
+            case "duration":
+                propertyBuilder.parameter(Value.DURATION);
+            case "date":
+                propertyBuilder.parameter(Value.DATE);
+            case "date-time":
+                propertyBuilder.parameter(Value.DATE_TIME);
+            case "period":
+                propertyBuilder.parameter(Value.PERIOD);
+            case "uri":
+                propertyBuilder.parameter(Value.URI);
+        }
+
         propertyBuilder.value(p.nextTextValue());
         assertNextToken(p, JsonToken.END_ARRAY);
 
