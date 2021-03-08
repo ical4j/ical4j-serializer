@@ -170,7 +170,7 @@ public class JCalSerializer extends StdSerializer<Calendar> {
 
         ObjectNode params = mapper.createObjectNode();
         for (Parameter p : parameterList) {
-            params.put(p.getName().toLowerCase(), p.getValue());
+            params.put(p.getName().toLowerCase(), p.getValue().toLowerCase());
         }
         return params;
     }
