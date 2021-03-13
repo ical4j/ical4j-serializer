@@ -7,18 +7,13 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
-import net.fortuna.ical4j.model.Calendar;
-import net.fortuna.ical4j.model.Component;
-import net.fortuna.ical4j.model.Parameter;
-import net.fortuna.ical4j.model.Property;
+import net.fortuna.ical4j.model.*;
 import net.fortuna.ical4j.model.component.VEvent;
 import net.fortuna.ical4j.model.component.VTimeZone;
 import net.fortuna.ical4j.model.component.VToDo;
 import net.fortuna.ical4j.model.parameter.Value;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
 
 public class JCalSerializer extends StdSerializer<Calendar> {
 
@@ -38,13 +33,13 @@ public class JCalSerializer extends StdSerializer<Calendar> {
         vcalendar.add("vcalendar");
 
         ArrayNode vcalprops = mapper.createArrayNode();
-        for (Property p : calendar.getProperties().getAll()) {
+        for (Property p : calendar.getProperties()) {
             vcalprops.add(buildPropertyArray(p));
         }
         vcalendar.add(vcalprops);
 
         ArrayNode vcalcomponents = mapper.createArrayNode();
-        for (Component c : calendar.getComponents().getAll()) {
+        for (Component c : calendar.getComponents()) {
             vcalcomponents.add(buildComponentArray(c));
         }
         vcalendar.add(vcalcomponents);
@@ -59,22 +54,22 @@ public class JCalSerializer extends StdSerializer<Calendar> {
         cArray.add(component.getName().toLowerCase());
 
         ArrayNode componentprops = mapper.createArrayNode();
-        for (Property p : component.getProperties().getAll()) {
+        for (Property p : component.getProperties()) {
             componentprops.add(buildPropertyArray(p));
         }
         cArray.add(componentprops);
 
         ArrayNode subcomponents = mapper.createArrayNode();
         if (component instanceof VEvent) {
-            for (Component c : ((VEvent) component).getAlarms().getAll()) {
+            for (Component c : ((VEvent) component).getAlarms()) {
                 subcomponents.add(buildComponentArray(c));
             }
         } else if (component instanceof VToDo) {
-            for (Component c : ((VToDo) component).getAlarms().getAll()) {
+            for (Component c : ((VToDo) component).getAlarms()) {
                 subcomponents.add(buildComponentArray(c));
             }
         } else if (component instanceof VTimeZone) {
-            for (Component c : ((VTimeZone) component).getObservances().getAll()) {
+            for (Component c : ((VTimeZone) component).getObservances()) {
                 subcomponents.add(buildComponentArray(c));
             }
         }
@@ -88,7 +83,7 @@ public class JCalSerializer extends StdSerializer<Calendar> {
 
         ArrayNode pArray = mapper.createArrayNode();
         pArray.add(property.getName().toLowerCase());
-        pArray.add(buildParamsObject(property.getParameters().getAll()));
+        pArray.add(buildParamsObject(property.getParameters()));
         pArray.add(getPropertyType(property));
         pArray.add(property.getValue());
 
@@ -97,9 +92,9 @@ public class JCalSerializer extends StdSerializer<Calendar> {
 
     private String getPropertyType(Property property) {
         // handle property type overrides via VALUE param..
-        Optional<Value> value = property.getParameters().getFirst(Parameter.VALUE);
-        if (value.isPresent()) {
-            return value.get().getValue().toLowerCase();
+        Value value = property.getParameter(Parameter.VALUE);
+        if (value != null) {
+            return value.getValue().toLowerCase();
         }
 
         switch (property.getName()) {
@@ -165,7 +160,7 @@ public class JCalSerializer extends StdSerializer<Calendar> {
         throw new IllegalArgumentException("Unknown property type");
     }
 
-    private JsonNode buildParamsObject(List<Parameter> parameterList) {
+    private JsonNode buildParamsObject(ParameterList parameterList) {
         ObjectMapper mapper = new ObjectMapper();
 
         ObjectNode params = mapper.createObjectNode();

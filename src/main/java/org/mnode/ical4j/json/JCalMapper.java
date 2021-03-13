@@ -14,6 +14,7 @@ import net.fortuna.ical4j.model.property.Version;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.text.ParseException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -40,8 +41,8 @@ public class JCalMapper extends StdDeserializer<Calendar> {
         assertNextToken(p, JsonToken.START_ARRAY);
         while (!JsonToken.END_ARRAY.equals(p.nextToken())) {
             try {
-                calendar.add(parseProperty(p));
-            } catch (URISyntaxException e) {
+                calendar.getProperties().add(parseProperty(p));
+            } catch (URISyntaxException | ParseException e) {
                 throw new IllegalArgumentException(e);
             }
         }
@@ -49,15 +50,15 @@ public class JCalMapper extends StdDeserializer<Calendar> {
         assertNextToken(p, JsonToken.START_ARRAY);
         while (!JsonToken.END_ARRAY.equals(p.nextToken())) {
             try {
-                calendar.add((CalendarComponent) parseComponent(p));
-            } catch (URISyntaxException e) {
+                calendar.getComponents().add((CalendarComponent) parseComponent(p));
+            } catch (URISyntaxException | ParseException e) {
                 throw new IllegalArgumentException(e);
             }
         }
         return calendar;
     }
 
-    private Component parseComponent(JsonParser p) throws IOException, URISyntaxException {
+    private Component parseComponent(JsonParser p) throws IOException, URISyntaxException, ParseException {
         assertCurrentToken(p, JsonToken.START_ARRAY);
         ComponentBuilder<?> componentBuilder = new ComponentBuilder<>().factories(componentFactories);
         componentBuilder.name(p.nextTextValue());
@@ -74,7 +75,7 @@ public class JCalMapper extends StdDeserializer<Calendar> {
         return componentBuilder.build();
     }
 
-    private Property parseProperty(JsonParser p) throws IOException, URISyntaxException {
+    private Property parseProperty(JsonParser p) throws IOException, URISyntaxException, ParseException {
         assertCurrentToken(p, JsonToken.START_ARRAY);
         PropertyBuilder propertyBuilder = new PropertyBuilder().factories(propertyFactories);
         propertyBuilder.name(p.nextTextValue());
