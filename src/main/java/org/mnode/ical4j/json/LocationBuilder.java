@@ -1,5 +1,7 @@
 package org.mnode.ical4j.json;
 
+import net.fortuna.ical4j.model.LocationType;
+
 import java.net.URL;
 import java.time.ZoneId;
 import java.util.Map;

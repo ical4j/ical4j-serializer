@@ -20,7 +20,7 @@ public class JSCalendarSerializer extends StdSerializer<Calendar> {
     @Override
     public void serialize(Calendar value, JsonGenerator gen, SerializerProvider provider) throws IOException {
         // For calendar objects with a UID we assume a JSGroup is used to represent in jscalendar..
-        if (value.getProperties().getFirst(Property.UID).isPresent()) {
+        if (value.getProperty(Property.UID) != null) {
             try {
                 gen.writeTree(buildJSGroup(value));
             } catch (ConstraintViolationException e) {
@@ -28,7 +28,7 @@ public class JSCalendarSerializer extends StdSerializer<Calendar> {
             }
         }
         // For calendar objects with one or more VEVENTs assume a JSEvent representation..
-        else if (value.getComponents().getFirst(Component.VEVENT).isPresent()) {
+        else if (value.getComponent(Component.VEVENT) != null) {
             try {
                 gen.writeTree(buildJSEvent(value));
             } catch (ConstraintViolationException e) {
@@ -36,7 +36,7 @@ public class JSCalendarSerializer extends StdSerializer<Calendar> {
             }
         }
         // For calendar objects with one or more VTODOs assume a JSTask representation..
-        else if (value.getComponents().getFirst(Component.VTODO).isPresent()) {
+        else if (value.getComponent(Component.VTODO) != null) {
             try {
                 gen.writeTree(buildJSTask(value));
             } catch (ConstraintViolationException e) {
@@ -49,20 +49,20 @@ public class JSCalendarSerializer extends StdSerializer<Calendar> {
 
     private JsonNode buildJSGroup(Calendar calendar) throws ConstraintViolationException {
         JSGroupBuilder builder = new JSGroupBuilder()
-                .uid(calendar.getProperties().getRequired(Property.UID).getValue());
+                .uid(calendar.getProperty(Property.UID).getValue());
         return builder.build();
     }
 
     private JsonNode buildJSEvent(Calendar calendar) throws ConstraintViolationException {
         JSEventBuilder builder = new JSEventBuilder()
-                .uid(calendar.getComponents().getRequired(Component.VEVENT)
-                        .getProperties().getRequired(Property.UID).getValue());
+                .uid(calendar.getComponent(Component.VEVENT)
+                        .getProperty(Property.UID).getValue());
         return builder.build();
     }
 
     private JsonNode buildJSTask(Calendar calendar) throws ConstraintViolationException {
         JSTaskBuilder builder = new JSTaskBuilder()
-                .uid(calendar.getProperties().getRequired(Property.UID).getValue());
+                .uid(calendar.getProperty(Property.UID).getValue());
         return builder.build();
     }
 }

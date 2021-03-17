@@ -7,12 +7,14 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import net.fortuna.ical4j.model.*;
 import net.fortuna.ical4j.model.component.CalendarComponent;
 import net.fortuna.ical4j.model.component.VEvent;
+import net.fortuna.ical4j.model.parameter.Value;
 import net.fortuna.ical4j.model.property.ProdId;
 import net.fortuna.ical4j.model.property.Uid;
 import net.fortuna.ical4j.model.property.Version;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.text.ParseException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -39,8 +41,8 @@ public class JCalMapper extends StdDeserializer<Calendar> {
         assertNextToken(p, JsonToken.START_ARRAY);
         while (!JsonToken.END_ARRAY.equals(p.nextToken())) {
             try {
-                calendar.add(parseProperty(p));
-            } catch (URISyntaxException e) {
+                calendar.getProperties().add(parseProperty(p));
+            } catch (URISyntaxException | ParseException e) {
                 throw new IllegalArgumentException(e);
             }
         }
@@ -48,15 +50,15 @@ public class JCalMapper extends StdDeserializer<Calendar> {
         assertNextToken(p, JsonToken.START_ARRAY);
         while (!JsonToken.END_ARRAY.equals(p.nextToken())) {
             try {
-                calendar.add((CalendarComponent) parseComponent(p));
-            } catch (URISyntaxException e) {
+                calendar.getComponents().add((CalendarComponent) parseComponent(p));
+            } catch (URISyntaxException | ParseException e) {
                 throw new IllegalArgumentException(e);
             }
         }
         return calendar;
     }
 
-    private Component parseComponent(JsonParser p) throws IOException, URISyntaxException {
+    private Component parseComponent(JsonParser p) throws IOException, URISyntaxException, ParseException {
         assertCurrentToken(p, JsonToken.START_ARRAY);
         ComponentBuilder<?> componentBuilder = new ComponentBuilder<>().factories(componentFactories);
         componentBuilder.name(p.nextTextValue());
@@ -73,7 +75,7 @@ public class JCalMapper extends StdDeserializer<Calendar> {
         return componentBuilder.build();
     }
 
-    private Property parseProperty(JsonParser p) throws IOException, URISyntaxException {
+    private Property parseProperty(JsonParser p) throws IOException, URISyntaxException, ParseException {
         assertCurrentToken(p, JsonToken.START_ARRAY);
         PropertyBuilder propertyBuilder = new PropertyBuilder().factories(propertyFactories);
         propertyBuilder.name(p.nextTextValue());
@@ -88,8 +90,24 @@ public class JCalMapper extends StdDeserializer<Calendar> {
                 throw new IllegalArgumentException(e);
             }
         }
+
         // propertyType
-        p.nextTextValue();
+        String propertyType = p.nextTextValue();
+        switch (propertyType) {
+            case "binary":
+                propertyBuilder.parameter(Value.BINARY);
+            case "duration":
+                propertyBuilder.parameter(Value.DURATION);
+            case "date":
+                propertyBuilder.parameter(Value.DATE);
+            case "date-time":
+                propertyBuilder.parameter(Value.DATE_TIME);
+            case "period":
+                propertyBuilder.parameter(Value.PERIOD);
+            case "uri":
+                propertyBuilder.parameter(Value.URI);
+        }
+
         propertyBuilder.value(p.nextTextValue());
         assertNextToken(p, JsonToken.END_ARRAY);
 
