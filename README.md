@@ -8,6 +8,7 @@ The following is a non-exhaustive list of known JSON calendar formats:
 
 * [jCal](https://tools.ietf.org/html/rfc7265) - The JSON Format for iCalendar
 * [JSCalendar](https://tools.ietf.org/html/draft-ietf-calext-jscalendar-32) - A JSON representation of calendar data (currently a draft specification)
+* [Jot API](https://github.com/micronode/jotapi) - An open REST API based on the iCalendar specification
 
 ## Implementation
 
@@ -67,3 +68,4 @@ Calendar calendar = mapper.readValue(json, Calendar.class);
 * [RFC7265](https://tools.ietf.org/html/rfc7265) (jCal)
 * [JSCalendar Draft](https://tools.ietf.org/html/draft-ietf-calext-jscalendar-32)
 * [JSCalendar to iCalendar Draft](https://datatracker.ietf.org/doc/html/draft-ietf-calext-jscalendar-icalendar-04)
+* [Jot API Models](https://github.com/micronode/jotapi/tree/main/models)
