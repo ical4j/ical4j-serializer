@@ -1,4 +1,4 @@
-package org.mnode.ical4j.json;
+package org.mnode.ical4j.json.jscalendar;
 
 import net.fortuna.ical4j.model.LocationType;
 

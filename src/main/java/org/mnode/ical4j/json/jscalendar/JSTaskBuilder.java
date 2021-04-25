@@ -1,4 +1,4 @@
-package org.mnode.ical4j.json;
+package org.mnode.ical4j.json.jscalendar;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,12 +22,13 @@ public class JSTaskBuilder extends AbstractJSCalendarBuilder {
 
     private Instant progressUpdated;
 
-    JSTaskBuilder uid(String uid) {
+    public JSTaskBuilder uid(String uid) {
         this.uid = uid;
         return this;
     }
 
-    JsonNode build() {
+    @Override
+    public JsonNode build() {
         ObjectMapper mapper = new ObjectMapper();
 
         ObjectNode jsEvent = mapper.createObjectNode();

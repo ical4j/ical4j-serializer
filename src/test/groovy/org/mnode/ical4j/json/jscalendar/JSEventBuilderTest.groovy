@@ -1,4 +1,4 @@
-package org.mnode.ical4j.json
+package org.mnode.ical4j.json.jscalendar
 
 import spock.lang.Specification
 

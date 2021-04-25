@@ -1,4 +1,4 @@
-package org.mnode.ical4j.json;
+package org.mnode.ical4j.json.jscalendar;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,6 +22,7 @@ public class JSGroupBuilder extends AbstractJSCalendarBuilder {
         return this;
     }
 
+    @Override
     public JsonNode build() {
         ObjectMapper mapper = new ObjectMapper();
 

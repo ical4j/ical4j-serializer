@@ -4,13 +4,11 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import net.fortuna.ical4j.data.DefaultParameterFactorySupplier;
+import net.fortuna.ical4j.data.DefaultPropertyFactorySupplier;
 import net.fortuna.ical4j.model.*;
-import net.fortuna.ical4j.model.component.CalendarComponent;
-import net.fortuna.ical4j.model.component.VEvent;
+import net.fortuna.ical4j.model.component.*;
 import net.fortuna.ical4j.model.parameter.Value;
-import net.fortuna.ical4j.model.property.ProdId;
-import net.fortuna.ical4j.model.property.Uid;
-import net.fortuna.ical4j.model.property.Version;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -28,9 +26,12 @@ public class JCalMapper extends StdDeserializer<Calendar> {
 
     public JCalMapper(Class<?> vc) {
         super(vc);
-        parameterFactories = Arrays.asList();
-        propertyFactories = Arrays.asList(new ProdId.Factory(), new Version.Factory(), new Uid.Factory());
-        componentFactories = Arrays.asList(new VEvent.Factory());
+        parameterFactories = new DefaultParameterFactorySupplier().get();
+        propertyFactories = new DefaultPropertyFactorySupplier().get();
+        componentFactories = Arrays.asList(new Available.Factory(), new Daylight.Factory(), new Standard.Factory(),
+                new VAlarm.Factory(), new VAvailability.Factory(), new VEvent.Factory(),
+                new VFreeBusy.Factory(), new VJournal.Factory(), new VTimeZone.Factory(),
+                new VToDo.Factory(), new VVenue.Factory());
     }
 
     @Override
