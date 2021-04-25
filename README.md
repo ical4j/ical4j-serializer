@@ -1,14 +1,51 @@
 # iCal4j Javascript Object Notation
 
+[jCal]: https://tools.ietf.org/html/rfc7265
+[JSCalendar]: https://tools.ietf.org/html/draft-ietf-calext-jscalendar-32
+[Jot API]: https://github.com/micronode/jotapi
+[CalDAV]: https://tools.ietf.org/html/rfc4791
+
 The purpose of this library is to provide custom marshalling between iCal4j objects and JSON formats.
 
 ## Overview
 
-The following is a non-exhaustive list of known JSON calendar formats:
+Interoperability is a very important aspect of the iCalendar specification(s), and as such it is important
+to support seamless and accurate translation between different data formats. JSON is currently the de-facto
+standard for structural data formats, and as such this library aims to provide a mechanism for conversion
+between iCalendar objects and JSON formats.
 
-* [jCal](https://tools.ietf.org/html/rfc7265) - The JSON Format for iCalendar
-* [JSCalendar](https://tools.ietf.org/html/draft-ietf-calext-jscalendar-32) - A JSON representation of calendar data (currently a draft specification)
-* [Jot API](https://github.com/micronode/jotapi) - An open REST API based on the iCalendar specification
+The following JSON calendar formats are the current focus of this library.
+
+### jCal - The JSON Format for iCalendar
+
+[jCal] is the official (standard) JSON respresentation of iCalendar
+object data. This format is designed to be a "lossless" format in that no semantic or syntactic data is lost
+when translating between iCalendar objects and this JSON format.
+
+This format is a good choice when unambiguous interoperability is required, as in theory if an agent supports
+the iCalendar specification then it should be reasonably trivial to have equivalent support for this format.
+
+### JSCalendar - A JSON representation of calendar data 
+
+[JSCalendar] is a relatively new format
+(currently a draft specification), and aims to simplify the data representation of iCalendar data by focusing
+on the key aspects that are primarily supported in most calendar agents. The focus of JSCalendar is on events
+and tasks, and does not include support for less widely used aspects of iCalendar such as journaling and
+availability.
+
+This format is good for calendar agents that do not yet have support for iCalendar, but would like to support
+interoperability with other calendar agents. As this is still a draft standard it is subject to change.
+
+### Jot API - An open REST API based on the iCalendar specification
+
+The [Jot API] is not a standard format, and does not have the same goals
+of interoperability that jCal and JSCalendar provide. Jot is designed to be an API for managing and persisting
+iCalendar data, and includes object formats and validation consistent with the iCalendar specification.
+
+The Jot model format can be more directly compared with calendar synchronization standards such as [CalDAV],
+however at this stage does not provide many of the features of such standards. This library may be of 
+benefit if you are building a calendar agent that requires simple calendar persistence (and support for CalDAV is not
+available), or if creating a persistence layer that supports the Jot API. 
 
 ## Implementation
 
@@ -47,6 +84,19 @@ ObjectMapper mapper = new ObjectMapper();
 mapper.registerModule(module);
 
 String serialized = mapper.writeValueAsString(calendar);
+```
+
+#### Jot API serialization
+
+```java
+VEvent event  = ...;
+
+SimpleModule module = new SimpleModule();
+module.addSerializer(VEvent.class, new JotEventSerializer());
+ObjectMapper mapper = new ObjectMapper();
+mapper.registerModule(module);
+
+String serialized = mapper.writeValueAsString(event);
 ```
 
 ### Deserialization
