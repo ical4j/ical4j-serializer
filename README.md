@@ -76,27 +76,27 @@ String serialized = mapper.writeValueAsString(calendar);
 #### JSCalendar JSON format:
 
 ```java
-Calendar calendar = ...;
+VEvent event = ...;
 
 SimpleModule module = new SimpleModule();
-module.addSerializer(Calendar.class, new JSCalendarSerializer());
+module.addSerializer(VEvent.class, new JSEventSerializer());
 ObjectMapper mapper = new ObjectMapper();
 mapper.registerModule(module);
 
-String serialized = mapper.writeValueAsString(calendar);
+String serialized = mapper.writeValueAsString(event);
 ```
 
 #### Jot API serialization
 
 ```java
-VEvent event  = ...;
+VJournal journal  = ...;
 
 SimpleModule module = new SimpleModule();
-module.addSerializer(VEvent.class, new JotEventSerializer());
+module.addSerializer(VJournal.class, new JotJournalSerializer());
 ObjectMapper mapper = new ObjectMapper();
 mapper.registerModule(module);
 
-String serialized = mapper.writeValueAsString(event);
+String serialized = mapper.writeValueAsString(journal);
 ```
 
 ### Deserialization
