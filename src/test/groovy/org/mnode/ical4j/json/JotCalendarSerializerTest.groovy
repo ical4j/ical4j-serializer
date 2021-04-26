@@ -14,9 +14,14 @@ class JotCalendarSerializerTest extends AbstractSerializerTest {
         mapper.registerModule(module)
 
         when: 'a calendar is serialized'
-        String serialized = mapper.writeValueAsString(calendar1)
+        String serialized = mapper.writeValueAsString(calendar)
 
         then: 'serialized string matches expected value'
-        serialized == '{"id":"123"}'
+        serialized == expectedSerialized
+
+        where:
+        calendar    | expectedSerialized
+        calendar1   | '{"id":"123"}'
+        calendar2   | '{"id":"1"}'
     }
 }

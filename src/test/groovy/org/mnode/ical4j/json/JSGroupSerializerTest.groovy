@@ -14,9 +14,14 @@ class JSGroupSerializerTest extends AbstractSerializerTest {
         mapper.registerModule(module)
 
         when: 'the calendar is serialized'
-        String serialized = mapper.writeValueAsString(calendar1)
+        String serialized = mapper.writeValueAsString(calendar)
 
         then: 'serialized string matches expected value'
-        serialized == '{"@type":"jsgroup","uid":"123"}'
+        serialized == expectedSerialized
+
+        where:
+        calendar    | expectedSerialized
+        calendar1   | '{"@type":"jsgroup","uid":"123"}'
+        calendar2   | '{"@type":"jsgroup","uid":"1"}'
     }
 }
