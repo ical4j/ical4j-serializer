@@ -2,6 +2,7 @@
 
 [jCal]: https://tools.ietf.org/html/rfc7265
 [JSCalendar]: https://tools.ietf.org/html/draft-ietf-calext-jscalendar-32
+[jCard]: https://tools.ietf.org/html/rfc7095
 [Jot API]: https://github.com/micronode/jotapi
 [CalDAV]: https://tools.ietf.org/html/rfc4791
 
@@ -35,6 +36,12 @@ availability.
 
 This format is good for calendar agents that do not yet have support for iCalendar, but would like to support
 interoperability with other calendar agents. As this is still a draft standard it is subject to change.
+
+### jCard - The JSON format for vCard
+
+As iCal4j includes a vCard object representation, it also makes sense to support JSON conversion of this
+object model. [jCard] provides a specification for converting JSON to/form vCard data.
+
 
 ### Jot API - An open REST API based on the iCalendar specification
 
