@@ -16,7 +16,7 @@ import java.text.ParseException;
 import java.util.Arrays;
 import java.util.List;
 
-public class JCalMapper extends StdDeserializer<Calendar> {
+public class JCalMapper extends StdDeserializer<Calendar> implements JsonMapper {
 
     private final List<ParameterFactory<?>> parameterFactories;
 
@@ -113,23 +113,5 @@ public class JCalMapper extends StdDeserializer<Calendar> {
         assertNextToken(p, JsonToken.END_ARRAY);
 
         return propertyBuilder.build();
-    }
-
-    private void assertNextToken(JsonParser p, JsonToken token) throws IOException {
-        if (!token.equals(p.nextToken())) {
-            throw new IllegalArgumentException("Invalid input");
-        }
-    }
-
-    private void assertCurrentToken(JsonParser p, JsonToken token) {
-        if (!token.equals(p.currentToken())) {
-            throw new IllegalArgumentException("Invalid input");
-        }
-    }
-
-    private void assertTextValue(JsonParser p, String value) throws IOException {
-        if (!value.equals(p.nextTextValue())) {
-            throw new IllegalArgumentException("Invalid input");
-        }
     }
 }

@@ -5,6 +5,7 @@ import net.fortuna.ical4j.model.ContentBuilder
 import net.fortuna.ical4j.model.component.VEvent
 import net.fortuna.ical4j.model.property.Attach
 import net.fortuna.ical4j.util.Calendars
+import net.fortuna.ical4j.vcard.VCard
 import spock.lang.Shared
 import spock.lang.Specification
 
@@ -15,6 +16,9 @@ class AbstractSerializerTest extends Specification {
 
     @Shared
     VEvent event1, event2
+
+    @Shared
+    VCard card1
 
     def setupSpec() {
         ContentBuilder builder = []
@@ -40,5 +44,10 @@ class AbstractSerializerTest extends Specification {
         }
 
         calendar2 = Calendars.load('src/test/resources/samples/justin.ics')
+
+        net.fortuna.ical4j.vcard.ContentBuilder vcardBuilder = []
+        card1 = vcardBuilder.vcard() {
+            fn 'Test Card'
+        }
     }
 }
