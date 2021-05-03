@@ -3,6 +3,8 @@
 [jCal]: https://tools.ietf.org/html/rfc7265
 [JSCalendar]: https://tools.ietf.org/html/draft-ietf-calext-jscalendar-32
 [jCard]: https://tools.ietf.org/html/rfc7095
+[Schema.org]: https://schema.org/
+[JSON-LD]: https://json-ld.org/
 [Jot API]: https://github.com/micronode/jotapi
 [CalDAV]: https://tools.ietf.org/html/rfc4791
 
@@ -41,6 +43,12 @@ interoperability with other calendar agents. As this is still a draft standard i
 
 As iCal4j includes a vCard object representation, it also makes sense to support JSON conversion of this
 object model. [jCard] provides a specification for converting JSON to/form vCard data.
+
+
+### Schema.org - shared vocabulary for structured Web content
+
+[Schema.org] presents a collection of collaborative data models to represent data on the Web. This includes
+data representations in [JSON-LD] format, which is included here.
 
 
 ### Jot API - An open REST API based on the iCalendar specification
