@@ -22,7 +22,7 @@ class SchemaEventSerializerTest extends AbstractSerializerTest {
 
         where:
         event   | expectedSerialized
-        event1  | '{"@context":"https://schema.org","@type":"Event","@id":"1","name":"Test Event 1"}'
-        event2  | '{"@context":"https://schema.org","@type":"Event","@id":"2","name":"Test Event 2"}'
+        event1  | '{"@context":"https://schema.org","@type":"Event","@id":"1","name":"Test Event 1","startDate":"20090810"}'
+        event2  | '{"@context":"https://schema.org","@type":"Event","@id":"2","name":"Test Event 2","startDate":"20100810"}'
     }
 }

@@ -50,6 +50,7 @@ class AbstractSerializerTest extends Specification {
         net.fortuna.ical4j.vcard.ContentBuilder vcardBuilder = []
         card1 = vcardBuilder.vcard() {
             fn 'Test Card'
+            uid '1'
         }
     }
 }

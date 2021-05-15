@@ -1,23 +1,45 @@
 package org.mnode.ical4j.json.schema;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import net.fortuna.ical4j.model.property.Summary;
-import net.fortuna.ical4j.model.property.Uid;
+import net.fortuna.ical4j.model.Property;
 
-public abstract class AbstractSchemaBuilder {
+public abstract class AbstractSchemaBuilder<T> {
 
-    protected Uid uid;
+    private final String schemaType;
 
-    protected Summary summary;
+    protected T component;
 
-    protected ObjectNode setId(ObjectNode node, Uid uid) {
-        node.put("@id", uid.getValue());
+    public AbstractSchemaBuilder(String schemaType) {
+        this.schemaType = schemaType;
+    }
+
+    public AbstractSchemaBuilder<T> component(T component) {
+        this.component = component;
+        return this;
+    }
+
+    protected ObjectNode createObjectNode() {
+        ObjectMapper mapper = new ObjectMapper();
+
+        ObjectNode node = mapper.createObjectNode();
+        node.put("@context", "https://schema.org");
+        node.put("@type", schemaType);
         return node;
     }
 
-    protected ObjectNode setName(ObjectNode node, Summary summary) {
-        node.put("name", summary.getValue());
+    protected ObjectNode setProperty(String propertyName, ObjectNode node, Property property) {
+        if (property != null) {
+            node.put(propertyName, property.getValue());
+        }
+        return node;
+    }
+
+    protected ObjectNode setProperty(String propertyName, ObjectNode node, net.fortuna.ical4j.vcard.Property property) {
+        if (property != null) {
+            node.put(propertyName, property.getValue());
+        }
         return node;
     }
 
