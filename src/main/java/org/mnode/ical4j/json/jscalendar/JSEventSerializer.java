@@ -1,4 +1,4 @@
-package org.mnode.ical4j.json;
+package org.mnode.ical4j.json.jscalendar;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;

@@ -1,22 +1,22 @@
-package org.mnode.ical4j.json;
+package org.mnode.ical4j.json.jscalendar;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
+import net.fortuna.ical4j.model.Calendar;
 import net.fortuna.ical4j.model.ConstraintViolationException;
-import net.fortuna.ical4j.model.component.VToDo;
 
 import java.io.IOException;
 
-public class JSTaskSerializer extends AbstractJSSerializer<VToDo> {
+public class JSGroupSerializer extends AbstractJSSerializer<Calendar> {
 
-    public JSTaskSerializer(Class<VToDo> t) {
+    public JSGroupSerializer(Class<Calendar> t) {
         super(t);
     }
 
     @Override
-    public void serialize(VToDo value, JsonGenerator gen, SerializerProvider provider) throws IOException {
+    public void serialize(Calendar value, JsonGenerator gen, SerializerProvider provider) throws IOException {
         try {
-            gen.writeTree(buildJSTask(value));
+            gen.writeTree(buildJSGroup(value));
         } catch (ConstraintViolationException e) {
             throw new RuntimeException(e);
         }

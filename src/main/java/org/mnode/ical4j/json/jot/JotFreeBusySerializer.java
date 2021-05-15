@@ -1,4 +1,4 @@
-package org.mnode.ical4j.json;
+package org.mnode.ical4j.json.jot;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import net.fortuna.ical4j.model.Property;
 import net.fortuna.ical4j.model.component.VFreeBusy;
 import net.fortuna.ical4j.model.property.Uid;
-import org.mnode.ical4j.json.jot.FreebusyBuilder;
 
 import java.io.IOException;
 

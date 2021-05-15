@@ -1,8 +1,10 @@
-package org.mnode.ical4j.json
+package org.mnode.ical4j.json.jscalendar
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.module.SimpleModule
 import net.fortuna.ical4j.model.Calendar
+import org.mnode.ical4j.json.AbstractSerializerTest
+import org.mnode.ical4j.json.jscalendar.JSGroupSerializer
 
 class JSGroupSerializerTest extends AbstractSerializerTest {
 

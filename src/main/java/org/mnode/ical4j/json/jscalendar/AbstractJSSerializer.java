@@ -1,4 +1,4 @@
-package org.mnode.ical4j.json;
+package org.mnode.ical4j.json.jscalendar;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
@@ -7,9 +7,6 @@ import net.fortuna.ical4j.model.ConstraintViolationException;
 import net.fortuna.ical4j.model.Property;
 import net.fortuna.ical4j.model.component.VEvent;
 import net.fortuna.ical4j.model.component.VToDo;
-import org.mnode.ical4j.json.jscalendar.JSEventBuilder;
-import org.mnode.ical4j.json.jscalendar.JSGroupBuilder;
-import org.mnode.ical4j.json.jscalendar.JSTaskBuilder;
 
 public abstract class AbstractJSSerializer<T> extends StdSerializer<T> {
 

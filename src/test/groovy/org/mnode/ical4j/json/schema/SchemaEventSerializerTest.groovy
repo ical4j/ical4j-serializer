@@ -1,15 +1,16 @@
-package org.mnode.ical4j.json
+package org.mnode.ical4j.json.schema
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.module.SimpleModule
 import net.fortuna.ical4j.model.component.VEvent
+import org.mnode.ical4j.json.AbstractSerializerTest
 
-class JSEventSerializerTest extends AbstractSerializerTest {
+class SchemaEventSerializerTest extends AbstractSerializerTest {
 
     def 'test event serialization'() {
         given: 'an object mapper'
         SimpleModule module = []
-        module.addSerializer(VEvent, new JSEventSerializer())
+        module.addSerializer(VEvent, new SchemaEventSerializer())
         ObjectMapper mapper = []
         mapper.registerModule(module)
 
@@ -21,7 +22,7 @@ class JSEventSerializerTest extends AbstractSerializerTest {
 
         where:
         event   | expectedSerialized
-        event1  | '{"@type":"jsevent"}'
-        event2  | '{"@type":"jsevent"}'
+        event1  | '{"@context":"https://schema.org","@type":"Event","@id":"1","name":"Test Event 1"}'
+        event2  | '{"@context":"https://schema.org","@type":"Event","@id":"2","name":"Test Event 2"}'
     }
 }
