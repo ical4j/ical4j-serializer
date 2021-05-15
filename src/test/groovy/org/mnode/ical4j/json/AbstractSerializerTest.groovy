@@ -18,7 +18,7 @@ class AbstractSerializerTest extends Specification {
     VEvent event1, event2
 
     @Shared
-    VCard card1, card2
+    VCard card1, card2, card3
 
     def setupSpec() {
         ContentBuilder builder = []
@@ -56,6 +56,13 @@ class AbstractSerializerTest extends Specification {
         card2 = vcardBuilder.vcard() {
             fn 'Jane Doe'
             uid '2'
+            adr ';;20341 Whitworth Institute 405 N. Whitworth;Seattle;WA;98052'
+        }
+
+        card3 = vcardBuilder.vcard() {
+            fn 'Acme Inc.'
+            uid '3'
+            logo 'http://example.org/acme-logo.png'
             adr ';;20341 Whitworth Institute 405 N. Whitworth;Seattle;WA;98052'
         }
     }

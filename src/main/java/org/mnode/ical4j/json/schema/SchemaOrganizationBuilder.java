@@ -15,6 +15,14 @@ public class SchemaOrganizationBuilder extends AbstractSchemaBuilder<VCard> {
     public JsonNode build() {
         ObjectNode node = createObjectNode();
         setProperty("@id", node, component.getProperty(Property.Id.UID));
+        setProperty("name", node, component.getProperty(Property.Id.FN));
+        setProperty("email", node, component.getProperty(Property.Id.EMAIL));
+        setProperty("image", node, component.getProperty(Property.Id.PHOTO));
+        setProperty("logo", node, component.getProperty(Property.Id.LOGO));
+        setProperty("telephone", node, component.getProperty(Property.Id.TEL));
+        setProperty("url", node, component.getProperty(Property.Id.URL));
+        setObject("address", node, component.getProperty(Property.Id.ADR));
+        setObject("member", node, component.getProperty(Property.Id.MEMBER));
         return node;
     }
 }
