@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import net.fortuna.ical4j.model.Property;
+import net.fortuna.ical4j.vcard.property.Address;
 
 public abstract class AbstractSchemaBuilder<T> {
 
@@ -29,6 +30,14 @@ public abstract class AbstractSchemaBuilder<T> {
         return node;
     }
 
+    protected ObjectNode setObject(String propertyName, ObjectNode node, net.fortuna.ical4j.vcard.Property property) {
+        if (property instanceof Address) {
+            JsonNode address = new SchemaPostalAddressBuilder().component((Address) property).build();
+            node.set(propertyName, address);
+        }
+        return node;
+    }
+
     protected ObjectNode setProperty(String propertyName, ObjectNode node, Property property) {
         if (property != null) {
             node.put(propertyName, property.getValue());
@@ -39,6 +48,13 @@ public abstract class AbstractSchemaBuilder<T> {
     protected ObjectNode setProperty(String propertyName, ObjectNode node, net.fortuna.ical4j.vcard.Property property) {
         if (property != null) {
             node.put(propertyName, property.getValue());
+        }
+        return node;
+    }
+
+    protected ObjectNode setProperty(String propertyName, ObjectNode node, String property) {
+        if (property != null) {
+            node.put(propertyName, property);
         }
         return node;
     }

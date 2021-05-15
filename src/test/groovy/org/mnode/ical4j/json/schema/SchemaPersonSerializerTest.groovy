@@ -22,6 +22,7 @@ class SchemaPersonSerializerTest extends AbstractSerializerTest {
 
         where:
         card   | expectedSerialized
-        card1  | '{"@context":"https://schema.org","@type":"Person","@id":"1"}'
+        card1  | '{"@context":"https://schema.org","@type":"Person","@id":"1","name":"Test Card"}'
+        card2  | '{"@context":"https://schema.org","@type":"Person","@id":"2","name":"Jane Doe","address":{"@context":"https://schema.org","@type":"PostalAddress","addressLocality":"Seattle","addressRegion":"WA","postalCode":"98052","streetAddress":"20341 Whitworth Institute 405 N. Whitworth"}}'
     }
 }
