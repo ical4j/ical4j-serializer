@@ -13,10 +13,10 @@ public class SchemaPostalAddressBuilder extends AbstractSchemaBuilder<Address> {
     @Override
     public JsonNode build() {
         ObjectNode node = createObjectNode();
-        setProperty("addressLocality", node, component.getLocality());
-        setProperty("addressRegion", node, component.getRegion());
-        setProperty("postalCode", node, component.getPostcode());
-        setProperty("streetAddress", node, component.getStreet());
+        putIfNotNull("addressLocality", node, component.getLocality());
+        putIfNotNull("addressRegion", node, component.getRegion());
+        putIfNotNull("postalCode", node, component.getPostcode());
+        putIfNotNull("streetAddress", node, component.getStreet());
         return node;
     }
 }

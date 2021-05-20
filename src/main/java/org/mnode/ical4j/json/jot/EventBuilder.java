@@ -1,23 +1,16 @@
 package org.mnode.ical4j.json.jot;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import net.fortuna.ical4j.model.property.Uid;
+import net.fortuna.ical4j.model.Property;
+import net.fortuna.ical4j.model.component.VEvent;
 
-public class EventBuilder extends AbstractJotBuilder {
-
-    public EventBuilder uid(Uid uid) {
-        this.uid = uid;
-        return this;
-    }
+public class EventBuilder extends AbstractJotBuilder<VEvent> {
 
     @Override
     public JsonNode build() {
-        ObjectMapper mapper = new ObjectMapper();
-
-        ObjectNode node = mapper.createObjectNode();
-        setUid(node, uid);
+        ObjectNode node = createObjectNode();
+        putIfNotNull("id", node, component.getProperty(Property.UID));
         return node;
     }
 }

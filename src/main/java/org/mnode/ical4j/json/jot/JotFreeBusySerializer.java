@@ -4,9 +4,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
-import net.fortuna.ical4j.model.Property;
 import net.fortuna.ical4j.model.component.VFreeBusy;
-import net.fortuna.ical4j.model.property.Uid;
 
 import java.io.IOException;
 
@@ -22,9 +20,7 @@ public class JotFreeBusySerializer extends StdSerializer<VFreeBusy> {
     }
 
     private JsonNode buildFreebusy(VFreeBusy freeBusy) {
-        Uid uid = freeBusy.getProperty(Property.UID);
-        FreebusyBuilder builder = new FreebusyBuilder().uid(uid);
-
+        AbstractJotBuilder<VFreeBusy> builder = new FreebusyBuilder().component(freeBusy);
         return builder.build();
     }
 }

@@ -1,35 +1,18 @@
 package org.mnode.ical4j.json.jscalendar;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import net.fortuna.ical4j.model.Calendar;
+import net.fortuna.ical4j.model.Property;
 
-import java.util.List;
-
-public class JSGroupBuilder extends AbstractJSCalendarBuilder {
-
-    private List<AbstractJSCalendarBuilder> entries;
-
-    private String source;
-
-    public JSGroupBuilder uid(String uid) {
-        this.uid = uid;
-        return this;
-    }
-
-    public JSGroupBuilder prodId(String prodId) {
-        this.prodId = prodId;
-        return this;
-    }
+public class JSGroupBuilder extends AbstractJSCalendarBuilder<Calendar> {
 
     @Override
     public JsonNode build() {
-        ObjectMapper mapper = new ObjectMapper();
-
-        ObjectNode jsEvent = mapper.createObjectNode();
+        ObjectNode jsEvent = createObjectNode();
         jsEvent.put("@type", "jsgroup");
-        setProperty(jsEvent, "uid", uid, true);
-        setProperty(jsEvent, "prodId", prodId, false);
+        putIfNotNull("prodid", jsEvent, component.getProperty(Property.PRODID));
+        putIfNotNull("uid", jsEvent, component.getProperty(Property.UID));
         return jsEvent;
     }
 }

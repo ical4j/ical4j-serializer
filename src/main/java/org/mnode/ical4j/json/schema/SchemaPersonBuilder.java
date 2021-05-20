@@ -14,13 +14,13 @@ public class SchemaPersonBuilder extends AbstractSchemaBuilder<VCard> {
     @Override
     public JsonNode build() {
         ObjectNode node = createObjectNode();
-        setProperty("@id", node, component.getProperty(Property.Id.UID));
-        setProperty("name", node, component.getProperty(Property.Id.FN));
-        setProperty("email", node, component.getProperty(Property.Id.EMAIL));
-        setProperty("image", node, component.getProperty(Property.Id.PHOTO));
-        setProperty("jobTitle", node, component.getProperty(Property.Id.TITLE));
-        setProperty("telephone", node, component.getProperty(Property.Id.TEL));
-        setProperty("url", node, component.getProperty(Property.Id.URL));
+        putIfNotNull("@id", node, component.getProperty(Property.Id.UID));
+        putIfNotNull("name", node, component.getProperty(Property.Id.FN));
+        putIfNotNull("email", node, component.getProperty(Property.Id.EMAIL));
+        putIfNotNull("image", node, component.getProperty(Property.Id.PHOTO));
+        putIfNotNull("jobTitle", node, component.getProperty(Property.Id.TITLE));
+        putIfNotNull("telephone", node, component.getProperty(Property.Id.TEL));
+        putIfNotNull("url", node, component.getProperty(Property.Id.URL));
         setObject("address", node, component.getProperty(Property.Id.ADR));
         return node;
     }

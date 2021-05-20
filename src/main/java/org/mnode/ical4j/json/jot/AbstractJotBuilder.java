@@ -1,15 +1,23 @@
 package org.mnode.ical4j.json.jot;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import net.fortuna.ical4j.model.property.Uid;
+import org.mnode.ical4j.json.JsonBuilder;
 
-public abstract class AbstractJotBuilder {
+public abstract class AbstractJotBuilder<T> implements JsonBuilder {
 
-    protected Uid uid;
+    protected T component;
 
-    protected ObjectNode setUid(ObjectNode node, Uid uid) {
-        node.put("id", uid.getValue());
+    public AbstractJotBuilder<T> component(T component) {
+        this.component = component;
+        return this;
+    }
+
+    protected ObjectNode createObjectNode() {
+        ObjectMapper mapper = new ObjectMapper();
+
+        ObjectNode node = mapper.createObjectNode();
         return node;
     }
 

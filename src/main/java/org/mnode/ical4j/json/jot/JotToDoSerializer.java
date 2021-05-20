@@ -4,9 +4,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
-import net.fortuna.ical4j.model.Property;
 import net.fortuna.ical4j.model.component.VToDo;
-import net.fortuna.ical4j.model.property.Uid;
 
 import java.io.IOException;
 
@@ -22,9 +20,7 @@ public class JotToDoSerializer extends StdSerializer<VToDo> {
     }
 
     private JsonNode buildTodo(VToDo toDo) {
-        Uid uid = toDo.getProperty(Property.UID);
-        JournalBuilder builder = new JournalBuilder().uid(uid);
-
+        AbstractJotBuilder<VToDo> builder = new TodoBuilder().component(toDo);
         return builder.build();
     }
 }

@@ -5,8 +5,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import net.fortuna.ical4j.model.Calendar;
-import net.fortuna.ical4j.model.Property;
-import net.fortuna.ical4j.model.property.Uid;
 
 import java.io.IOException;
 
@@ -22,9 +20,7 @@ public class JotCalendarSerializer extends StdSerializer<Calendar> {
     }
 
     private JsonNode buildCalendar(Calendar calendar) {
-        Uid uid = calendar.getProperty(Property.UID);
-        CalendarBuilder builder = new CalendarBuilder().uid(uid);
-
+        AbstractJotBuilder<Calendar> builder = new CalendarBuilder().component(calendar);
         return builder.build();
     }
 }

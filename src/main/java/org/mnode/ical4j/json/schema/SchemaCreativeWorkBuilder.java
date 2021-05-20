@@ -14,10 +14,10 @@ public class SchemaCreativeWorkBuilder extends AbstractSchemaBuilder<VJournal> {
     @Override
     public JsonNode build() {
         ObjectNode node = createObjectNode();
-        setProperty("@id", node, component.getProperty(Property.UID));
-        setProperty("name", node, component.getProperty(Property.SUMMARY));
-        setProperty("description", node, component.getProperty(Property.DESCRIPTION));
-        setProperty("url", node, component.getProperty(Property.URL));
+        putIfNotNull("@id", node, component.getProperty(Property.UID));
+        putIfNotNull("name", node, component.getProperty(Property.SUMMARY));
+        putIfNotNull("description", node, component.getProperty(Property.DESCRIPTION));
+        putIfNotNull("url", node, component.getProperty(Property.URL));
         return node;
     }
 }

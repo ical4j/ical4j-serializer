@@ -14,13 +14,13 @@ public class SchemaActionBuilder extends AbstractSchemaBuilder<VToDo> {
     @Override
     public JsonNode build() {
         ObjectNode node = createObjectNode();
-        setProperty("@id", node, component.getProperty(Property.UID));
-        setProperty("name", node, component.getProperty(Property.SUMMARY));
-        setProperty("description", node, component.getProperty(Property.DESCRIPTION));
-        setProperty("url", node, component.getProperty(Property.URL));
-        setProperty("startTime", node, component.getProperty(Property.DTSTART));
-        setProperty("endTime", node, component.getProperty(Property.DUE));
-        setProperty("actionStatus", node, component.getProperty(Property.STATUS));
+        putIfNotNull("@id", node, component.getProperty(Property.UID));
+        putIfNotNull("name", node, component.getProperty(Property.SUMMARY));
+        putIfNotNull("description", node, component.getProperty(Property.DESCRIPTION));
+        putIfNotNull("url", node, component.getProperty(Property.URL));
+        putIfNotNull("startTime", node, component.getProperty(Property.DTSTART));
+        putIfNotNull("endTime", node, component.getProperty(Property.DUE));
+        putIfNotNull("actionStatus", node, component.getProperty(Property.STATUS));
         return node;
     }
 }
