@@ -51,7 +51,7 @@ public class JCardMapper extends StdDeserializer<VCard> implements JsonMapper {
         List<net.fortuna.ical4j.vcard.Parameter> params = new ArrayList<>();
         while (!JsonToken.END_OBJECT.equals(p.nextToken())) {
             Parameter parameter = parameterFactoryRegistry.getFactory(p.currentName()).createParameter(
-                    p.currentName(), p.getCurrentValue().toString());
+                    p.currentName(), p.getText());
             params.add(parameter);
         }
 

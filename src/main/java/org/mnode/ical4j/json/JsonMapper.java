@@ -19,6 +19,18 @@ public interface JsonMapper {
         }
     }
 
+    default void assertNextScalarValue(JsonParser p) throws IOException {
+        if (!p.nextToken().isScalarValue()) {
+            throw new IllegalArgumentException("Invalid input");
+        }
+    }
+
+    default void assertCurrentScalarValue(JsonParser p) throws IOException {
+        if (!p.currentToken().isScalarValue()) {
+            throw new IllegalArgumentException("Invalid input");
+        }
+    }
+
     default void assertTextValue(JsonParser p, String value) throws IOException {
         if (!value.equals(p.nextTextValue())) {
             throw new IllegalArgumentException("Invalid input");

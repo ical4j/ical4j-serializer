@@ -84,10 +84,8 @@ public class JCalMapper extends StdDeserializer<Calendar> implements JsonMapper 
         assertNextToken(p, JsonToken.START_OBJECT);
         while (!JsonToken.END_OBJECT.equals(p.nextToken())) {
             try {
-                Parameter parameter = new ParameterBuilder().factories(parameterFactories)
-                        .name(p.currentName()).value(p.getCurrentValue().toString()).build();
-                propertyBuilder.parameter(parameter);
-            } catch (URISyntaxException e) {
+                propertyBuilder.parameter(parseParameter(p));
+            } catch (URISyntaxException | IOException e) {
                 throw new IllegalArgumentException(e);
             }
         }
@@ -113,5 +111,10 @@ public class JCalMapper extends StdDeserializer<Calendar> implements JsonMapper 
         assertNextToken(p, JsonToken.END_ARRAY);
 
         return propertyBuilder.build();
+    }
+
+    private Parameter parseParameter(JsonParser p) throws IOException, URISyntaxException {
+        return new ParameterBuilder().factories(parameterFactories)
+                .name(p.currentName()).value(p.getText()).build();
     }
 }
