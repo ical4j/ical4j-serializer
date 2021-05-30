@@ -17,7 +17,7 @@ public class JotEventMapper extends AbstractJotMapper<VEvent> {
 
     @Override
     public VEvent deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
-        VEvent event = new VEvent();
+        VEvent event = new VEvent(false);
         assertCurrentToken(p, JsonToken.START_OBJECT);
         while (!JsonToken.END_OBJECT.equals(p.nextToken())) {
             assertCurrentToken(p, JsonToken.FIELD_NAME);

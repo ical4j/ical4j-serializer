@@ -21,13 +21,16 @@ class JotEventMapperTest extends Specification {
   "summary": "string",
   "dtstart": "2019-08-24T14:15:22Z",
   "sequence": 0,
+  "recurrence-id": "2019-08-24T14:15:22Z",
   "class": "PUBLIC",
   "priority": 0,
   "status": "TENTATIVE",
   "dtend": "2019-08-24T14:15:22Z",
   "duration": "PT15M",
+  "rrule": "FREQ=WEEKLY",
   "description": "string",
   "url": "http://example.com",
+  "geo": "49.8932;40.3834",
   "location": {
     "uid": "07cc67f4-45d6-494b-adac-09b5cbc7e2b5",
     "name": "The venue"
@@ -37,7 +40,7 @@ class JotEventMapperTest extends Specification {
   "categories": [
     "string"
   ],
-  "comments": [
+  "comment": [
     {
       "text": "string",
       "altrep": "string"
@@ -49,7 +52,7 @@ class JotEventMapperTest extends Specification {
       "altrep": "CID:part3.msg.970415T083000@example.com"
     }
   ],
-  "attachments": [
+  "attach": [
     {
       "fmttype": "string",
       "url": "http://example.com"
@@ -61,13 +64,13 @@ class JotEventMapperTest extends Specification {
       "reltype": "PARENT"
     }
   ],
-  "rdates": [
+  "rdate": [
     "2019-08-24T14:15:22Z"
   ],
-  "exdates": [
+  "exdate": [
     "2019-08-24T14:15:22Z"
   ],
-  "attendees": [
+  "attendee": [
     {
       "cal-address": "mailto:joecool@example.com",
       "cu-type": "INDIVIDUAL",
@@ -84,7 +87,7 @@ class JotEventMapperTest extends Specification {
     }
   ],
   "transp": "OPAQUE",
-  "contacts": [
+  "contact": [
     {
       "text": "string",
       "altrep": "string"
@@ -118,32 +121,34 @@ class JotEventMapperTest extends Specification {
 
         then: 'event matches expected result'
         event as String == 'BEGIN:VEVENT\r\n' +
-                'DTSTAMP:20210530T023910Z\r\n' +
                 'UID:07cc67f4-45d6-494b-adac-09b5cbc7e2b5\r\n' +
                 'ORGANIZER;LANGUAGE=en-US:mailto:joecool@example.com\r\n' +
                 'SUMMARY:string\r\n' +
                 'DTSTART:20181208T000000\r\n' +
                 'SEQUENCE:0\r\n' +
+                'RECURRENCE-ID:20181208T000000\r\n' +
                 'CLASS:PUBLIC\r\n' +
                 'PRIORITY:0\r\n' +
                 'STATUS:TENTATIVE\r\n' +
                 'DTEND:20181208T000000\r\n' +
                 'DURATION:PT15M\r\n' +
+                'RRULE:FREQ=WEEKLY\r\n' +
                 'DESCRIPTION:string\r\n' +
                 'URL:http://example.com\r\n' +
+                'GEO:49.8932;40.3834\r\n' +
                 'LOCATION:The venue\r\n' +
                 'LAST-MODIFIED:20181208T000000\r\n' +
                 'CREATED:20181208T000000\r\n' +
                 'CATEGORIES:string\r\n' +
-                'COMMENTS;ALTREP=string:string\r\n' +
+                'COMMENT;ALTREP=string:string\r\n' +
                 'RESOURCES;ALTREP="CID:part3.msg.970415T083000@example.com":07cc67f4-45d6-494b-adac-09b5cbc7e2b5\r\n' +
-                'ATTACHMENTS;FMTTYPE=string:http://example.com\r\n' +
+                'ATTACH;FMTTYPE=string:http://example.com\r\n' +
                 'RELATED-TO:PARENT\r\n' +
-                'RDATES:2019-08-24T14:15:22Z\r\n' +
-                'EXDATES:2019-08-24T14:15:22Z\r\n' +
-                'ATTENDEES;LANGUAGE=en-US:http://example.com\r\n' +
+                'RDATE:20181208T000000\r\n' +
+                'EXDATE:20181208T000000\r\n' +
+                'ATTENDEE;LANGUAGE=en-US:http://example.com\r\n' +
                 'TRANSP:OPAQUE\r\n' +
-                'CONTACTS;ALTREP=string:string\r\n' +
+                'CONTACT;ALTREP=string:string\r\n' +
                 'STYLED-DESCRIPTION;FMTTYPE=text/html:true\r\n' +
                 'STRUCTURED-DATA;FMTTYPE=string:string\r\n' +
                 'END:VEVENT\r\n'
