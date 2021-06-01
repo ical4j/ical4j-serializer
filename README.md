@@ -88,6 +88,13 @@ mapper.registerModule(module);
 String serialized = mapper.writeValueAsString(calendar);
 ```
 
+Result:
+
+```
+["vcalendar",[["prodid",{},"text","-//Ben Fortuna//iCal4j 1.0//EN"],["version",{},"text","2.0"],["uid",{},"text","123"]],[["vevent",[["uid",{},"text","1"],["summary",{},"text","Test Event 1"],["dtstart",{"value":"date"},"date","20090810"],["action",{},"text","DISPLAY"],["attach",{"encoding":"base64","value":"binary"},"binary","..."]],[]],["vevent",[["uid",{},"text","2"],["summary",{},"text","Test Event 2"],["dtstart",{"value":"date"},"date","20100810"]],[]]]]
+```
+
+
 #### JSCalendar JSON format:
 
 ```java
@@ -99,6 +106,12 @@ ObjectMapper mapper = new ObjectMapper();
 mapper.registerModule(module);
 
 String serialized = mapper.writeValueAsString(event);
+```
+
+Result:
+
+```
+{"@type":"jsevent"}
 ```
 
 #### Jot API serialization
@@ -133,4 +146,5 @@ Calendar calendar = mapper.readValue(json, Calendar.class);
 * [RFC7265](https://tools.ietf.org/html/rfc7265) (jCal)
 * [JSCalendar Draft](https://tools.ietf.org/html/draft-ietf-calext-jscalendar-32)
 * [JSCalendar to iCalendar Draft](https://datatracker.ietf.org/doc/html/draft-ietf-calext-jscalendar-icalendar-04)
+* [Schema.org - Event](https://schema.org/Event)
 * [Jot API Models](https://github.com/micronode/jotapi/tree/main/models)
