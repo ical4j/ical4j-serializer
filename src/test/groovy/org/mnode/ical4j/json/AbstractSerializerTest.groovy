@@ -2,7 +2,7 @@ package org.mnode.ical4j.json
 
 import net.fortuna.ical4j.model.Calendar
 import net.fortuna.ical4j.model.ContentBuilder
-import net.fortuna.ical4j.model.component.VEvent
+import net.fortuna.ical4j.model.component.*
 import net.fortuna.ical4j.model.property.Attach
 import net.fortuna.ical4j.util.Calendars
 import net.fortuna.ical4j.vcard.VCard
@@ -16,6 +16,24 @@ class AbstractSerializerTest extends Specification {
 
     @Shared
     VEvent event1, event2
+
+    @Shared
+    VFreeBusy freebusy1
+
+    @Shared
+    VJournal journal1
+
+    @Shared
+    VToDo todo1
+
+    @Shared
+    VAvailability availability1
+
+    @Shared
+    VAlarm alarm1
+
+    @Shared
+    Available available1
 
     @Shared
     VCard card1, card2, card3
@@ -65,5 +83,12 @@ class AbstractSerializerTest extends Specification {
             logo 'http://example.org/acme-logo.png'
             adr ';;20341 Whitworth Institute 405 N. Whitworth;Seattle;WA;98052'
         }
+
+        freebusy1 = builder.vfreebusy() { uid '123'}
+        journal1 = builder.vjournal() { uid '123'}
+        todo1 = builder.vtodo() { uid '123'}
+        availability1 = builder.vavailability() { uid '123'}
+        alarm1 = builder.valarm() { uid '123'}
+        available1 = builder.available() { uid '123'}
     }
 }
