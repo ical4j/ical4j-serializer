@@ -22,6 +22,6 @@ class JotJournalSerializerTest extends AbstractSerializerTest {
 
         where:
         journal    | expectedSerialized
-        journal1   | '{"id":"123"}'
+        journal1   | '{"uid":"123"}'
     }
 }

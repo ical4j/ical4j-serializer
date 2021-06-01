@@ -22,7 +22,7 @@ class JotEventSerializerTest extends AbstractSerializerTest {
 
         where:
         event    | expectedSerialized
-        event1   | '{"id":"1"}'
-        event2   | '{"id":"2"}'
+        event1   | '{"uid":"1"}'
+        event2   | '{"uid":"2"}'
     }
 }

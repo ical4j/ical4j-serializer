@@ -22,6 +22,6 @@ class JotAvailableSerializerTest extends AbstractSerializerTest {
 
         where:
         available    | expectedSerialized
-        available1   | '{"id":"123"}'
+        available1   | '{"uid":"123"}'
     }
 }

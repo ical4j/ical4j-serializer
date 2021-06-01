@@ -10,7 +10,7 @@ public class CardBuilder extends AbstractJotBuilder<VCard> {
     @Override
     public JsonNode build() {
         ObjectNode node = createObjectNode();
-        putIfNotNull("id", node, component.getProperty(Property.Id.UID));
+        putIfNotNull("uid", node, component.getProperty(Property.Id.UID));
         return node;
     }
 }

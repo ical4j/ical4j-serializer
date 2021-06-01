@@ -22,7 +22,7 @@ class JotCalendarSerializerTest extends AbstractSerializerTest {
 
         where:
         calendar    | expectedSerialized
-        calendar1   | '{"id":"123"}'
-        calendar2   | '{"id":"1"}'
+        calendar1   | '{"uid":"123"}'
+        calendar2   | '{"uid":"1"}'
     }
 }

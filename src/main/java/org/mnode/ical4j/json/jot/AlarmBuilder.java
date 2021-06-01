@@ -10,7 +10,7 @@ public class AlarmBuilder extends AbstractJotBuilder<VAlarm> {
     @Override
     public JsonNode build() {
         ObjectNode node = createObjectNode();
-        putIfNotNull("id", node, component.getProperty(Property.UID));
+        putIfNotNull("uid", node, component.getProperty(Property.UID));
         putIfNotNull("action", node, component.getProperty(Property.ACTION));
         putIfNotNull("trigger", node, component.getProperty(Property.TRIGGER));
         return node;

@@ -22,6 +22,6 @@ class JotToDoSerializerTest extends AbstractSerializerTest {
 
         where:
         todo    | expectedSerialized
-        todo1   | '{"id":"123"}'
+        todo1   | '{"uid":"123"}'
     }
 }

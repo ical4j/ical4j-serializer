@@ -10,7 +10,7 @@ public class EventBuilder extends AbstractJotBuilder<VEvent> {
     @Override
     public JsonNode build() {
         ObjectNode node = createObjectNode();
-        putIfNotNull("id", node, component.getProperty(Property.UID));
+        putIfNotNull("uid", node, component.getProperty(Property.UID));
         return node;
     }
 }

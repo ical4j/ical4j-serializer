@@ -22,6 +22,6 @@ class JotAlarmSerializerTest extends AbstractSerializerTest {
 
         where:
         alarm    | expectedSerialized
-        alarm1   | '{"id":"123"}'
+        alarm1   | '{"uid":"123"}'
     }
 }

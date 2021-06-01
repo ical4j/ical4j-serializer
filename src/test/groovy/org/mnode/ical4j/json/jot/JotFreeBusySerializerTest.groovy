@@ -22,6 +22,6 @@ class JotFreeBusySerializerTest extends AbstractSerializerTest {
 
         where:
         freebusy    | expectedSerialized
-        freebusy1   | '{"id":"123"}'
+        freebusy1   | '{"uid":"123"}'
     }
 }
