@@ -66,12 +66,18 @@ public abstract class AbstractJotMapper<T> extends StdDeserializer<T> implements
     }
 
     protected Parameter parseParameter(JsonParser p) throws IOException, URISyntaxException {
-        assertNextToken(p, JsonToken.VALUE_STRING);
+        assertNextScalarValue(p);
         return new ParameterBuilder().factories(parameterFactories)
                 .name(p.currentName()).value(p.getText()).build();
     }
 
     private boolean isParameter(String fieldName) {
-        return Arrays.asList("altrep", "fmttype", "language").contains(fieldName);
+        return Arrays.asList(Parameter.ABBREV, Parameter.CN, Parameter.ALTREP, Parameter.CUTYPE,
+                Parameter.DIR, Parameter.DELEGATED_FROM, Parameter.DELEGATED_TO, Parameter.DISPLAY,
+                Parameter.EMAIL, Parameter.ENCODING, Parameter.FBTYPE, Parameter.FEATURE,
+                Parameter.FMTTYPE, Parameter.LABEL, Parameter.LANGUAGE, Parameter.MEMBER,
+                Parameter.PARTSTAT, Parameter.RANGE, Parameter.RELATED, Parameter.RELTYPE,
+                Parameter.ROLE, Parameter.RSVP, Parameter.SCHEDULE_AGENT, Parameter.SCHEDULE_STATUS,
+                Parameter.SENT_BY, Parameter.TYPE, Parameter.TZID, Parameter.VALUE, Parameter.VVENUE).contains(fieldName.toUpperCase());
     }
 }

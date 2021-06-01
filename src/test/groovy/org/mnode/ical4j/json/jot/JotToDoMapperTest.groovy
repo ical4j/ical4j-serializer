@@ -2,12 +2,12 @@ package org.mnode.ical4j.json.jot
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.module.SimpleModule
-import net.fortuna.ical4j.model.component.VEvent
+import net.fortuna.ical4j.model.component.VToDo
 import spock.lang.Specification
 
-class JotEventMapperTest extends Specification {
+class JotToDoMapperTest extends Specification {
 
-    def 'test event deserialization'() {
+    def 'test todo deserialization'() {
         given: 'a json string'
         String json = '''{
   "uid": "07cc67f4-45d6-494b-adac-09b5cbc7e2b5",
@@ -24,11 +24,10 @@ class JotEventMapperTest extends Specification {
   "recurrence-id": "2019-08-24T14:15:22Z",
   "class": "PUBLIC",
   "priority": 0,
-  "status": "TENTATIVE",
-  "dtend": "2019-08-24T14:15:22Z",
+  "status": "NEEDS-ACTION",
+  "due": "2019-08-24T14:15:22Z",
   "duration": "PT15M",
   "rrule": "FREQ=WEEKLY",
-  "description": "string",
   "url": "http://example.com",
   "geo": "49.8932;40.3834",
   "location": {
@@ -37,14 +36,13 @@ class JotEventMapperTest extends Specification {
   },
   "last-modified": "2019-08-24T14:15:22Z",
   "created": "2019-08-24T14:15:22Z",
+  "percent-complete": 0,
+  "description": "string",
   "categories": [
     "string"
   ],
-  "comment": [
-    {
-      "text": "string",
-      "altrep": "string"
-    }
+  "comments": [
+    "string"
   ],
   "resources": [
     {
@@ -52,7 +50,7 @@ class JotEventMapperTest extends Specification {
       "altrep": "CID:part3.msg.970415T083000@example.com"
     }
   ],
-  "attach": [
+  "attachments": [
     {
       "fmttype": "string",
       "url": "http://example.com"
@@ -64,13 +62,13 @@ class JotEventMapperTest extends Specification {
       "reltype": "PARENT"
     }
   ],
-  "rdate": [
-    "2019-08-24T14:15:22Z"
+  "rdates": [
+    "string"
   ],
-  "exdate": [
-    "2019-08-24T14:15:22Z"
+  "exdates": [
+    "string"
   ],
-  "attendee": [
+  "attendees": [
     {
       "cal-address": "mailto:joecool@example.com",
       "cu-type": "INDIVIDUAL",
@@ -86,12 +84,8 @@ class JotEventMapperTest extends Specification {
       "language": "en-US"
     }
   ],
-  "transp": "OPAQUE",
-  "contact": [
-    {
-      "text": "string",
-      "altrep": "string"
-    }
+  "contacts": [
+    "string"
   ],
   "styled-description": [
     {
@@ -112,15 +106,15 @@ class JotEventMapperTest extends Specification {
 
         and: 'an object mapper'
         SimpleModule module = []
-        module.addDeserializer(VEvent, new JotEventMapper())
+        module.addDeserializer(VToDo, new JotToDoMapper())
         ObjectMapper mapper = []
         mapper.registerModule(module)
 
-        when: 'the event is deserialized'
-        VEvent event = mapper.readValue(json, VEvent)
+        when: 'the todo is deserialized'
+        VToDo toDo = mapper.readValue(json, VToDo)
 
-        then: 'event matches expected result'
-        event as String == 'BEGIN:VEVENT\r\n' +
+        then: 'todo matches expected result'
+        toDo as String == 'BEGIN:VTODO\r\n' +
                 'UID:07cc67f4-45d6-494b-adac-09b5cbc7e2b5\r\n' +
                 'ORGANIZER;CN=string;DIR="http://example.com";SENT-BY="mailto:joecool@example.com";LANGUAGE=en-US:mailto:jane_doe@example.com\r\n' +
                 'SUMMARY:string\r\n' +
@@ -129,28 +123,28 @@ class JotEventMapperTest extends Specification {
                 'RECURRENCE-ID:20181208T000000\r\n' +
                 'CLASS:PUBLIC\r\n' +
                 'PRIORITY:0\r\n' +
-                'STATUS:TENTATIVE\r\n' +
-                'DTEND:20181208T000000\r\n' +
+                'STATUS:NEEDS-ACTION\r\n' +
+                'DUE:20181208T000000\r\n' +
                 'DURATION:PT15M\r\n' +
                 'RRULE:FREQ=WEEKLY\r\n' +
-                'DESCRIPTION:string\r\n' +
                 'URL:http://example.com\r\n' +
                 'GEO:49.8932;40.3834\r\n' +
                 'LOCATION:The venue\r\n' +
                 'LAST-MODIFIED:20181208T000000\r\n' +
                 'CREATED:20181208T000000\r\n' +
+                'PERCENT-COMPLETE:0\r\n' +
+                'DESCRIPTION:string\r\n' +
                 'CATEGORIES:string\r\n' +
-                'COMMENT;ALTREP=string:string\r\n' +
+                'COMMENTS:string\r\n' +
                 'RESOURCES;ALTREP="CID:part3.msg.970415T083000@example.com":07cc67f4-45d6-494b-adac-09b5cbc7e2b5\r\n' +
-                'ATTACH;FMTTYPE=string:http://example.com\r\n' +
+                'ATTACHMENTS;FMTTYPE=string:http://example.com\r\n' +
                 'RELATED-TO;RELTYPE=PARENT:07cc67f4-45d6-494b-adac-09b5cbc7e2b5\r\n' +
-                'RDATE:20181208T000000\r\n' +
-                'EXDATE:20181208T000000\r\n' +
-                'ATTENDEE;MEMBER="mailto:DEV-GROUP@example.com";ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=FALSE;CN=string;DIR="http://example.com";LANGUAGE=en-US:mailto:joecool@example.com\r\n' +
-                'TRANSP:OPAQUE\r\n' +
-                'CONTACT;ALTREP=string:string\r\n' +
+                'RDATES:string\r\n' +
+                'EXDATES:string\r\n' +
+                'ATTENDEES;MEMBER="mailto:DEV-GROUP@example.com";ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=FALSE;CN=string;DIR="http://example.com";LANGUAGE=en-US:mailto:joecool@example.com\r\n' +
+                'CONTACTS:string\r\n' +
                 'STYLED-DESCRIPTION;FMTTYPE=text/html:true\r\n' +
                 'STRUCTURED-DATA;FMTTYPE=string;ENCODING=BASE64:string\r\n' +
-                'END:VEVENT\r\n'
+                'END:VTODO\r\n'
     }
 }
