@@ -8,6 +8,12 @@ import net.fortuna.ical4j.model.component.VFreeBusy;
 
 import java.io.IOException;
 
+/**
+ * Convert iCal4j {@link VFreeBusy} objects to Jot JSON format.
+ *
+ * NOTE: Conversion to jot is "lossy" in that child components are ignored. This is intentional as
+ * Jot JSON separates calendars and components into separate (not nested) JSON structures.
+ */
 public class JotFreeBusySerializer extends StdSerializer<VFreeBusy> {
 
     public JotFreeBusySerializer(Class<VFreeBusy> t) {
@@ -20,7 +26,7 @@ public class JotFreeBusySerializer extends StdSerializer<VFreeBusy> {
     }
 
     private JsonNode buildFreebusy(VFreeBusy freeBusy) {
-        AbstractJotBuilder<VFreeBusy> builder = new FreebusyBuilder().component(freeBusy);
+        AbstractJotBuilder<VFreeBusy> builder = new ComponentBuilder<VFreeBusy>().component(freeBusy);
         return builder.build();
     }
 }

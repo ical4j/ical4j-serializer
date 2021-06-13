@@ -8,6 +8,12 @@ import net.fortuna.ical4j.model.component.VJournal;
 
 import java.io.IOException;
 
+/**
+ * Convert iCal4j {@link VJournal} objects to Jot JSON format.
+ *
+ * NOTE: Conversion to jot is "lossy" in that child components are ignored. This is intentional as
+ * Jot JSON separates calendars and components into separate (not nested) JSON structures.
+ */
 public class JotJournalSerializer extends StdSerializer<VJournal> {
 
     public JotJournalSerializer(Class<VJournal> t) {
@@ -20,7 +26,7 @@ public class JotJournalSerializer extends StdSerializer<VJournal> {
     }
 
     private JsonNode buildJournal(VJournal journal) {
-        AbstractJotBuilder<VJournal> builder = new JournalBuilder().component(journal);
+        AbstractJotBuilder<VJournal> builder = new ComponentBuilder<VJournal>().component(journal);
         return builder.build();
     }
 }

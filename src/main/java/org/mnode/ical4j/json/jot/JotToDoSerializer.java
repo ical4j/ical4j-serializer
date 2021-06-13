@@ -8,6 +8,12 @@ import net.fortuna.ical4j.model.component.VToDo;
 
 import java.io.IOException;
 
+/**
+ * Convert iCal4j {@link VToDo} objects to Jot JSON format.
+ *
+ * NOTE: Conversion to jot is "lossy" in that child components are ignored. This is intentional as
+ * Jot JSON separates calendars and components into separate (not nested) JSON structures.
+ */
 public class JotToDoSerializer extends StdSerializer<VToDo> {
 
     public JotToDoSerializer(Class<VToDo> t) {
@@ -20,7 +26,7 @@ public class JotToDoSerializer extends StdSerializer<VToDo> {
     }
 
     private JsonNode buildTodo(VToDo toDo) {
-        AbstractJotBuilder<VToDo> builder = new TodoBuilder().component(toDo);
+        AbstractJotBuilder<VToDo> builder = new ComponentBuilder<VToDo>().component(toDo);
         return builder.build();
     }
 }

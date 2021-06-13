@@ -8,6 +8,9 @@ import net.fortuna.ical4j.model.component.VAlarm;
 
 import java.io.IOException;
 
+/**
+ * Convert iCal4j {@link VAlarm} objects to Jot JSON format.
+ */
 public class JotAlarmSerializer extends StdSerializer<VAlarm> {
 
     public JotAlarmSerializer(Class<VAlarm> t) {
@@ -20,7 +23,7 @@ public class JotAlarmSerializer extends StdSerializer<VAlarm> {
     }
 
     private JsonNode buildAlarm(VAlarm alarm) {
-        AbstractJotBuilder<VAlarm> builder = new AlarmBuilder().component(alarm);
+        AbstractJotBuilder<VAlarm> builder = new ComponentBuilder<VAlarm>().component(alarm);
         return builder.build();
     }
 }

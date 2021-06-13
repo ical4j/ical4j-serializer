@@ -8,6 +8,9 @@ import net.fortuna.ical4j.model.component.Available;
 
 import java.io.IOException;
 
+/**
+ * Convert iCal4j {@link Available} objects to Jot JSON format.
+ */
 public class JotAvailableSerializer extends StdSerializer<Available> {
 
     public JotAvailableSerializer(Class<Available> t) {
@@ -20,7 +23,7 @@ public class JotAvailableSerializer extends StdSerializer<Available> {
     }
 
     private JsonNode buildAvailable(Available available) {
-        AbstractJotBuilder<Available> builder = new AvailableBuilder().component(available);
+        AbstractJotBuilder<Available> builder = new ComponentBuilder<Available>().component(available);
         return builder.build();
     }
 }

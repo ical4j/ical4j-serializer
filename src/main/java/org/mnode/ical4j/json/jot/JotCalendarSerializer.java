@@ -8,6 +8,12 @@ import net.fortuna.ical4j.model.Calendar;
 
 import java.io.IOException;
 
+/**
+ * Convert iCal4j {@link Calendar} objects to Jot JSON format.
+ *
+ * NOTE: Conversion to jot is "lossy" in that child components are ignored. This is intentional as
+ * Jot JSON separates calendars and components into separate (not nested) JSON structures.
+ */
 public class JotCalendarSerializer extends StdSerializer<Calendar> {
 
     public JotCalendarSerializer(Class<Calendar> t) {

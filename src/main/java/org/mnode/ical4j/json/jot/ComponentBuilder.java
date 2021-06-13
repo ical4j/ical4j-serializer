@@ -2,9 +2,9 @@ package org.mnode.ical4j.json.jot;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import net.fortuna.ical4j.model.Calendar;
+import net.fortuna.ical4j.model.Component;
 
-public class CalendarBuilder extends AbstractJotBuilder<Calendar> {
+public class ComponentBuilder<T extends Component> extends AbstractJotBuilder<T> {
 
     @Override
     public JsonNode build() {
