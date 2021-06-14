@@ -44,6 +44,7 @@ class AbstractSerializerTest extends Specification {
             uid '1'
 //            dtstamp()
             summary 'Test Event 1'
+            organizer 'johnd@example.com'
             dtstart '20090810', parameters: parameters { value 'DATE' }
             action 'DISPLAY'
             attach new Attach(new File('LICENSE').bytes)
@@ -52,6 +53,7 @@ class AbstractSerializerTest extends Specification {
         event2 = builder.vevent() {
             uid '2'
             summary 'Test Event 2'
+            organizer 'johnd@example.com', parameters: parameters { cn 'John Doe' }
             dtstart '20100810', parameters: parameters { value 'DATE' }
         }
 

@@ -15,13 +15,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class AbstractJotMapper<T> extends StdDeserializer<T> implements JsonMapper {
+public abstract class AbstractJotCalMapper<T> extends StdDeserializer<T> implements JsonMapper {
 
     private final List<ParameterFactory<?>> parameterFactories;
 
     private final List<PropertyFactory<?>> propertyFactories;
 
-    public AbstractJotMapper(Class<?> vc) {
+    public AbstractJotCalMapper(Class<?> vc) {
         super(vc);
         parameterFactories = new DefaultParameterFactorySupplier().get();
         propertyFactories = new DefaultPropertyFactorySupplier().get();

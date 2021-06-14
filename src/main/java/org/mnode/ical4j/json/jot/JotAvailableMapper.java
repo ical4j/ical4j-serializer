@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.text.ParseException;
 
-public class JotAvailableMapper extends AbstractJotMapper<Available> {
+public class JotAvailableMapper extends AbstractJotCalMapper<Available> {
 
     public JotAvailableMapper(Class<Available> t) {
         super(t);

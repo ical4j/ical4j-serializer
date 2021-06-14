@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.text.ParseException;
 
-public class JotToDoMapper extends AbstractJotMapper<VToDo> {
+public class JotToDoMapper extends AbstractJotCalMapper<VToDo> {
 
     public JotToDoMapper(Class<VToDo> t) {
         super(t);

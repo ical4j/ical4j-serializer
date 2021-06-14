@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.text.ParseException;
 
-public class JotAlarmMapper extends AbstractJotMapper<VAlarm> {
+public class JotAlarmMapper extends AbstractJotCalMapper<VAlarm> {
 
     public JotAlarmMapper(Class<VAlarm> t) {
         super(t);

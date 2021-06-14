@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.text.ParseException;
 
-public class JotFreeBusyMapper extends AbstractJotMapper<VFreeBusy> {
+public class JotFreeBusyMapper extends AbstractJotCalMapper<VFreeBusy> {
 
     public JotFreeBusyMapper(Class<VFreeBusy> t) {
         super(t);

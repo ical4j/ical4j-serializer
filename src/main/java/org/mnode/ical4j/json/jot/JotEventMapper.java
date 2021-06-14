@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.text.ParseException;
 
-public class JotEventMapper extends AbstractJotMapper<VEvent> {
+public class JotEventMapper extends AbstractJotCalMapper<VEvent> {
 
     public JotEventMapper(Class<VEvent> t) {
         super(t);

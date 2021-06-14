@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.text.ParseException;
 
-public class JotJournalMapper extends AbstractJotMapper<VJournal> {
+public class JotJournalMapper extends AbstractJotCalMapper<VJournal> {
 
     public JotJournalMapper(Class<VJournal> t) {
         super(t);
