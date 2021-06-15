@@ -59,6 +59,10 @@ group = 'org.mnode.ical4j'
 description = 'Custom marshalling between iCal4j objects and JSON formats'
 version = scmVersion.version
 
+ext {
+    isReleaseVersion = !version.endsWith("SNAPSHOT")
+}
+
 publishing {
     publications {
         ical4j_json(MavenPublication) {
@@ -108,6 +112,6 @@ publishing {
 }
 
 signing {
-    required = true
+    required { isReleaseVersion }
     sign publishing.publications.ical4j_json
 }
