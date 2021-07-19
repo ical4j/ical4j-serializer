@@ -1,8 +1,9 @@
 # iCal4j Javascript Object Notation
 
 [jCal]: https://tools.ietf.org/html/rfc7265
-[JSCalendar]: https://tools.ietf.org/html/draft-ietf-calext-jscalendar-32
+[JSCalendar]: https://datatracker.ietf.org/doc/html/rfc8984
 [jCard]: https://tools.ietf.org/html/rfc7095
+[JSCard]: https://datatracker.ietf.org/doc/html/draft-ietf-jmap-jscontact
 [Schema.org]: https://schema.org/
 [JSON-LD]: https://json-ld.org/
 [Jot API]: https://github.com/micronode/jotapi
@@ -42,7 +43,11 @@ interoperability with other calendar agents. As this is still a draft standard i
 ### jCard - The JSON format for vCard
 
 As iCal4j includes a vCard object representation, it also makes sense to support JSON conversion of this
-object model. [jCard] provides a specification for converting JSON to/form vCard data.
+object model. [jCard] provides a specification for converting JSON to/from vCard data.
+
+### JSCard - A JSON representation for contact data
+
+[JSCard] provides a specification for converting JSON to/from vCard data.
 
 
 ### Schema.org - shared vocabulary for structured Web content
@@ -143,8 +148,10 @@ Calendar calendar = mapper.readValue(json, Calendar.class);
 ## References
 
 * [RFC5545](https://tools.ietf.org/html/rfc5545) (iCalendar)
+* [RFC7953](https://datatracker.ietf.org/doc/html/rfc7953) (iCalendar Availability)
+* [RFC6350](https://datatracker.ietf.org/doc/html/rfc6350) (vCard)
 * [RFC7265](https://tools.ietf.org/html/rfc7265) (jCal)
-* [JSCalendar Draft](https://tools.ietf.org/html/draft-ietf-calext-jscalendar-32)
-* [JSCalendar to iCalendar Draft](https://datatracker.ietf.org/doc/html/draft-ietf-calext-jscalendar-icalendar-04)
+* [RFC8984](https://datatracker.ietf.org/doc/html/rfc8984) (JSCalendar)
+* [JSCalendar to iCalendar Draft](https://datatracker.ietf.org/doc/html/draft-ietf-calext-jscalendar-icalendar-05)
 * [Schema.org - Event](https://schema.org/Event)
 * [Jot API Models](https://github.com/micronode/jotapi/tree/main/models)
