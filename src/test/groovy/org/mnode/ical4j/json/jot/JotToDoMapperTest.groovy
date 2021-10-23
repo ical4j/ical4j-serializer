@@ -91,14 +91,14 @@ class JotToDoMapperTest extends Specification {
     {
       "fmttype": "text/html",
       "text": "<h1>Test Event</h1><p>An example event description<p>",
-      "derived": true
+      "derived": true,
+      "value": "TEXT"
     }
   ],
   "structured-data": [
     {
       "fmttype": "string",
       "schema": "string",
-      "encoding": "BASE64",
       "text": "string"
     }
   ]
@@ -114,37 +114,37 @@ class JotToDoMapperTest extends Specification {
         VToDo toDo = mapper.readValue(json, VToDo)
 
         then: 'todo matches expected result'
-        toDo as String == 'BEGIN:VTODO\r\n' +
-                'UID:07cc67f4-45d6-494b-adac-09b5cbc7e2b5\r\n' +
-                'ORGANIZER;CN=string;DIR="http://example.com";SENT-BY="mailto:joecool@example.com";LANGUAGE=en-US:mailto:jane_doe@example.com\r\n' +
-                'SUMMARY:string\r\n' +
-                'DTSTART:20181208T000000\r\n' +
-                'SEQUENCE:0\r\n' +
-                'RECURRENCE-ID:20181208T000000\r\n' +
-                'CLASS:PUBLIC\r\n' +
-                'PRIORITY:0\r\n' +
-                'STATUS:NEEDS-ACTION\r\n' +
-                'DUE:20181208T000000\r\n' +
-                'DURATION:PT15M\r\n' +
-                'RRULE:FREQ=WEEKLY\r\n' +
-                'URL:http://example.com\r\n' +
-                'GEO:49.8932;40.3834\r\n' +
-                'LOCATION:The venue\r\n' +
-                'LAST-MODIFIED:20181208T000000\r\n' +
-                'CREATED:20181208T000000\r\n' +
-                'PERCENT-COMPLETE:0\r\n' +
-                'DESCRIPTION:string\r\n' +
-                'CATEGORIES:string\r\n' +
-                'COMMENTS:string\r\n' +
-                'RESOURCES;ALTREP="CID:part3.msg.970415T083000@example.com":07cc67f4-45d6-494b-adac-09b5cbc7e2b5\r\n' +
-                'ATTACHMENTS;FMTTYPE=string:http://example.com\r\n' +
-                'RELATED-TO;RELTYPE=PARENT:07cc67f4-45d6-494b-adac-09b5cbc7e2b5\r\n' +
-                'RDATES:string\r\n' +
-                'EXDATES:string\r\n' +
-                'ATTENDEES;MEMBER="mailto:DEV-GROUP@example.com";ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=FALSE;CN=string;DIR="http://example.com";LANGUAGE=en-US:mailto:joecool@example.com\r\n' +
-                'CONTACTS:string\r\n' +
-                'STYLED-DESCRIPTION;FMTTYPE=text/html:true\r\n' +
-                'STRUCTURED-DATA;FMTTYPE=string;ENCODING=BASE64:string\r\n' +
-                'END:VTODO\r\n'
+        toDo as String == '''BEGIN:VTODO\r
+UID:07cc67f4-45d6-494b-adac-09b5cbc7e2b5\r
+ORGANIZER;CN=string;DIR="http://example.com";SENT-BY="mailto:joecool@example.com";LANGUAGE=en-US:mailto:jane_doe@example.com\r
+SUMMARY:string\r
+DTSTART:20181208T000000\r
+SEQUENCE:0\r
+RECURRENCE-ID:20181208T000000\r
+CLASS:PUBLIC\r
+PRIORITY:0\r
+STATUS:NEEDS-ACTION\r
+DUE:20181208T000000\r
+DURATION:PT15M\r
+RRULE:FREQ=WEEKLY\r
+URL:http://example.com\r
+GEO:49.8932;40.3834\r
+LOCATION:The venue\r
+LAST-MODIFIED:20181208T000000\r
+CREATED:20181208T000000\r
+PERCENT-COMPLETE:0\r
+DESCRIPTION:string\r
+CATEGORIES:string\r
+COMMENTS:string\r
+RESOURCES;ALTREP="CID:part3.msg.970415T083000@example.com":07cc67f4-45d6-494b-adac-09b5cbc7e2b5\r
+ATTACHMENTS;FMTTYPE=string:http://example.com\r
+RELATED-TO;RELTYPE=PARENT:07cc67f4-45d6-494b-adac-09b5cbc7e2b5\r
+RDATES:string\r
+EXDATES:string\r
+ATTENDEES;MEMBER="mailto:DEV-GROUP@example.com";ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=FALSE;CN=string;DIR="http://example.com";LANGUAGE=en-US:mailto:joecool@example.com\r
+CONTACTS:string\r
+STYLED-DESCRIPTION;FMTTYPE=text/html;VALUE=TEXT:true\r
+STRUCTURED-DATA;FMTTYPE=string:string\r
+END:VTODO\r\n'''
     }
 }

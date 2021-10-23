@@ -57,7 +57,8 @@ class JotFreeBusyMapperTest extends Specification {
     {
       "fmttype": "text/html",
       "text": "<h1>Test Event</h1><p>An example event description<p>",
-      "derived": true
+      "derived": true,
+      "value": "TEXT"
     }
   ]
 }'''
@@ -82,7 +83,7 @@ class JotFreeBusyMapperTest extends Specification {
                 'ATTENDEE;MEMBER="mailto:DEV-GROUP@example.com";ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=FALSE;CN=string;DIR="http://example.com";LANGUAGE=en-US:mailto:joecool@example.com\r\n' +
                 'COMMENT;ALTREP=string:string\r\n' +
                 'CONTACT;ALTREP=string:string\r\n' +
-                'STYLED-DESCRIPTION;FMTTYPE=text/html:true\r\n' +
+                'STYLED-DESCRIPTION;FMTTYPE=text/html;VALUE=TEXT:true\r\n' +
                 'END:VFREEBUSY\r\n'
     }
 }

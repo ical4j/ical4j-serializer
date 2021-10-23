@@ -79,14 +79,14 @@ class JotJournalMapperTest extends Specification {
     {
       "fmttype": "text/html",
       "text": "<h1>Test Event</h1><p>An example event description<p>",
-      "derived": true
+      "derived": true,
+      "value": "TEXT"
     }
   ],
   "structured-data": [
     {
       "fmttype": "string",
       "schema": "string",
-      "encoding": "BASE64",
       "text": "string"
     }
   ]
@@ -123,8 +123,8 @@ class JotJournalMapperTest extends Specification {
                 'EXDATE:20181208T000000\r\n' +
                 'ATTENDEE;MEMBER="mailto:DEV-GROUP@example.com";ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=FALSE;CN=string;DIR="http://example.com";LANGUAGE=en-US:mailto:joecool@example.com\r\n' +
                 'CONTACT;ALTREP=string:string\r\n' +
-                'STYLED-DESCRIPTION;FMTTYPE=text/html:true\r\n' +
-                'STRUCTURED-DATA;FMTTYPE=string;ENCODING=BASE64:string\r\n' +
+                'STYLED-DESCRIPTION;FMTTYPE=text/html;VALUE=TEXT:true\r\n' +
+                'STRUCTURED-DATA;FMTTYPE=string:string\r\n' +
                 'END:VJOURNAL\r\n'
     }
 }

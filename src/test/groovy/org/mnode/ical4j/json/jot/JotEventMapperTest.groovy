@@ -97,14 +97,14 @@ class JotEventMapperTest extends Specification {
     {
       "fmttype": "text/html",
       "text": "<h1>Test Event</h1><p>An example event description<p>",
-      "derived": true
+      "derived": true,
+      "value": "TEXT"
     }
   ],
   "structured-data": [
     {
       "fmttype": "string",
       "schema": "string",
-      "encoding": "BASE64",
       "text": "string"
     }
   ]
@@ -120,37 +120,37 @@ class JotEventMapperTest extends Specification {
         VEvent event = mapper.readValue(json, VEvent)
 
         then: 'event matches expected result'
-        event as String == 'BEGIN:VEVENT\r\n' +
-                'UID:07cc67f4-45d6-494b-adac-09b5cbc7e2b5\r\n' +
-                'ORGANIZER;CN=string;DIR="http://example.com";SENT-BY="mailto:joecool@example.com";LANGUAGE=en-US:mailto:jane_doe@example.com\r\n' +
-                'SUMMARY:string\r\n' +
-                'DTSTART:20181208T000000\r\n' +
-                'SEQUENCE:0\r\n' +
-                'RECURRENCE-ID:20181208T000000\r\n' +
-                'CLASS:PUBLIC\r\n' +
-                'PRIORITY:0\r\n' +
-                'STATUS:TENTATIVE\r\n' +
-                'DTEND:20181208T000000\r\n' +
-                'DURATION:PT15M\r\n' +
-                'RRULE:FREQ=WEEKLY\r\n' +
-                'DESCRIPTION:string\r\n' +
-                'URL:http://example.com\r\n' +
-                'GEO:49.8932;40.3834\r\n' +
-                'LOCATION:The venue\r\n' +
-                'LAST-MODIFIED:20181208T000000\r\n' +
-                'CREATED:20181208T000000\r\n' +
-                'CATEGORIES:string\r\n' +
-                'COMMENT;ALTREP=string:string\r\n' +
-                'RESOURCES;ALTREP="CID:part3.msg.970415T083000@example.com":07cc67f4-45d6-494b-adac-09b5cbc7e2b5\r\n' +
-                'ATTACH;FMTTYPE=string:http://example.com\r\n' +
-                'RELATED-TO;RELTYPE=PARENT:07cc67f4-45d6-494b-adac-09b5cbc7e2b5\r\n' +
-                'RDATE:20181208T000000\r\n' +
-                'EXDATE:20181208T000000\r\n' +
-                'ATTENDEE;MEMBER="mailto:DEV-GROUP@example.com";ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=FALSE;CN=string;DIR="http://example.com";LANGUAGE=en-US:mailto:joecool@example.com\r\n' +
-                'TRANSP:OPAQUE\r\n' +
-                'CONTACT;ALTREP=string:string\r\n' +
-                'STYLED-DESCRIPTION;FMTTYPE=text/html:true\r\n' +
-                'STRUCTURED-DATA;FMTTYPE=string;ENCODING=BASE64:string\r\n' +
-                'END:VEVENT\r\n'
+        event as String == '''BEGIN:VEVENT\r
+UID:07cc67f4-45d6-494b-adac-09b5cbc7e2b5\r
+ORGANIZER;CN=string;DIR="http://example.com";SENT-BY="mailto:joecool@example.com";LANGUAGE=en-US:mailto:jane_doe@example.com\r
+SUMMARY:string\r
+DTSTART:20181208T000000\r
+SEQUENCE:0\r
+RECURRENCE-ID:20181208T000000\r
+CLASS:PUBLIC\r
+PRIORITY:0\r
+STATUS:TENTATIVE\r
+DTEND:20181208T000000\r
+DURATION:PT15M\r
+RRULE:FREQ=WEEKLY\r
+DESCRIPTION:string\r
+URL:http://example.com\r
+GEO:49.8932;40.3834\r
+LOCATION:The venue\r
+LAST-MODIFIED:20181208T000000\r
+CREATED:20181208T000000\r
+CATEGORIES:string\r
+COMMENT;ALTREP=string:string\r
+RESOURCES;ALTREP="CID:part3.msg.970415T083000@example.com":07cc67f4-45d6-494b-adac-09b5cbc7e2b5\r
+ATTACH;FMTTYPE=string:http://example.com\r
+RELATED-TO;RELTYPE=PARENT:07cc67f4-45d6-494b-adac-09b5cbc7e2b5\r
+RDATE:20181208T000000\r
+EXDATE:20181208T000000\r
+ATTENDEE;MEMBER="mailto:DEV-GROUP@example.com";ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=FALSE;CN=string;DIR="http://example.com";LANGUAGE=en-US:mailto:joecool@example.com\r
+TRANSP:OPAQUE\r
+CONTACT;ALTREP=string:string\r
+STYLED-DESCRIPTION;FMTTYPE=text/html;VALUE=TEXT:true\r
+STRUCTURED-DATA;FMTTYPE=string:string\r
+END:VEVENT\r\n'''
     }
 }

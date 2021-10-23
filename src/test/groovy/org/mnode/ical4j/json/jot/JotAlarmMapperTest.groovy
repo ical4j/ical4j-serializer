@@ -45,7 +45,8 @@ class JotAlarmMapperTest extends Specification {
     {
       "fmttype": "text/html",
       "text": "<h1>Test Event</h1><p>An example event description<p>",
-      "derived": true
+      "derived": true,
+      "value": "TEXT"
     }
   ]
 }'''
@@ -70,7 +71,7 @@ REPEAT:1\r
 SUMMARY:string\r
 ATTENDEES;MEMBER="mailto:DEV-GROUP@example.com";ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=FALSE;CN=string;DIR="http://example.com";LANGUAGE=en-US:mailto:joecool@example.com\r
 ATTACHMENTS;FMTTYPE=string:http://example.com\r
-STYLED-DESCRIPTION;FMTTYPE=text/html:true\r
+STYLED-DESCRIPTION;FMTTYPE=text/html;VALUE=TEXT:true\r
 END:VALARM\r\n'''
     }
 }
