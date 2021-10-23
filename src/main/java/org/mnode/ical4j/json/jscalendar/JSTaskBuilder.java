@@ -6,10 +6,13 @@ import net.fortuna.ical4j.model.component.VToDo;
 
 public class JSTaskBuilder extends AbstractJSCalendarBuilder<VToDo> {
 
+    public JSTaskBuilder() {
+        super("jstask");
+    }
+
     @Override
     public JsonNode build() {
-        ObjectNode jsEvent = createObjectNode();
-        jsEvent.put("@type", "jstask");
-        return jsEvent;
+        ObjectNode jsTask = createObjectNode();
+        return jsTask;
     }
 }

@@ -6,10 +6,13 @@ import net.fortuna.ical4j.model.component.VEvent;
 
 public class JSEventBuilder extends AbstractJSCalendarBuilder<VEvent> {
 
+    public JSEventBuilder() {
+        super("jsevent");
+    }
+
     @Override
     public JsonNode build() {
         ObjectNode jsEvent = createObjectNode();
-        jsEvent.put("@type", "jsevent");
         return jsEvent;
     }
 }

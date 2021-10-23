@@ -36,7 +36,7 @@ public abstract class AbstractJotCalMapper<T> extends StdDeserializer<T> impleme
     }
 
     protected Property parseProperty(String propertyName, JsonParser p) throws IOException, URISyntaxException, ParseException {
-        PropertyBuilder propertyBuilder = new PropertyBuilder().factories(propertyFactories);
+        PropertyBuilder propertyBuilder = new PropertyBuilder(propertyFactories);
         propertyBuilder.name(propertyName);
         if (JsonToken.START_ARRAY.equals(p.currentToken())) {
             StringBuilder b = new StringBuilder();
@@ -67,7 +67,7 @@ public abstract class AbstractJotCalMapper<T> extends StdDeserializer<T> impleme
 
     protected Parameter parseParameter(JsonParser p) throws IOException, URISyntaxException {
         assertNextScalarValue(p);
-        return new ParameterBuilder().factories(parameterFactories)
+        return new ParameterBuilder(parameterFactories)
                 .name(p.currentName()).value(p.getText()).build();
     }
 

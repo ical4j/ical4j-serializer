@@ -7,7 +7,13 @@ import org.mnode.ical4j.json.JsonBuilder;
 
 public abstract class AbstractJSCalendarBuilder<T> implements JsonBuilder {
 
+    private final String objectType;
+
     protected T component;
+
+    public AbstractJSCalendarBuilder(String objectType) {
+        this.objectType = objectType;
+    }
 
     public AbstractJSCalendarBuilder<T> component(T component) {
         this.component = component;
@@ -18,6 +24,7 @@ public abstract class AbstractJSCalendarBuilder<T> implements JsonBuilder {
         ObjectMapper mapper = new ObjectMapper();
 
         ObjectNode node = mapper.createObjectNode();
+        node.put("@type", objectType);
         return node;
     }
 

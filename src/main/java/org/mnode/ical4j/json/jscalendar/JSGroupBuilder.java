@@ -7,12 +7,15 @@ import net.fortuna.ical4j.model.Property;
 
 public class JSGroupBuilder extends AbstractJSCalendarBuilder<Calendar> {
 
+    public JSGroupBuilder() {
+        super("jsgroup");
+    }
+
     @Override
     public JsonNode build() {
-        ObjectNode jsEvent = createObjectNode();
-        jsEvent.put("@type", "jsgroup");
-        putIfNotNull("prodid", jsEvent, component.getProperty(Property.PRODID));
-        putIfNotNull("uid", jsEvent, component.getProperty(Property.UID));
-        return jsEvent;
+        ObjectNode jsGroup = createObjectNode();
+        putIfNotNull("prodid", jsGroup, component.getProperty(Property.PRODID));
+        putIfNotNull("uid", jsGroup, component.getProperty(Property.UID));
+        return jsGroup;
     }
 }

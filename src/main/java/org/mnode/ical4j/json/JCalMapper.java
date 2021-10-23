@@ -61,7 +61,7 @@ public class JCalMapper extends StdDeserializer<Calendar> implements JsonMapper 
 
     private Component parseComponent(JsonParser p) throws IOException, URISyntaxException, ParseException {
         assertCurrentToken(p, JsonToken.START_ARRAY);
-        ComponentBuilder<?> componentBuilder = new ComponentBuilder<>().factories(componentFactories);
+        ComponentBuilder<?> componentBuilder = new ComponentBuilder<>(componentFactories);
         componentBuilder.name(p.nextTextValue());
         // component properties..
         assertNextToken(p, JsonToken.START_ARRAY);
@@ -78,7 +78,7 @@ public class JCalMapper extends StdDeserializer<Calendar> implements JsonMapper 
 
     private Property parseProperty(JsonParser p) throws IOException, URISyntaxException, ParseException {
         assertCurrentToken(p, JsonToken.START_ARRAY);
-        PropertyBuilder propertyBuilder = new PropertyBuilder().factories(propertyFactories);
+        PropertyBuilder propertyBuilder = new PropertyBuilder(propertyFactories);
         propertyBuilder.name(p.nextTextValue());
         // property params..
         assertNextToken(p, JsonToken.START_OBJECT);
@@ -114,7 +114,7 @@ public class JCalMapper extends StdDeserializer<Calendar> implements JsonMapper 
     }
 
     private Parameter parseParameter(JsonParser p) throws IOException, URISyntaxException {
-        return new ParameterBuilder().factories(parameterFactories)
+        return new ParameterBuilder(parameterFactories)
                 .name(p.currentName()).value(p.getText()).build();
     }
 }
