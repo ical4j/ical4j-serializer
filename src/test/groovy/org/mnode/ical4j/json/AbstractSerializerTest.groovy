@@ -55,6 +55,7 @@ class AbstractSerializerTest extends Specification {
             summary 'Test Event 2'
             organizer 'johnd@example.com', parameters: parameters { cn 'John Doe' }
             dtstart '20100810', parameters: parameters { value 'DATE' }
+            description 'Test Description 2', parameters: parameters { xparameter name: 'x-format', value: 'text/plain' }
             xproperty 'x-test', value: 'test-value'
         }
 
