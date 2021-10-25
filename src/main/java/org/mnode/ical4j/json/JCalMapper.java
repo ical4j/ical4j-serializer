@@ -115,6 +115,6 @@ public class JCalMapper extends StdDeserializer<Calendar> implements JsonMapper 
 
     private Parameter parseParameter(JsonParser p) throws IOException, URISyntaxException {
         return new ParameterBuilder(parameterFactories)
-                .name(p.currentName()).value(p.getText()).build();
+                .name(p.currentName()).value(p.nextTextValue()).build();
     }
 }

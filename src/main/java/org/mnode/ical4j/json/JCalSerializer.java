@@ -156,8 +156,9 @@ public class JCalSerializer extends StdSerializer<Calendar> {
                 return "cal-address";
             case "RRULE":
                 return "recur";
+            default:
+                return "unknown";
         }
-        throw new IllegalArgumentException("Unknown property type");
     }
 
     private JsonNode buildParamsObject(ParameterList parameterList) {

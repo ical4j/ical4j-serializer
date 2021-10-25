@@ -1,0 +1,8 @@
+BEGIN:VCALENDAR
+PRODID:-//Ben Fortuna//iCal4j 1.0//EN
+VERSION:2.0
+UID:123
+SOURCE;VALUE=URI:https://www.abc.net.au/news/feed/51120/rss.xml
+DESCRIPTION;X-FORMAT=text/plain:Sample Calendar 1
+X-TEST:test-value
+END:VCALENDAR
