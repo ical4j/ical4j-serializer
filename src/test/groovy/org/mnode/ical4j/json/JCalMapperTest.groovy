@@ -9,7 +9,7 @@ class JCalMapperTest extends Specification {
 
     def 'test calendar deserialization'() {
         given: 'a json string'
-        String json = '["vcalendar",[["prodid",{},"string","-//Ben Fortuna//iCal4j 1.0//EN"],["version",{},"string","2.0"],["uid",{},"string","123"],["source",{},"uri","https://www.abc.net.au/news/feed/51120/rss.xml"]],[]]'
+        String json = getClass().getResourceAsStream('/samples/jcal/1.json').text
 
         and: 'an object mapper'
         SimpleModule module = []
@@ -21,6 +21,6 @@ class JCalMapperTest extends Specification {
         Calendar calendar = mapper.readValue(json, Calendar)
 
         then: 'calendar matches expected result'
-        calendar as String == 'BEGIN:VCALENDAR\r\nPRODID:-//Ben Fortuna//iCal4j 1.0//EN\r\nVERSION:2.0\r\nUID:123\r\nSOURCE;VALUE=URI:https://www.abc.net.au/news/feed/51120/rss.xml\r\nEND:VCALENDAR\r\n'
+        calendar as String == getClass().getResourceAsStream('/samples/jcal/1.ics').text
     }
 }

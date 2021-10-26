@@ -1,0 +1,44 @@
+[
+  "vcalendar",
+  [
+    [
+      "prodid",
+      {},
+      "string",
+      "-//Ben Fortuna//iCal4j 1.0//EN"
+    ],
+    [
+      "version",
+      {},
+      "string",
+      "2.0"
+    ],
+    [
+      "uid",
+      {},
+      "string",
+      "123"
+    ],
+    [
+      "source",
+      {},
+      "uri",
+      "https://www.abc.net.au/news/feed/51120/rss.xml"
+    ],
+    [
+      "description",
+      {
+        "x-format": "text/plain"
+      },
+      "string",
+      "Sample Calendar 1"
+    ],
+    [
+      "x-test",
+      {},
+      "unknown",
+      "test-value"
+    ]
+  ],
+  []
+]

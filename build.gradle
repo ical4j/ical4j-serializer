@@ -5,7 +5,7 @@ plugins {
     id 'java-library'
     id 'maven-publish'
     id 'signing'
-    id 'pl.allegro.tech.build.axion-release' version '1.10.2'
+    id 'pl.allegro.tech.build.axion-release' version '1.13.1'
 }
 
 repositories {
@@ -17,7 +17,8 @@ targetCompatibility = 1.8
 
 dependencies {
     api "org.mnode.ical4j:ical4j:$ical4jVersion",
-        "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
+            "org.mnode.ical4j:ical4j-vcard:$ical4jVCardVersion",
+            "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
 
     testCompile "org.codehaus.groovy:groovy:$groovyVersion"
 
@@ -57,6 +58,10 @@ artifacts {
 group = 'org.mnode.ical4j'
 description = 'Custom marshalling between iCal4j objects and JSON formats'
 version = scmVersion.version
+
+ext {
+    isReleaseVersion = !version.endsWith("SNAPSHOT")
+}
 
 publishing {
     publications {
@@ -107,6 +112,6 @@ publishing {
 }
 
 signing {
-    required = true
+    required { isReleaseVersion }
     sign publishing.publications.ical4j_json
 }
