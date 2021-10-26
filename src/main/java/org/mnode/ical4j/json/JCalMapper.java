@@ -13,6 +13,7 @@ import net.fortuna.ical4j.model.parameter.Value;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.text.ParseException;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 
@@ -107,10 +108,27 @@ public class JCalMapper extends StdDeserializer<Calendar> implements JsonMapper 
                 propertyBuilder.parameter(Value.URI);
         }
 
-        propertyBuilder.value(p.nextTextValue());
+        propertyBuilder.value(convert(p.nextTextValue(), propertyType));
         assertNextToken(p, JsonToken.END_ARRAY);
 
         return propertyBuilder.build();
+    }
+
+    private String convert(String value, String propertyType) {
+        switch (propertyType) {
+            case "date":
+                return DateTimeFormatter.BASIC_ISO_DATE.format(
+                        DateTimeFormatter.ISO_LOCAL_DATE.parse(value));
+            case "date-time":
+                return DateTimeFormatter.ofPattern("yyyyMMdd'T'HHmmss").format(
+                        DateTimeFormatter.ISO_LOCAL_DATE_TIME.parse(value));
+            case "binary":
+            case "duration":
+            case "period":
+            case "uri":
+            default:
+                return value;
+        }
     }
 
     private Parameter parseParameter(JsonParser p) throws IOException, URISyntaxException {

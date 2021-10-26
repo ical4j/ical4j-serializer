@@ -14,6 +14,7 @@ import net.fortuna.ical4j.model.component.VToDo;
 import net.fortuna.ical4j.model.parameter.Value;
 
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
 
 public class JCalSerializer extends StdSerializer<Calendar> {
 
@@ -81,13 +82,31 @@ public class JCalSerializer extends StdSerializer<Calendar> {
     private JsonNode buildPropertyArray(Property property) {
         ObjectMapper mapper = new ObjectMapper();
 
+        String propertyType = getPropertyType(property);
         ArrayNode pArray = mapper.createArrayNode();
         pArray.add(property.getName().toLowerCase());
         pArray.add(buildParamsObject(property.getParameters()));
-        pArray.add(getPropertyType(property));
-        pArray.add(property.getValue());
+        pArray.add(propertyType);
+        pArray.add(convert(property.getValue(), propertyType));
 
         return pArray;
+    }
+
+    private String convert(String value, String propertyType) {
+        switch (propertyType) {
+            case "date":
+                return DateTimeFormatter.ISO_LOCAL_DATE.format(
+                        DateTimeFormatter.BASIC_ISO_DATE.parse(value));
+            case "date-time":
+                return DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss[X]").format(
+                        DateTimeFormatter.ofPattern("yyyyMMdd'T'HHmmss[X]").parse(value));
+            case "binary":
+            case "duration":
+            case "period":
+            case "uri":
+            default:
+                return value;
+        }
     }
 
     private String getPropertyType(Property property) {
