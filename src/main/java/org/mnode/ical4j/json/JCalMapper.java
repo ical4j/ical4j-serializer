@@ -13,7 +13,6 @@ import net.fortuna.ical4j.model.parameter.Value;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.text.ParseException;
-import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 
@@ -94,41 +93,37 @@ public class JCalMapper extends StdDeserializer<Calendar> implements JsonMapper 
         // propertyType
         String propertyType = p.nextTextValue();
         switch (propertyType) {
+            case "date":
+                propertyBuilder.parameter(Value.DATE);
+                propertyBuilder.value(JCalDecoder.DATE.decode(p.nextTextValue()));
+                break;
+            case "date-time":
+                propertyBuilder.parameter(Value.DATE_TIME);
+                propertyBuilder.value(JCalDecoder.DATE_TIME.decode(p.nextTextValue()));
+                break;
+            case "time":
+                propertyBuilder.parameter(Value.TIME);
+                propertyBuilder.value(JCalDecoder.TIME.decode(p.nextTextValue()));
+                break;
+            case "utc-offset":
+                propertyBuilder.parameter(Value.UTC_OFFSET);
+                propertyBuilder.value(JCalDecoder.UTCOFFSET.decode(p.nextTextValue()));
+                break;
             case "binary":
                 propertyBuilder.parameter(Value.BINARY);
             case "duration":
                 propertyBuilder.parameter(Value.DURATION);
-            case "date":
-                propertyBuilder.parameter(Value.DATE);
-            case "date-time":
-                propertyBuilder.parameter(Value.DATE_TIME);
             case "period":
                 propertyBuilder.parameter(Value.PERIOD);
             case "uri":
                 propertyBuilder.parameter(Value.URI);
+            default:
+                propertyBuilder.value(p.nextTextValue());
         }
 
-        propertyBuilder.value(convert(p.nextTextValue(), propertyType));
         assertNextToken(p, JsonToken.END_ARRAY);
 
         return propertyBuilder.build();
-    }
-
-    private String convert(String value, String propertyType) {
-        switch (propertyType) {
-            case "date":
-                return DateTimeFormatter.BASIC_ISO_DATE.format(
-                        DateTimeFormatter.ISO_LOCAL_DATE.parse(value));
-            case "date-time":
-                return DateTimeFormatter.ofPattern("yyyyMMdd'T'HHmmss").format(
-                        DateTimeFormatter.ISO_LOCAL_DATE_TIME.parse(value));
-            case "binary":
-            case "duration":
-            case "period":
-            case "uri":
-            default:
-                return value;
-        }
     }
 
     private Parameter parseParameter(JsonParser p) throws IOException, URISyntaxException {
