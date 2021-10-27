@@ -84,9 +84,29 @@ public class JCalSerializer extends StdSerializer<Calendar> {
         ArrayNode pArray = mapper.createArrayNode();
         pArray.add(property.getName().toLowerCase());
         pArray.add(buildParamsObject(property.getParameters()));
-        pArray.add(getPropertyType(property));
-        pArray.add(property.getValue());
 
+        String propertyType = getPropertyType(property);
+        pArray.add(propertyType);
+        switch (propertyType) {
+            case "date":
+                pArray.add(JCalEncoder.DATE.encode(property.getValue()));
+                break;
+            case "date-time":
+                pArray.add(JCalEncoder.DATE_TIME.encode(property.getValue()));
+                break;
+            case "time":
+                pArray.add(JCalEncoder.TIME.encode(property.getValue()));
+                break;
+            case "utc-offset":
+                pArray.add(JCalEncoder.UTCOFFSET.encode(property.getValue()));
+                break;
+            case "binary":
+            case "duration":
+            case "period":
+            case "uri":
+            default:
+                pArray.add(property.getValue());
+        }
         return pArray;
     }
 

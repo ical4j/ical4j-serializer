@@ -93,21 +93,34 @@ public class JCalMapper extends StdDeserializer<Calendar> implements JsonMapper 
         // propertyType
         String propertyType = p.nextTextValue();
         switch (propertyType) {
+            case "date":
+                propertyBuilder.parameter(Value.DATE);
+                propertyBuilder.value(JCalDecoder.DATE.decode(p.nextTextValue()));
+                break;
+            case "date-time":
+                propertyBuilder.parameter(Value.DATE_TIME);
+                propertyBuilder.value(JCalDecoder.DATE_TIME.decode(p.nextTextValue()));
+                break;
+            case "time":
+                propertyBuilder.parameter(Value.TIME);
+                propertyBuilder.value(JCalDecoder.TIME.decode(p.nextTextValue()));
+                break;
+            case "utc-offset":
+                propertyBuilder.parameter(Value.UTC_OFFSET);
+                propertyBuilder.value(JCalDecoder.UTCOFFSET.decode(p.nextTextValue()));
+                break;
             case "binary":
                 propertyBuilder.parameter(Value.BINARY);
             case "duration":
                 propertyBuilder.parameter(Value.DURATION);
-            case "date":
-                propertyBuilder.parameter(Value.DATE);
-            case "date-time":
-                propertyBuilder.parameter(Value.DATE_TIME);
             case "period":
                 propertyBuilder.parameter(Value.PERIOD);
             case "uri":
                 propertyBuilder.parameter(Value.URI);
+            default:
+                propertyBuilder.value(p.nextTextValue());
         }
 
-        propertyBuilder.value(p.nextTextValue());
         assertNextToken(p, JsonToken.END_ARRAY);
 
         return propertyBuilder.build();
