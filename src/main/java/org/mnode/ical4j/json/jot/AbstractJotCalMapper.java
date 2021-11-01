@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static net.fortuna.ical4j.model.Parameter.*;
+
 public abstract class AbstractJotCalMapper<T> extends StdDeserializer<T> implements JsonMapper {
 
     private final List<ParameterFactory<?>> parameterFactories;
@@ -72,12 +74,12 @@ public abstract class AbstractJotCalMapper<T> extends StdDeserializer<T> impleme
     }
 
     private boolean isParameter(String fieldName) {
-        return Arrays.asList(Parameter.ABBREV, Parameter.CN, Parameter.ALTREP, Parameter.CUTYPE,
-                Parameter.DIR, Parameter.DELEGATED_FROM, Parameter.DELEGATED_TO, Parameter.DISPLAY,
-                Parameter.EMAIL, Parameter.ENCODING, Parameter.FBTYPE, Parameter.FEATURE,
-                Parameter.FMTTYPE, Parameter.LABEL, Parameter.LANGUAGE, Parameter.MEMBER,
-                Parameter.PARTSTAT, Parameter.RANGE, Parameter.RELATED, Parameter.RELTYPE,
-                Parameter.ROLE, Parameter.RSVP, Parameter.SCHEDULE_AGENT, Parameter.SCHEDULE_STATUS,
-                Parameter.SENT_BY, Parameter.TYPE, Parameter.TZID, Parameter.VALUE, Parameter.VVENUE).contains(fieldName.toUpperCase());
+        return Arrays.asList(ABBREV, CN, ALTREP, CUTYPE,
+                DIR, DELEGATED_FROM, DELEGATED_TO, DISPLAY,
+                EMAIL, ENCODING, FBTYPE, FEATURE,
+                FMTTYPE, LABEL, LANGUAGE, MEMBER,
+                PARTSTAT, RANGE, RELATED, RELTYPE,
+                ROLE, RSVP, SCHEDULE_AGENT, SCHEDULE_STATUS,
+                SENT_BY, TYPE, TZID, VALUE, VVENUE).contains(fieldName.toUpperCase());
     }
 }

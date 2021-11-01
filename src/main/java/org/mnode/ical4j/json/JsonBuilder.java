@@ -12,6 +12,13 @@ public interface JsonBuilder {
         return node;
     }
 
+//    default ObjectNode putIfNotNull(String propertyName, ObjectNode node, DateProperty property) {
+//        if (property != null) {
+//            node.put(propertyName, property.getValue());
+//        }
+//        return node;
+//    }
+
     default ObjectNode putIfNotNull(String propertyName, ObjectNode node, net.fortuna.ical4j.vcard.Property property) {
         if (property != null) {
             node.put(propertyName, property.getValue());

@@ -8,6 +8,7 @@
 [JSON-LD]: https://json-ld.org/
 [Jot API]: https://github.com/micronode/jotapi
 [CalDAV]: https://tools.ietf.org/html/rfc4791
+[JSON Feed]: https://www.jsonfeed.org/version/1.1/
 
 The purpose of this library is to provide custom marshalling between iCal4j objects and JSON formats.
 
@@ -54,6 +55,11 @@ object model. [jCard] provides a specification for converting JSON to/from vCard
 
 [Schema.org] presents a collection of collaborative data models to represent data on the Web. This includes
 data representations in [JSON-LD] format, which is included here.
+
+### JSON Feed - a format similar to RSS and Atom but in JSON
+
+[JSON Feed] is a pragmatic syndication format, like RSS and Atom, but with one big difference:
+it’s JSON instead of XML.
 
 
 ### Jot API - An open REST API based on the iCalendar specification
