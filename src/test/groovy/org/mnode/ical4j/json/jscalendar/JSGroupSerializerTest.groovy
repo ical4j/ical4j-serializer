@@ -23,7 +23,7 @@ class JSGroupSerializerTest extends AbstractSerializerTest {
 
         where:
         calendar    | expectedSerialized
-        calendar1   | '{"@type":"jsgroup","prodid":"-//Ben Fortuna//iCal4j 1.0//EN","uid":"123"}'
+        calendar1   | '{"@type":"jsgroup","prodid":"-//Ben Fortuna//iCal4j 3.1//EN","uid":"123"}'
         calendar2   | '{"@type":"jsgroup","prodid":"-//ABC Corporation//NONSGML My Product//EN","uid":"1"}'
     }
 }

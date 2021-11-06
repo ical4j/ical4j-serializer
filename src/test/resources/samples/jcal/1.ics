@@ -1,5 +1,5 @@
 BEGIN:VCALENDAR
-PRODID:-//Ben Fortuna//iCal4j 1.0//EN
+PRODID:-//Ben Fortuna//iCal4j 3.1//EN
 VERSION:2.0
 UID:123
 SOURCE;VALUE=URI:https://www.abc.net.au/news/feed/51120/rss.xml

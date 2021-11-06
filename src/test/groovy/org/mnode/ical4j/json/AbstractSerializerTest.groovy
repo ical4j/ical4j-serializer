@@ -60,7 +60,7 @@ class AbstractSerializerTest extends Specification {
         }
 
         calendar1 = builder.calendar() {
-            prodid '-//Ben Fortuna//iCal4j 1.0//EN'
+            prodid '-//Ben Fortuna//iCal4j 3.1//EN'
             version '2.0'
             uid '123'
             vevent(event1)

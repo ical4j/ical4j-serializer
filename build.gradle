@@ -18,11 +18,12 @@ targetCompatibility = 1.8
 dependencies {
     api "org.mnode.ical4j:ical4j:$ical4jVersion",
             "org.mnode.ical4j:ical4j-vcard:$ical4jVCardVersion",
-            "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
+            "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion",
+            "com.fasterxml.jackson.dataformat:jackson-dataformat-xml:$jacksonVersion"
 
     testCompile "org.codehaus.groovy:groovy:$groovyVersion"
 
-    testImplementation platform("org.spockframework:spock-bom:2.0-M4-groovy-3.0"),
+    testImplementation platform("org.spockframework:spock-bom:$spockVersion"),
         "org.spockframework:spock-core",
         "org.slf4j:slf4j-log4j12:$slf4jVersion"
 }
@@ -34,9 +35,10 @@ test {
 javadoc {
     options {
         links 'https://docs.oracle.com/en/java/javase/11/docs/api/',
-            'http://ical4j.github.io/docs/ical4j/api/4.0.0-alpha6/',
-            'http://fasterxml.github.io/jackson-core/javadoc/2.12/',
-            'http://fasterxml.github.io/jackson-databind/javadoc/2.12/'
+            'http://ical4j.github.io/docs/ical4j/api/3.1.0/',
+            'http://fasterxml.github.io/jackson-core/javadoc/2.13/',
+            'http://fasterxml.github.io/jackson-databind/javadoc/2.13/',
+            'http://fasterxml.github.io/jackson-dataformat-xml/javadoc/2.13/'
     }
 }
 
@@ -75,9 +77,9 @@ publishing {
                 asNode().appendNode('url', 'http://ical4j.github.io')
 
                 def scmNode = asNode().appendNode('scm')
-                scmNode.appendNode('url', 'https://github.com/ical4j/ical4j-json')
-                scmNode.appendNode('connection', 'scm:git@github.com:ical4j/ical4j-json.git')
-                scmNode.appendNode('developerConnection', 'scm:git@github.com:ical4j/ical4j-json.git')
+                scmNode.appendNode('url', 'https://github.com/ical4j/ical4j-serializer')
+                scmNode.appendNode('connection', 'scm:git@github.com:ical4j/ical4j-serializer.git')
+                scmNode.appendNode('developerConnection', 'scm:git@github.com:ical4j/ical4j-serializer.git')
 
                 def licenseNode = asNode().appendNode('licenses').appendNode('license')
                 licenseNode.appendNode('name', 'iCal4j - License')
