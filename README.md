@@ -1,4 +1,4 @@
-# iCal4j Javascript Object Notation
+# iCal4j Serializer
 
 [jCal]: https://tools.ietf.org/html/rfc7265
 [JSCalendar]: https://datatracker.ietf.org/doc/html/rfc8984
@@ -10,16 +10,16 @@
 [CalDAV]: https://tools.ietf.org/html/rfc4791
 [JSON Feed]: https://www.jsonfeed.org/version/1.1/
 
-The purpose of this library is to provide custom marshalling between iCal4j objects and JSON formats.
+The purpose of this library is to provide custom marshalling between iCal4j objects and other formats.
 
 ## Overview
 
 Interoperability is a very important aspect of the iCalendar specification(s), and as such it is important
-to support seamless and accurate translation between different data formats. JSON is currently the de-facto
-standard for structural data formats, and as such this library aims to provide a mechanism for conversion
-between iCalendar objects and JSON formats.
+to support seamless and accurate translation between different data formats. There are many alternate formats
+using JSON and XML, and as such this library aims to provide a mechanism for conversion
+between iCalendar objects and other popular JSON and XML-based formats.
 
-The following JSON calendar formats are the current focus of this library.
+The following calendar formats are the current focus of this library.
 
 ### jCal - The JSON Format for iCalendar
 
@@ -29,6 +29,10 @@ when translating between iCalendar objects and this JSON format.
 
 This format is a good choice when unambiguous interoperability is required, as in theory if an agent supports
 the iCalendar specification then it should be reasonably trivial to have equivalent support for this format.
+
+### xCal - The XML Format for iCalendar
+
+TBD.
 
 ### JSCalendar - A JSON representation of calendar data 
 
