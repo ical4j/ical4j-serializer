@@ -1,0 +1,33 @@
+<icalendar xmlns="urn:ietf:params:xml:ns:icalendar-2.0">
+    <vcalendar>
+        <properties>
+            <prodid>
+                <parameters/>
+                <text>-//Ben Fortuna//iCal4j 3.1//EN</text>
+            </prodid>
+            <version>
+                <parameters/>
+                <text>2.0</text>
+            </version>
+            <uid>
+                <parameters/>
+                <text>123</text>
+            </uid>
+            <source>
+                <parameters/>
+                <uri>https://www.abc.net.au/news/feed/51120/rss.xml</uri>
+            </source>
+            <description>
+                <parameters>
+                    <x-format>text/plain</x-format>
+                </parameters>
+                <text>Sample Calendar 1</text>
+            </description>
+            <x-test>
+                <parameters/>
+                <text>test-value</text>
+            </x-test>
+        </properties>
+        <components/>
+    </vcalendar>
+</icalendar>

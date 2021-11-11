@@ -1,6 +1,7 @@
-# iCal4j Javascript Object Notation
+# iCal4j Serializer
 
 [jCal]: https://tools.ietf.org/html/rfc7265
+[xCal]: https://www.rfc-editor.org/rfc/rfc6321.html
 [JSCalendar]: https://datatracker.ietf.org/doc/html/rfc8984
 [jCard]: https://tools.ietf.org/html/rfc7095
 [JSCard]: https://datatracker.ietf.org/doc/html/draft-ietf-jmap-jscontact
@@ -8,17 +9,18 @@
 [JSON-LD]: https://json-ld.org/
 [Jot API]: https://github.com/micronode/jotapi
 [CalDAV]: https://tools.ietf.org/html/rfc4791
+[JSON Feed]: https://www.jsonfeed.org/version/1.1/
 
-The purpose of this library is to provide custom marshalling between iCal4j objects and JSON formats.
+The purpose of this library is to provide custom marshalling between iCal4j objects and other formats.
 
 ## Overview
 
 Interoperability is a very important aspect of the iCalendar specification(s), and as such it is important
-to support seamless and accurate translation between different data formats. JSON is currently the de-facto
-standard for structural data formats, and as such this library aims to provide a mechanism for conversion
-between iCalendar objects and JSON formats.
+to support seamless and accurate translation between different data formats. There are many alternate formats
+using JSON and XML, and as such this library aims to provide a mechanism for conversion
+between iCalendar objects and other popular JSON and XML-based formats.
 
-The following JSON calendar formats are the current focus of this library.
+The following calendar formats are the current focus of this library.
 
 ### jCal - The JSON Format for iCalendar
 
@@ -28,6 +30,10 @@ when translating between iCalendar objects and this JSON format.
 
 This format is a good choice when unambiguous interoperability is required, as in theory if an agent supports
 the iCalendar specification then it should be reasonably trivial to have equivalent support for this format.
+
+### xCal - The XML Format for iCalendar
+
+TBD.
 
 ### JSCalendar - A JSON representation of calendar data 
 
@@ -54,6 +60,11 @@ object model. [jCard] provides a specification for converting JSON to/from vCard
 
 [Schema.org] presents a collection of collaborative data models to represent data on the Web. This includes
 data representations in [JSON-LD] format, which is included here.
+
+### JSON Feed - a format similar to RSS and Atom but in JSON
+
+[JSON Feed] is a pragmatic syndication format, like RSS and Atom, but with one big difference:
+it’s JSON instead of XML.
 
 
 ### Jot API - An open REST API based on the iCalendar specification
@@ -96,7 +107,7 @@ String serialized = mapper.writeValueAsString(calendar);
 Result:
 
 ```
-["vcalendar",[["prodid",{},"text","-//Ben Fortuna//iCal4j 1.0//EN"],["version",{},"text","2.0"],["uid",{},"text","123"]],[["vevent",[["uid",{},"text","1"],["summary",{},"text","Test Event 1"],["dtstart",{"value":"date"},"date","20090810"],["action",{},"text","DISPLAY"],["attach",{"encoding":"base64","value":"binary"},"binary","..."]],[]],["vevent",[["uid",{},"text","2"],["summary",{},"text","Test Event 2"],["dtstart",{"value":"date"},"date","20100810"]],[]]]]
+["vcalendar",[["prodid",{},"text","-//Ben Fortuna//iCal4j 3.1//EN"],["version",{},"text","2.0"],["uid",{},"text","123"]],[["vevent",[["uid",{},"text","1"],["summary",{},"text","Test Event 1"],["dtstart",{"value":"date"},"date","20090810"],["action",{},"text","DISPLAY"],["attach",{"encoding":"base64","value":"binary"},"binary","..."]],[]],["vevent",[["uid",{},"text","2"],["summary",{},"text","Test Event 2"],["dtstart",{"value":"date"},"date","20100810"]],[]]]]
 ```
 
 
@@ -151,6 +162,7 @@ Calendar calendar = mapper.readValue(json, Calendar.class);
 * [RFC7953](https://datatracker.ietf.org/doc/html/rfc7953) (iCalendar Availability)
 * [RFC6350](https://datatracker.ietf.org/doc/html/rfc6350) (vCard)
 * [RFC7265](https://tools.ietf.org/html/rfc7265) (jCal)
+* [RFC6321](https://www.rfc-editor.org/rfc/rfc6321.html) (xCal)
 * [RFC7095](https://tools.ietf.org/html/rfc7095) (jCard)
 * [RFC8984](https://datatracker.ietf.org/doc/html/rfc8984) (JSCalendar)
 * [JSCalendar to iCalendar Draft](https://datatracker.ietf.org/doc/html/draft-ietf-calext-jscalendar-icalendar-05)
