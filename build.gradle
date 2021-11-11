@@ -57,6 +57,14 @@ artifacts {
     archives sourcesJar
 }
 
+scmVersion {
+    tag {
+        prefix = 'ical4j-serializer-'
+    }
+    versionCreator 'versionWithBranch'
+    branchVersionCreator = ['main': 'simple']
+}
+
 group = 'org.mnode.ical4j'
 description = 'Custom marshalling between iCal4j objects and JSON formats'
 version = scmVersion.version
