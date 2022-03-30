@@ -3,6 +3,9 @@ package org.mnode.ical4j.serializer;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import net.fortuna.ical4j.model.Property;
 
+/**
+ * Support for serialization of objects to JSON encoded representations.
+ */
 public interface JsonBuilder {
 
     default ObjectNode putIfNotNull(String propertyName, ObjectNode node, Property property) {

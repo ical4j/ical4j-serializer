@@ -15,6 +15,9 @@ import net.fortuna.ical4j.model.parameter.Value;
 
 import java.io.IOException;
 
+/**
+ * Support for serialization of {@link Calendar} objects according to the JCal specification.
+ */
 public class JCalSerializer extends StdSerializer<Calendar> {
 
     public JCalSerializer(Class<Calendar> t) {

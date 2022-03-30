@@ -16,6 +16,9 @@ import java.text.ParseException;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Support for deserialization of {@link Calendar} objects encoded according to the JCal specification.
+ */
 public class JCalMapper extends StdDeserializer<Calendar> implements JsonMapper {
 
     private final List<ParameterFactory<?>> parameterFactories;

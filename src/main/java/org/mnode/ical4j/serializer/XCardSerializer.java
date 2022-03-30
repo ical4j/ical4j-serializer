@@ -15,6 +15,9 @@ import net.fortuna.ical4j.vcard.VCard;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Support for serialization of {@link VCard} objects according to the XCard specification.
+ */
 @JsonRootName(value = "vcards")
 public class XCardSerializer extends StdSerializer<VCard> {
 

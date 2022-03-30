@@ -16,6 +16,9 @@ import net.fortuna.ical4j.model.parameter.Value;
 
 import java.io.IOException;
 
+/**
+ * Support for serialization of {@link Calendar} objects according to the XCal specification.
+ */
 @JsonRootName(value = "icalendar")
 public class XCalSerializer extends StdSerializer<Calendar> {
 

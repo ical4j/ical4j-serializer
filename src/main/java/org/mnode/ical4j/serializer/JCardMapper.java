@@ -15,6 +15,9 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Support for deserialization of {@link VCard} objects encoded according to the JCard specification.
+ */
 public class JCardMapper extends StdDeserializer<VCard> implements JsonMapper {
 
     private final ParameterFactoryRegistry parameterFactoryRegistry;

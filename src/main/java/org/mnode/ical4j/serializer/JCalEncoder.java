@@ -6,6 +6,9 @@ import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.function.Function;
 
+/**
+ * Support for encoding iCalendar value strings as JCal value strings.
+ */
 public class JCalEncoder implements StringEncoder {
 
     public static final JCalEncoder DATE = new JCalEncoder(s ->

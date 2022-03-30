@@ -15,6 +15,9 @@ import net.fortuna.ical4j.vcard.parameter.Value;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Support for serialization of {@link VCard} objects according to the JCard specification.
+ */
 public class JCardSerializer extends StdSerializer<VCard> {
 
     public JCardSerializer(Class<VCard> t) {
