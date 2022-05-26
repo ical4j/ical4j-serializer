@@ -1,12 +1,8 @@
 package org.mnode.ical4j.serializer;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.module.SimpleModule;
-import net.fortuna.ical4j.data.CalendarBuilder;
 import net.fortuna.ical4j.data.ParserException;
-import net.fortuna.ical4j.data.UnfoldingReader;
-import net.fortuna.ical4j.model.Calendar;
 import org.apache.commons.io.IOUtils;
+import org.mnode.ical4j.serializer.command.SerializeCalendarCommand;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.metatype.annotations.Designate;
 
@@ -18,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.Objects;
 
@@ -43,21 +38,12 @@ public class ICalendarSerializerServlet extends HttpServlet {
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String url = req.getParameter("url");
-        if (url != null) {
+        String urlParam = req.getParameter("url");
+        if (urlParam != null) {
             try {
-                CalendarBuilder builder = new CalendarBuilder();
-                UnfoldingReader reader = new UnfoldingReader(new InputStreamReader(new URL(url).openStream()), true);
-//                Calendar cal = Calendars.load(new URL(url));
-                Calendar cal = builder.build(reader);
-
-                SimpleModule module = new SimpleModule();
-                module.addSerializer(Calendar.class, new JCalSerializer(null));
-                ObjectMapper mapper = new ObjectMapper();
-                mapper.registerModule(module);
-
+                URL url = new URL(urlParam);
                 resp.setContentType("application/json");
-                resp.getWriter().println(mapper.writeValueAsString(cal));
+                resp.getWriter().println(new SerializeCalendarCommand(url).serialize());
             } catch (ParserException e) {
                 throw new ServletException(e);
             }

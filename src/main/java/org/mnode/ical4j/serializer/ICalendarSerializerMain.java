@@ -1,10 +1,11 @@
 package org.mnode.ical4j.serializer;
 
 import org.mnode.ical4j.serializer.command.JettyRunCommand;
+import org.mnode.ical4j.serializer.command.SerializeCalendarCommand;
 import picocli.CommandLine;
 
 @CommandLine.Command(name = "serializer", description = "iCal4j Serializer",
-        subcommands = {JettyRunCommand.class})
+        subcommands = {SerializeCalendarCommand.class, JettyRunCommand.class})
 public class ICalendarSerializerMain implements Runnable {
 
     @Override
