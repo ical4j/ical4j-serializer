@@ -3,6 +3,7 @@
 [jCal]: https://tools.ietf.org/html/rfc7265
 [xCal]: https://www.rfc-editor.org/rfc/rfc6321.html
 [JSCalendar]: https://datatracker.ietf.org/doc/html/rfc8984
+[xCard]: https://www.rfc-editor.org/rfc/rfc6351.html
 [jCard]: https://tools.ietf.org/html/rfc7095
 [JSCard]: https://datatracker.ietf.org/doc/html/draft-ietf-jmap-jscontact
 [Schema.org]: https://schema.org/
@@ -164,6 +165,7 @@ Calendar calendar = mapper.readValue(json, Calendar.class);
 * [RFC7265](https://tools.ietf.org/html/rfc7265) (jCal)
 * [RFC6321](https://www.rfc-editor.org/rfc/rfc6321.html) (xCal)
 * [RFC7095](https://tools.ietf.org/html/rfc7095) (jCard)
+* [RFC6351](https://www.rfc-editor.org/rfc/rfc6351.html) (xCard)
 * [RFC8984](https://datatracker.ietf.org/doc/html/rfc8984) (JSCalendar)
 * [JSCalendar to iCalendar Draft](https://datatracker.ietf.org/doc/html/draft-ietf-calext-jscalendar-icalendar-05)
 * [JSContact Draft](https://datatracker.ietf.org/doc/html/draft-ietf-jmap-jscontact)
