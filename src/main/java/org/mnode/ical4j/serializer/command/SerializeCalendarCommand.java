@@ -25,8 +25,9 @@ public class SerializeCalendarCommand implements Runnable {
     public SerializeCalendarCommand() {
     }
 
-    public SerializeCalendarCommand(URL url) {
+    public SerializeCalendarCommand withUrl(URL url) {
         this.url = url;
+        return this;
     }
 
     public String serialize() throws IOException, ParserException {

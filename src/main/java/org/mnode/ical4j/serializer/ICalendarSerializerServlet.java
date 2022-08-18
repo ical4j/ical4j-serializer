@@ -43,7 +43,7 @@ public class ICalendarSerializerServlet extends HttpServlet {
             try {
                 URL url = new URL(urlParam);
                 resp.setContentType("application/json");
-                resp.getWriter().println(new SerializeCalendarCommand(url).serialize());
+                resp.getWriter().println(new SerializeCalendarCommand().withUrl(url).serialize());
             } catch (ParserException e) {
                 throw new ServletException(e);
             }
