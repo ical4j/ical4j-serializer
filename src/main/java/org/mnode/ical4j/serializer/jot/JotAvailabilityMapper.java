@@ -24,9 +24,9 @@ public class JotAvailabilityMapper extends AbstractJotCalMapper<VAvailability> {
             String propertyName = p.currentName();
             try {
                 if (JsonToken.START_ARRAY.equals(p.nextToken())) {
-                    availability.getProperties().addAll(parsePropertyList(propertyName, p));
+                    availability.addAll(parsePropertyList(propertyName, p));
                 } else {
-                    availability.getProperties().add(parseProperty(propertyName, p));
+                    availability.add(parseProperty(propertyName, p));
                 }
             } catch (URISyntaxException | ParseException e) {
                 throw new IllegalArgumentException(e);

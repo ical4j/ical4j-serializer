@@ -3,9 +3,11 @@ package org.mnode.ical4j.serializer.jot;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import net.fortuna.ical4j.vcard.Parameter;
+import net.fortuna.ical4j.model.Parameter;
+import net.fortuna.ical4j.model.ParameterList;
+import net.fortuna.ical4j.model.Property;
 import net.fortuna.ical4j.vcard.ParameterFactoryRegistry;
-import net.fortuna.ical4j.vcard.Property;
+import net.fortuna.ical4j.vcard.ParameterName;
 import net.fortuna.ical4j.vcard.PropertyFactoryRegistry;
 import org.apache.commons.codec.DecoderException;
 import org.mnode.ical4j.serializer.JsonMapper;
@@ -39,7 +41,7 @@ public abstract class AbstractJotCardMapper<T> extends StdDeserializer<T> implem
 
     protected Property parseProperty(String propertyName, JsonParser p) throws IOException, URISyntaxException, ParseException, DecoderException {
         String value = null;
-        List<net.fortuna.ical4j.vcard.Parameter> parameters = new ArrayList<>();
+        List<Parameter> parameters = new ArrayList<>();
         if (JsonToken.START_ARRAY.equals(p.currentToken())) {
             StringBuilder b = new StringBuilder();
             while (!JsonToken.END_ARRAY.equals(p.nextToken())) {
@@ -64,15 +66,15 @@ public abstract class AbstractJotCardMapper<T> extends StdDeserializer<T> implem
             value = p.getText();
         }
 
-        return propertyFactoryRegistry.getFactory(propertyName).createProperty(parameters, value);
+        return propertyFactoryRegistry.getFactory(propertyName).createProperty(new ParameterList(parameters), value);
     }
 
     protected Parameter parseParameter(JsonParser p) throws IOException {
         assertNextScalarValue(p);
-        return parameterFactoryRegistry.getFactory(p.currentName()).createParameter(p.currentName(), p.getText());
+        return parameterFactoryRegistry.getFactory(p.currentName()).createParameter(p.getText());
     }
 
     private boolean isParameter(String fieldName) {
-        return Arrays.asList(Parameter.Id.PREF).contains(Parameter.Id.valueOf(fieldName));
+        return Arrays.asList(ParameterName.PREF).contains(ParameterName.valueOf(fieldName));
     }
 }

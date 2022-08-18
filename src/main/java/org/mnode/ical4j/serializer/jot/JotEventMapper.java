@@ -24,9 +24,9 @@ public class JotEventMapper extends AbstractJotCalMapper<VEvent> {
             String propertyName = p.currentName();
             try {
                 if (JsonToken.START_ARRAY.equals(p.nextToken())) {
-                    event.getProperties().addAll(parsePropertyList(propertyName, p));
+                    event.addAll(parsePropertyList(propertyName, p));
                 } else {
-                    event.getProperties().add(parseProperty(propertyName, p));
+                    event.add(parseProperty(propertyName, p));
                 }
             } catch (URISyntaxException | ParseException e) {
                 throw new IllegalArgumentException(e);

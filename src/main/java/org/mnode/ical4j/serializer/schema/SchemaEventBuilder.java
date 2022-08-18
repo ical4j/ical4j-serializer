@@ -14,13 +14,13 @@ public class SchemaEventBuilder extends AbstractSchemaBuilder<VEvent> {
     @Override
     public JsonNode build() {
         ObjectNode node = createObjectNode();
-        putIfNotNull("@id", node, component.getProperty(Property.UID));
-        putIfNotNull("name", node, component.getProperty(Property.SUMMARY));
-        putIfNotNull("description", node, component.getProperty(Property.DESCRIPTION));
-        putIfNotNull("url", node, component.getProperty(Property.URL));
-        putIfNotNull("startDate", node, component.getProperty(Property.DTSTART));
-        putIfNotNull("endDate", node, component.getProperty(Property.DTEND));
-        putIfNotNull("location", node, component.getProperty(Property.LOCATION));
+        putIfNotAbsent("@id", node, component.getProperty(Property.UID));
+        putIfNotAbsent("name", node, component.getProperty(Property.SUMMARY));
+        putIfNotAbsent("description", node, component.getProperty(Property.DESCRIPTION));
+        putIfNotAbsent("url", node, component.getProperty(Property.URL));
+        putIfNotAbsent("startDate", node, component.getProperty(Property.DTSTART));
+        putIfNotAbsent("endDate", node, component.getProperty(Property.DTEND));
+        putIfNotAbsent("location", node, component.getProperty(Property.LOCATION));
         return node;
     }
 }

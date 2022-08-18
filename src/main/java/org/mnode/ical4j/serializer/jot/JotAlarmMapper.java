@@ -24,9 +24,9 @@ public class JotAlarmMapper extends AbstractJotCalMapper<VAlarm> {
             String propertyName = p.currentName();
             try {
                 if (JsonToken.START_ARRAY.equals(p.nextToken())) {
-                    alarm.getProperties().addAll(parsePropertyList(propertyName, p));
+                    alarm.addAll(parsePropertyList(propertyName, p));
                 } else {
-                    alarm.getProperties().add(parseProperty(propertyName, p));
+                    alarm.add(parseProperty(propertyName, p));
                 }
             } catch (URISyntaxException | ParseException e) {
                 throw new IllegalArgumentException(e);

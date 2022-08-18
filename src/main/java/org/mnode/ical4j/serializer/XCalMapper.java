@@ -47,7 +47,7 @@ public class XCalMapper extends StdDeserializer<Calendar> implements JsonMapper 
         assertNextToken(p, JsonToken.START_OBJECT);
         while (!JsonToken.END_OBJECT.equals(p.nextToken())) {
             try {
-                calendar.getProperties().add(parseProperty(p));
+                calendar.add(parseProperty(p));
             } catch (URISyntaxException | ParseException e) {
                 throw new IllegalArgumentException(e);
             }
@@ -59,7 +59,7 @@ public class XCalMapper extends StdDeserializer<Calendar> implements JsonMapper 
             assertNextToken(p, JsonToken.START_OBJECT);
             while (!JsonToken.END_OBJECT.equals(p.nextToken())) {
                 try {
-                    calendar.getComponents().add((CalendarComponent) parseComponent(p));
+                    calendar.add((CalendarComponent) parseComponent(p));
                 } catch (URISyntaxException | ParseException e) {
                     throw new IllegalArgumentException(e);
                 }

@@ -3,8 +3,11 @@ package org.mnode.ical4j.serializer.schema;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import net.fortuna.ical4j.model.Property;
 import net.fortuna.ical4j.vcard.property.Address;
 import org.mnode.ical4j.serializer.JsonBuilder;
+
+import java.util.Optional;
 
 public abstract class AbstractSchemaBuilder<T> implements JsonBuilder {
 
@@ -30,9 +33,9 @@ public abstract class AbstractSchemaBuilder<T> implements JsonBuilder {
         return node;
     }
 
-    protected ObjectNode setObject(String propertyName, ObjectNode node, net.fortuna.ical4j.vcard.Property property) {
-        if (property instanceof Address) {
-            JsonNode address = new SchemaPostalAddressBuilder().component((Address) property).build();
+    protected ObjectNode setObject(String propertyName, ObjectNode node, Optional<Property> property) {
+        if (property.isPresent() && property.get() instanceof Address) {
+            JsonNode address = new SchemaPostalAddressBuilder().component((Address) property.get()).build();
             node.set(propertyName, address);
         }
         return node;

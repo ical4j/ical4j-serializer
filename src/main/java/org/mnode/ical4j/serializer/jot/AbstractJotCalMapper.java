@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import net.fortuna.ical4j.data.DefaultParameterFactorySupplier;
 import net.fortuna.ical4j.data.DefaultPropertyFactorySupplier;
 import net.fortuna.ical4j.model.*;
+import org.mnode.ical4j.serializer.JCalDecoder;
 import org.mnode.ical4j.serializer.JsonMapper;
 
 import java.io.IOException;
@@ -56,12 +57,12 @@ public abstract class AbstractJotCalMapper<T> extends StdDeserializer<T> impleme
                     propertyBuilder.parameter(parseParameter(p));
                 } else {
                     assertNextScalarValue(p);
-                    propertyBuilder.value(p.getText());
+                    propertyBuilder.value(decodeValue(propertyName, p.getText()));
                 }
             }
         } else {
             assertCurrentScalarValue(p);
-            propertyBuilder.value(p.getText());
+            propertyBuilder.value(decodeValue(propertyName, p.getText()));
         }
 
         return propertyBuilder.build();
@@ -81,5 +82,23 @@ public abstract class AbstractJotCalMapper<T> extends StdDeserializer<T> impleme
                 PARTSTAT, RANGE, RELATED, RELTYPE,
                 ROLE, RSVP, SCHEDULE_AGENT, SCHEDULE_STATUS,
                 SENT_BY, TYPE, TZID, VALUE, VVENUE).contains(fieldName.toUpperCase());
+    }
+
+    private String decodeValue(String propertyName, String value) {
+        switch (propertyName) {
+            case "trigger":
+            case "created":
+            case "last-modified":
+            case "recurrence-id":
+            case "dtstamp":
+                return JCalDecoder.INSTANT.decode(value);
+            case "dtstart":
+            case "dtend":
+            case "rdate":
+            case "exdate":
+            case "due":
+                return JCalDecoder.DATE_TIME.decode(value);
+            default: return value;
+        }
     }
 }

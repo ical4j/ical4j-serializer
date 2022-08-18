@@ -48,7 +48,7 @@ public class XCardMapper extends StdDeserializer<VCard> implements JsonMapper {
         assertNextToken(p, JsonToken.START_OBJECT);
         while (!JsonToken.END_OBJECT.equals(p.nextToken())) {
             try {
-                card.getProperties().add(parseProperty(p));
+                card.add(parseProperty(p));
             } catch (URISyntaxException | ParseException e) {
                 throw new IllegalArgumentException(e);
             }
@@ -56,7 +56,7 @@ public class XCardMapper extends StdDeserializer<VCard> implements JsonMapper {
         return card;
     }
 
-    private net.fortuna.ical4j.vcard.Property parseProperty(JsonParser p) throws IOException, URISyntaxException, ParseException {
+    private Property parseProperty(JsonParser p) throws IOException, URISyntaxException, ParseException {
         String propertyName = p.currentName();
         assertNextToken(p, JsonToken.START_OBJECT);
         PropertyBuilder propertyBuilder = new PropertyBuilder(propertyFactories);

@@ -5,7 +5,7 @@ import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import net.fortuna.ical4j.vcard.Property;
+import net.fortuna.ical4j.model.Property;
 import net.fortuna.ical4j.vcard.VCard;
 import net.fortuna.ical4j.vcard.property.Address;
 import net.fortuna.ical4j.vcard.property.Email;
@@ -34,7 +34,7 @@ public class JwtClaimsMapper extends StdDeserializer<VCard> implements JsonMappe
         assertNextToken(p, JsonToken.FIELD_NAME);
         while (p.getCurrentToken() != JsonToken.END_OBJECT) {
             try {
-                card.getProperties().add(parseProperty(p));
+                card.add(parseProperty(p));
             } catch (URISyntaxException | ParseException e) {
                 throw new IllegalArgumentException(e);
             }

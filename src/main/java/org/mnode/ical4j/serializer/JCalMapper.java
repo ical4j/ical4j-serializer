@@ -3,7 +3,7 @@ package org.mnode.ical4j.serializer;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import com.fasterxml.jackson.databind.JsonDeserializer;
 import net.fortuna.ical4j.data.DefaultParameterFactorySupplier;
 import net.fortuna.ical4j.data.DefaultPropertyFactorySupplier;
 import net.fortuna.ical4j.model.*;
@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * Support for deserialization of {@link Calendar} objects encoded according to the JCal specification.
  */
-public class JCalMapper extends StdDeserializer<Calendar> implements JsonMapper {
+public class JCalMapper extends JsonDeserializer<Calendar> implements JsonMapper {
 
     private final List<ParameterFactory<?>> parameterFactories;
 
@@ -28,13 +28,13 @@ public class JCalMapper extends StdDeserializer<Calendar> implements JsonMapper 
     private final List<ComponentFactory<?>> componentFactories;
 
     public JCalMapper(Class<?> vc) {
-        super(vc);
+//        super(vc);
         parameterFactories = new DefaultParameterFactorySupplier().get();
         propertyFactories = new DefaultPropertyFactorySupplier().get();
         componentFactories = Arrays.asList(new Available.Factory(), new Daylight.Factory(), new Standard.Factory(),
                 new VAlarm.Factory(), new VAvailability.Factory(), new VEvent.Factory(),
                 new VFreeBusy.Factory(), new VJournal.Factory(), new VTimeZone.Factory(),
-                new VToDo.Factory(), new VVenue.Factory());
+                new VToDo.Factory());
     }
 
     @Override
@@ -45,7 +45,7 @@ public class JCalMapper extends StdDeserializer<Calendar> implements JsonMapper 
         assertNextToken(p, JsonToken.START_ARRAY);
         while (!JsonToken.END_ARRAY.equals(p.nextToken())) {
             try {
-                calendar.getProperties().add(parseProperty(p));
+                calendar.add(parseProperty(p));
             } catch (URISyntaxException | ParseException e) {
                 throw new IllegalArgumentException(e);
             }
@@ -54,7 +54,7 @@ public class JCalMapper extends StdDeserializer<Calendar> implements JsonMapper 
         assertNextToken(p, JsonToken.START_ARRAY);
         while (!JsonToken.END_ARRAY.equals(p.nextToken())) {
             try {
-                calendar.getComponents().add((CalendarComponent) parseComponent(p));
+                calendar.add((CalendarComponent) parseComponent(p));
             } catch (URISyntaxException | ParseException e) {
                 throw new IllegalArgumentException(e);
             }

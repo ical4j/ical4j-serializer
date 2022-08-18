@@ -14,8 +14,8 @@ public class JSGroupBuilder extends AbstractJSCalendarBuilder<Calendar> {
     @Override
     public JsonNode build() {
         ObjectNode jsGroup = createObjectNode();
-        putIfNotNull("prodid", jsGroup, component.getProperty(Property.PRODID));
-        putIfNotNull("uid", jsGroup, component.getProperty(Property.UID));
+        putIfNotAbsent("prodid", jsGroup, component.getProperty(Property.PRODID));
+        putIfNotAbsent("uid", jsGroup, component.getProperty(Property.UID));
         return jsGroup;
     }
 }

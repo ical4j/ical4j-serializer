@@ -8,8 +8,9 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import net.fortuna.ical4j.vcard.Parameter;
-import net.fortuna.ical4j.vcard.Property;
+import net.fortuna.ical4j.model.Parameter;
+import net.fortuna.ical4j.model.Property;
+import net.fortuna.ical4j.vcard.ParameterName;
 import net.fortuna.ical4j.vcard.VCard;
 
 import java.io.IOException;
@@ -39,7 +40,7 @@ public class XCardSerializer extends StdSerializer<VCard> {
 
         ObjectNode cardprops = vcard.putObject("properties");
         for (Property p : card.getProperties()) {
-            cardprops.putIfAbsent(p.getId().toString().toLowerCase(), buildPropertyNode(p));
+            cardprops.putIfAbsent(p.getName().toLowerCase(), buildPropertyNode(p));
         }
         return root;
     }
@@ -74,12 +75,12 @@ public class XCardSerializer extends StdSerializer<VCard> {
 
     private String getPropertyType(Property property) {
         // handle property type overrides via VALUE param..
-        Parameter value = property.getParameter(Parameter.Id.VALUE);
+        Parameter value = property.getRequiredParameter(ParameterName.VALUE.toString());
         if (value != null) {
             return value.getValue().toLowerCase();
         }
 
-        switch (property.getId().toString()) {
+        switch (property.getName()) {
             case "CALSCALE":
             case "METHOD":
             case "PRODID":
@@ -146,7 +147,7 @@ public class XCardSerializer extends StdSerializer<VCard> {
     private JsonNode buildParamsObject(List<Parameter> parameterList) {
         ObjectNode params = objectMapper.createObjectNode();
         for (Parameter p : parameterList) {
-            params.put(p.getId().toString().toLowerCase(), p.getValue().toLowerCase());
+            params.put(p.getName().toLowerCase(), p.getValue().toLowerCase());
         }
         return params;
     }

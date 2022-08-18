@@ -7,13 +7,18 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
-import net.fortuna.ical4j.model.*;
+import net.fortuna.ical4j.model.Calendar;
+import net.fortuna.ical4j.model.Component;
+import net.fortuna.ical4j.model.Parameter;
+import net.fortuna.ical4j.model.Property;
 import net.fortuna.ical4j.model.component.VEvent;
 import net.fortuna.ical4j.model.component.VTimeZone;
 import net.fortuna.ical4j.model.component.VToDo;
 import net.fortuna.ical4j.model.parameter.Value;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * Support for serialization of {@link Calendar} objects according to the JCal specification.
@@ -115,9 +120,9 @@ public class JCalSerializer extends StdSerializer<Calendar> {
 
     private String getPropertyType(Property property) {
         // handle property type overrides via VALUE param..
-        Value value = property.getParameter(Parameter.VALUE);
-        if (value != null) {
-            return value.getValue().toLowerCase();
+        Optional<Value> value = property.getParameter(Parameter.VALUE);
+        if (value.isPresent()) {
+            return value.get().getValue().toLowerCase();
         }
 
         switch (property.getName()) {
@@ -184,7 +189,7 @@ public class JCalSerializer extends StdSerializer<Calendar> {
         }
     }
 
-    private JsonNode buildParamsObject(ParameterList parameterList) {
+    private JsonNode buildParamsObject(List<Parameter> parameterList) {
         ObjectMapper mapper = new ObjectMapper();
 
         ObjectNode params = mapper.createObjectNode();
