@@ -64,7 +64,7 @@ class JotAlarmMapperTest extends Specification {
         alarm as String == '''BEGIN:VALARM\r
 UID:07cc67f4-45d6-494b-adac-09b5cbc7e2b5\r
 ACTION:AUDIO\r
-TRIGGER:20181208T000000\r
+TRIGGER:20190824T141522Z\r
 DESCRIPTION:string\r
 DURATION:PT15M\r
 REPEAT:1\r

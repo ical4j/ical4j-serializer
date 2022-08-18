@@ -24,9 +24,9 @@ public class JotToDoMapper extends AbstractJotCalMapper<VToDo> {
             String propertyName = p.currentName();
             try {
                 if (JsonToken.START_ARRAY.equals(p.nextToken())) {
-                    toDo.getProperties().addAll(parsePropertyList(propertyName, p));
+                    toDo.addAll(parsePropertyList(propertyName, p));
                 } else {
-                    toDo.getProperties().add(parseProperty(propertyName, p));
+                    toDo.add(parseProperty(propertyName, p));
                 }
             } catch (URISyntaxException | ParseException e) {
                 throw new IllegalArgumentException(e);

@@ -7,14 +7,20 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
-import net.fortuna.ical4j.vcard.Parameter;
-import net.fortuna.ical4j.vcard.Property;
+import net.fortuna.ical4j.model.Parameter;
+import net.fortuna.ical4j.model.Property;
+import net.fortuna.ical4j.vcard.ParameterName;
+import net.fortuna.ical4j.vcard.PropertyName;
 import net.fortuna.ical4j.vcard.VCard;
 import net.fortuna.ical4j.vcard.parameter.Value;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
+/**
+ * Support for serialization of {@link VCard} objects according to the JCard specification.
+ */
 public class JCardSerializer extends StdSerializer<VCard> {
 
     public JCardSerializer(Class<VCard> t) {
@@ -45,7 +51,7 @@ public class JCardSerializer extends StdSerializer<VCard> {
         ObjectMapper mapper = new ObjectMapper();
 
         ArrayNode pArray = mapper.createArrayNode();
-        pArray.add(property.getId().toString().toLowerCase());
+        pArray.add(property.getName().toLowerCase());
         pArray.add(buildParamsObject(property.getParameters()));
         pArray.add(getPropertyType(property));
         pArray.add(property.getValue());
@@ -55,12 +61,12 @@ public class JCardSerializer extends StdSerializer<VCard> {
 
     private String getPropertyType(Property property) {
         // handle property type overrides via VALUE param..
-        Value value = property.getParameter(Parameter.Id.VALUE);
-        if (value != null) {
-            return value.getValue().toLowerCase();
+        Optional<Value> value = property.getParameter(ParameterName.VALUE.toString());
+        if (value.isPresent()) {
+            return value.get().getValue().toLowerCase();
         }
 
-        switch (property.getId()) {
+        switch (PropertyName.valueOf(property.getName())) {
             case KIND:
 //            case XML:
             case FN:
@@ -111,7 +117,7 @@ public class JCardSerializer extends StdSerializer<VCard> {
 
         ObjectNode params = mapper.createObjectNode();
         for (Parameter p : parameterList) {
-            params.put(p.getId().toString().toLowerCase(), p.getValue().toLowerCase());
+            params.put(p.getName().toLowerCase(), p.getValue().toLowerCase());
         }
         return params;
     }

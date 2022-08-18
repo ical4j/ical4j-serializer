@@ -24,9 +24,9 @@ public class JotCalendarMapper extends AbstractJotCalMapper<Calendar> {
             String propertyName = p.currentName();
             try {
                 if (JsonToken.START_ARRAY.equals(p.nextToken())) {
-                    calendar.getProperties().addAll(parsePropertyList(propertyName, p));
+                    calendar.addAll(parsePropertyList(propertyName, p));
                 } else {
-                    calendar.getProperties().add(parseProperty(propertyName, p));
+                    calendar.add(parseProperty(propertyName, p));
                 }
             } catch (URISyntaxException | ParseException e) {
                 throw new IllegalArgumentException(e);

@@ -85,6 +85,7 @@ class JotJournalMapperTest extends Specification {
   ],
   "structured-data": [
     {
+      "value": "text",
       "fmttype": "string",
       "schema": "string",
       "text": "string"
@@ -106,25 +107,25 @@ class JotJournalMapperTest extends Specification {
                 'UID:07cc67f4-45d6-494b-adac-09b5cbc7e2b5\r\n' +
                 'ORGANIZER;CN=string;DIR="http://example.com";SENT-BY="mailto:joecool@example.com";LANGUAGE=en-US:mailto:jane_doe@example.com\r\n' +
                 'SUMMARY:string\r\n' +
-                'DTSTAMP:20181208T000000\r\n' +
+                'DTSTAMP:20190824T141522Z\r\n' +
                 'SEQUENCE:0\r\n' +
-                'RECURRENCE-ID:20181208T000000\r\n' +
+                'RECURRENCE-ID:20190824T141522Z\r\n' +
                 'CLASS:PUBLIC\r\n' +
                 'STATUS:DRAFT\r\n' +
                 'RRULE:FREQ=WEEKLY\r\n' +
                 'DESCRIPTION:string\r\n' +
                 'URL:http://example.com\r\n' +
-                'LAST-MODIFIED:20181208T000000\r\n' +
+                'LAST-MODIFIED:20190824T141522Z\r\n' +
                 'CATEGORIES:string\r\n' +
                 'COMMENT;ALTREP=string:string\r\n' +
                 'ATTACH;FMTTYPE=string:string\r\n' +
                 'RELATED-TO;RELTYPE=PARENT:07cc67f4-45d6-494b-adac-09b5cbc7e2b5\r\n' +
-                'RDATE:20181208T000000\r\n' +
-                'EXDATE:20181208T000000\r\n' +
+                'RDATE:20190824T141522Z\r\n' +
+                'EXDATE:20190824T141522Z\r\n' +
                 'ATTENDEE;MEMBER="mailto:DEV-GROUP@example.com";ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=FALSE;CN=string;DIR="http://example.com";LANGUAGE=en-US:mailto:joecool@example.com\r\n' +
                 'CONTACT;ALTREP=string:string\r\n' +
                 'STYLED-DESCRIPTION;FMTTYPE=text/html;VALUE=TEXT:true\r\n' +
-                'STRUCTURED-DATA;FMTTYPE=string:string\r\n' +
+                'STRUCTURED-DATA;VALUE=text;FMTTYPE=string:string\r\n' +
                 'END:VJOURNAL\r\n'
     }
 }

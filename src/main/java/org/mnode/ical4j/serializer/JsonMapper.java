@@ -5,6 +5,9 @@ import com.fasterxml.jackson.core.JsonToken;
 
 import java.io.IOException;
 
+/**
+ * Support for deserialization of JSON encoded object representations.
+ */
 public interface JsonMapper {
 
     default void assertNextToken(JsonParser p, JsonToken token) throws IOException {

@@ -24,9 +24,9 @@ public class JotFreeBusyMapper extends AbstractJotCalMapper<VFreeBusy> {
             String propertyName = p.currentName();
             try {
                 if (JsonToken.START_ARRAY.equals(p.nextToken())) {
-                    freeBusy.getProperties().addAll(parsePropertyList(propertyName, p));
+                    freeBusy.addAll(parsePropertyList(propertyName, p));
                 } else {
-                    freeBusy.getProperties().add(parseProperty(propertyName, p));
+                    freeBusy.add(parseProperty(propertyName, p));
                 }
             } catch (URISyntaxException | ParseException e) {
                 throw new IllegalArgumentException(e);

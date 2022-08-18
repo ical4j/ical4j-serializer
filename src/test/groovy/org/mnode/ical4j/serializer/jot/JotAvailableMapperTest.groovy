@@ -30,10 +30,10 @@ class JotAvailableMapperTest extends Specification {
   "comments": [
     "string"
   ],
-  "exdates": [
+  "exdate": [
     "2019-08-24T14:15:22Z"
   ],
-  "rdates": [
+  "rdate": [
     "2019-08-24T14:15:22Z"
   ],
   "contacts": [
@@ -53,20 +53,20 @@ class JotAvailableMapperTest extends Specification {
         then: 'available matches expected result'
         available as String == '''BEGIN:AVAILABLE\r
 UID:07cc67f4-45d6-494b-adac-09b5cbc7e2b5\r
-DTSTART:20181208T000000\r
-DTEND:20181208T000000\r
+DTSTART:20190824T141522Z\r
+DTEND:20190824T141522Z\r
 DURATION:PT15M\r
 SUMMARY:string\r
-RECURRENCE-ID:20181208T000000\r
+RECURRENCE-ID:20190824T141522Z\r
 LOCATION:The venue\r
 DESCRIPTION:string\r
-CREATED:20181208T000000\r
-LAST-MODIFIED:20181208T000000\r
+CREATED:20190824T141522Z\r
+LAST-MODIFIED:20190824T141522Z\r
 RRULE:FREQ=WEEKLY\r
 CATEGORIES:string\r
 COMMENTS:string\r
-EXDATES:2019-08-24T14:15:22Z\r
-RDATES:2019-08-24T14:15:22Z\r
+EXDATE:20190824T141522Z\r
+RDATE:20190824T141522Z\r
 CONTACTS:string\r
 END:AVAILABLE\r\n'''
     }

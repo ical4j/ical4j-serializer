@@ -76,8 +76,8 @@ class JotFreeBusyMapperTest extends Specification {
         freeBusy as String == 'BEGIN:VFREEBUSY\r\n' +
                 'UID:07cc67f4-45d6-494b-adac-09b5cbc7e2b5\r\n' +
                 'ORGANIZER;CN=string;DIR="http://example.com";SENT-BY="mailto:joecool@example.com";LANGUAGE=en-US:mailto:jane_doe@example.com\r\n' +
-                'DTSTART:20181208T000000\r\n' +
-                'DTEND:20181208T000000\r\n' +
+                'DTSTART:20190824T141522Z\r\n' +
+                'DTEND:20190824T141522Z\r\n' +
                 'URL:http://www.example.com/calendar/busytime/jsmith.ifb\r\n' +
                 'FBPERIODS;FBTYPE=BUSY:PT5H30M\r\n' +
                 'ATTENDEE;MEMBER="mailto:DEV-GROUP@example.com";ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=FALSE;CN=string;DIR="http://example.com";LANGUAGE=en-US:mailto:joecool@example.com\r\n' +

@@ -41,7 +41,7 @@ class JotCalendarMapperTest extends Specification {
                 'CALSCALE:GREGORIAN\r\n' +
                 'NAME:My Social Calendar\r\n' +
                 'DESCRIPTION:A collection of social events\\, journals\\, tasks and availability\r\n' +
-                'LAST-MODIFIED:20181208T000000\r\n' +
+                'LAST-MODIFIED:20190824T141522Z\r\n' +
                 'URL:https://calendar.example.com/mysocialcalendar.html\r\n' +
                 'CATEGORIES:social\r\n' +
                 'REFRESH-INTERVAL:P1W\r\n' +

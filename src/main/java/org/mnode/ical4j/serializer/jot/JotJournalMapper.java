@@ -24,9 +24,9 @@ public class JotJournalMapper extends AbstractJotCalMapper<VJournal> {
             String propertyName = p.currentName();
             try {
                 if (JsonToken.START_ARRAY.equals(p.nextToken())) {
-                    journal.getProperties().addAll(parsePropertyList(propertyName, p));
+                    journal.addAll(parsePropertyList(propertyName, p));
                 } else {
-                    journal.getProperties().add(parseProperty(propertyName, p));
+                    journal.add(parseProperty(propertyName, p));
                 }
             } catch (URISyntaxException | ParseException e) {
                 throw new IllegalArgumentException(e);

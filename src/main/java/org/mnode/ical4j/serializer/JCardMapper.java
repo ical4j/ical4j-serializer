@@ -5,7 +5,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import net.fortuna.ical4j.vcard.*;
+import net.fortuna.ical4j.model.Parameter;
+import net.fortuna.ical4j.model.ParameterList;
+import net.fortuna.ical4j.model.Property;
+import net.fortuna.ical4j.vcard.ParameterFactoryRegistry;
+import net.fortuna.ical4j.vcard.PropertyFactoryRegistry;
+import net.fortuna.ical4j.vcard.VCard;
 import net.fortuna.ical4j.vcard.parameter.Value;
 import org.apache.commons.codec.DecoderException;
 
@@ -15,6 +20,9 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Support for deserialization of {@link VCard} objects encoded according to the JCard specification.
+ */
 public class JCardMapper extends StdDeserializer<VCard> implements JsonMapper {
 
     private final ParameterFactoryRegistry parameterFactoryRegistry;
@@ -35,7 +43,7 @@ public class JCardMapper extends StdDeserializer<VCard> implements JsonMapper {
         assertNextToken(p, JsonToken.START_ARRAY);
         while (!JsonToken.END_ARRAY.equals(p.nextToken())) {
             try {
-                card.getProperties().add(parseProperty(p));
+                card.add(parseProperty(p));
             } catch (URISyntaxException | ParseException | DecoderException e) {
                 throw new IllegalArgumentException(e);
             }
@@ -48,10 +56,9 @@ public class JCardMapper extends StdDeserializer<VCard> implements JsonMapper {
         String propName = p.nextTextValue();
         // property params..
         assertNextToken(p, JsonToken.START_OBJECT);
-        List<net.fortuna.ical4j.vcard.Parameter> params = new ArrayList<>();
+        List<Parameter> params = new ArrayList<>();
         while (!JsonToken.END_OBJECT.equals(p.nextToken())) {
-            Parameter parameter = parameterFactoryRegistry.getFactory(p.currentName()).createParameter(
-                    p.currentName(), p.getText());
+            Parameter parameter = parameterFactoryRegistry.getFactory(p.currentName()).createParameter(p.getText());
             params.add(parameter);
         }
 
@@ -73,6 +80,6 @@ public class JCardMapper extends StdDeserializer<VCard> implements JsonMapper {
         String value = p.nextTextValue();
         assertNextToken(p, JsonToken.END_ARRAY);
 
-        return propertyFactoryRegistry.getFactory(propName).createProperty(params, value);
+        return propertyFactoryRegistry.getFactory(propName).createProperty(new ParameterList(params), value);
     }
 }

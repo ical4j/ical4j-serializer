@@ -2,7 +2,7 @@ package org.mnode.ical4j.serializer.schema;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import net.fortuna.ical4j.vcard.Property;
+import net.fortuna.ical4j.vcard.PropertyName;
 import net.fortuna.ical4j.vcard.VCard;
 
 public class SchemaPersonBuilder extends AbstractSchemaBuilder<VCard> {
@@ -14,14 +14,14 @@ public class SchemaPersonBuilder extends AbstractSchemaBuilder<VCard> {
     @Override
     public JsonNode build() {
         ObjectNode node = createObjectNode();
-        putIfNotNull("@id", node, component.getProperty(Property.Id.UID));
-        putIfNotNull("name", node, component.getProperty(Property.Id.FN));
-        putIfNotNull("email", node, component.getProperty(Property.Id.EMAIL));
-        putIfNotNull("image", node, component.getProperty(Property.Id.PHOTO));
-        putIfNotNull("jobTitle", node, component.getProperty(Property.Id.TITLE));
-        putIfNotNull("telephone", node, component.getProperty(Property.Id.TEL));
-        putIfNotNull("url", node, component.getProperty(Property.Id.URL));
-        setObject("address", node, component.getProperty(Property.Id.ADR));
+        putIfNotAbsent("@id", node, component.getProperty(PropertyName.UID.toString()));
+        putIfNotAbsent("name", node, component.getProperty(PropertyName.FN.toString()));
+        putIfNotAbsent("email", node, component.getProperty(PropertyName.EMAIL.toString()));
+        putIfNotAbsent("image", node, component.getProperty(PropertyName.PHOTO.toString()));
+        putIfNotAbsent("jobTitle", node, component.getProperty(PropertyName.TITLE.toString()));
+        putIfNotAbsent("telephone", node, component.getProperty(PropertyName.TEL.toString()));
+        putIfNotAbsent("url", node, component.getProperty(PropertyName.URL.toString()));
+        setObject("address", node, component.getProperty(PropertyName.ADR.toString()));
         return node;
     }
 }

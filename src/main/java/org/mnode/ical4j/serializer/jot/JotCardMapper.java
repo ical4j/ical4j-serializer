@@ -25,9 +25,9 @@ public class JotCardMapper extends AbstractJotCardMapper<VCard> {
             String propertyName = p.currentName();
             try {
                 if (JsonToken.START_ARRAY.equals(p.nextToken())) {
-                    card.getProperties().addAll(parsePropertyList(propertyName, p));
+                    card.addAll(parsePropertyList(propertyName, p));
                 } else {
-                    card.getProperties().add(parseProperty(propertyName, p));
+                    card.add(parseProperty(propertyName, p));
                 }
             } catch (URISyntaxException | ParseException | DecoderException e) {
                 throw new IllegalArgumentException(e);
