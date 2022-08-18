@@ -129,8 +129,8 @@ publishing {
             name = "OSSRH"
             url = version.endsWith('SNAPSHOT') ? "https://s01.oss.sonatype.org/content/repositories/snapshots/" : "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
             credentials {
-                username = System.getenv("OSS_SONATYPE_USERNAME")
-                password = System.getenv("OSS_SONATYPE_PASSWORD")
+                username = System.getenv("MAVEN_USERNAME")
+                password = System.getenv("MAVEN_PASSWORD")
             }
         }
 //        maven {
