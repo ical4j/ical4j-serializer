@@ -13,7 +13,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 
-@CommandLine.Command(name = "calendar", description = "Transform input calendar data to specified format")
+@CommandLine.Command(name = "calendar", description = "Transform input calendar data to specified format",
+        subcommands = {CommandLine.HelpCommand.class})
 public class SerializeCalendarCommand implements Runnable {
 
     @CommandLine.Option(names = {"-U", "--url"})
