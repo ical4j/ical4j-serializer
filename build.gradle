@@ -5,7 +5,8 @@ plugins {
     id 'java-library'
     id 'maven-publish'
     id 'signing'
-    id 'pl.allegro.tech.build.axion-release' version '1.13.1'
+    id 'pl.allegro.tech.build.axion-release' version '1.13.6'
+    id 'application'
 }
 
 repositories {
@@ -100,6 +101,10 @@ task sourcesJar(type: Jar) {
 artifacts {
     archives javadocJar
     archives sourcesJar
+}
+
+application {
+    mainClass = 'org.mnode.ical4j.serializer.ICalendarSerializerMain'
 }
 
 ext {

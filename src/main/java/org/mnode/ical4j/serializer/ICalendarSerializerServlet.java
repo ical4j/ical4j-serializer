@@ -2,6 +2,7 @@ package org.mnode.ical4j.serializer;
 
 import net.fortuna.ical4j.data.ParserException;
 import org.apache.commons.io.IOUtils;
+import org.mnode.ical4j.serializer.command.AbstractCommand;
 import org.mnode.ical4j.serializer.command.SerializeCalendarCommand;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.metatype.annotations.Designate;
@@ -43,7 +44,8 @@ public class ICalendarSerializerServlet extends HttpServlet {
             try {
                 URL url = new URL(urlParam);
                 resp.setContentType("application/json");
-                resp.getWriter().println(new SerializeCalendarCommand().withUrl(url).serialize());
+                resp.getWriter().println(new SerializeCalendarCommand().withInput(
+                        new AbstractCommand.Input(url)).serialize());
             } catch (ParserException e) {
                 throw new ServletException(e);
             }
