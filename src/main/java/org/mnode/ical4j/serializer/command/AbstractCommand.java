@@ -6,9 +6,6 @@ import java.net.URL;
 
 public abstract class AbstractCommand implements Runnable {
 
-    @CommandLine.Option(names = {"-X", "--query"})
-    protected String query;
-
     @CommandLine.ArgGroup(multiplicity = "1")
     protected Input input;
 
