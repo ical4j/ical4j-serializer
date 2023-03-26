@@ -6,7 +6,6 @@ plugins {
     id 'maven-publish'
     id 'signing'
     id 'pl.allegro.tech.build.axion-release' version '1.13.6'
-    id 'application'
 }
 
 repositories {
@@ -20,6 +19,11 @@ repositories {
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
 dependencies {
     api "org.mnode.ical4j:ical4j:$ical4jVersion",
             "org.mnode.ical4j:ical4j-vcard:$ical4jVCardVersion",
@@ -28,15 +32,6 @@ dependencies {
 
     implementation "org.slf4j:slf4j-log4j12:$slf4jVersion",
             "org.apache.logging.log4j:log4j:$log4jVersion"
-
-    implementation ("org.eclipse.jetty:jetty-server:$jettyVersion") {
-        exclude group: 'org.slf4j', module: 'slf4j-api'
-    }
-    implementation ("org.eclipse.jetty:jetty-servlet:$jettyVersion") {
-        exclude group: 'org.slf4j', module: 'slf4j-api'
-    }
-
-    implementation "info.picocli:picocli:$picocliVersion"
 
     compileOnly 'org.osgi:osgi.core:8.0.0',
             'org.osgi:org.osgi.service.component.annotations:1.5.0',
@@ -88,23 +83,9 @@ jar {
     }
 }
 
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    archiveClassifier.set('javadoc')
-    from 'build/docs/javadoc'
-}
-
-task sourcesJar(type: Jar) {
-    from sourceSets.main.allSource
-    archiveClassifier.set('sources')
-}
-
 artifacts {
     archives javadocJar
     archives sourcesJar
-}
-
-application {
-    mainClass = 'org.mnode.ical4j.serializer.ICalendarSerializerMain'
 }
 
 ext {
