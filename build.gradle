@@ -30,13 +30,13 @@ dependencies {
             "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion",
             "com.fasterxml.jackson.dataformat:jackson-dataformat-xml:$jacksonVersion"
 
-    implementation "org.slf4j:slf4j-log4j12:$slf4jVersion",
-            "org.apache.logging.log4j:log4j:$log4jVersion"
-
     compileOnly 'org.osgi:osgi.core:8.0.0',
             'org.osgi:org.osgi.service.component.annotations:1.5.0',
             'org.osgi:org.osgi.service.metatype.annotations:1.4.1',
             'org.osgi:org.osgi.annotation:6.0.0'
+
+    testImplementation "org.slf4j:slf4j-log4j12:$slf4jVersion",
+            "org.apache.logging.log4j:log4j:$log4jVersion"
 
     testImplementation "org.codehaus.groovy:groovy:$groovyVersion"
 
