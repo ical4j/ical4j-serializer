@@ -83,11 +83,6 @@ jar {
     }
 }
 
-artifacts {
-    archives javadocJar
-    archives sourcesJar
-}
-
 ext {
     isReleaseVersion = !version.endsWith("SNAPSHOT")
 }
@@ -96,8 +91,6 @@ publishing {
     publications {
         ical4j_serializer(MavenPublication) {
             from components.java
-            artifact javadocJar
-            artifact sourcesJar
             pom.withXml {
                 asNode().appendNode('name', project.name)
                 asNode().appendNode('description', project.description)
