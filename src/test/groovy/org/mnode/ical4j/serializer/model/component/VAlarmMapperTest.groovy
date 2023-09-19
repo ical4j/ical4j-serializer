@@ -1,11 +1,11 @@
-package org.mnode.ical4j.serializer.jot
+package org.mnode.ical4j.serializer.model.component
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.module.SimpleModule
 import net.fortuna.ical4j.model.component.VAlarm
 import spock.lang.Specification
 
-class JotAlarmMapperTest extends Specification {
+class VAlarmMapperTest extends Specification {
 
     def 'test alarm deserialization'() {
         given: 'a json string'
@@ -37,7 +37,7 @@ class JotAlarmMapperTest extends Specification {
   ],
   "attachments": [
     {
-      "fmttype": "string",
+      "fmttype": "application/msword",
       "url": "http://example.com"
     }
   ],
@@ -53,7 +53,7 @@ class JotAlarmMapperTest extends Specification {
 
         and: 'an object mapper'
         SimpleModule module = []
-        module.addDeserializer(VAlarm, new JotAlarmMapper())
+        module.addDeserializer(VAlarm, new VAlarmMapper())
         ObjectMapper mapper = []
         mapper.registerModule(module)
 
@@ -70,7 +70,7 @@ DURATION:PT15M\r
 REPEAT:1\r
 SUMMARY:string\r
 ATTENDEES;MEMBER="mailto:DEV-GROUP@example.com";ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=FALSE;CN=string;DIR="http://example.com";LANGUAGE=en-US:mailto:joecool@example.com\r
-ATTACHMENTS;FMTTYPE=string:http://example.com\r
+ATTACHMENTS;FMTTYPE=application/msword:http://example.com\r
 STYLED-DESCRIPTION;FMTTYPE=text/html;VALUE=TEXT:true\r
 END:VALARM\r\n'''
     }

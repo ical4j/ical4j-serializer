@@ -1,11 +1,11 @@
-package org.mnode.ical4j.serializer.jot
+package org.mnode.ical4j.serializer.model.component
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.module.SimpleModule
 import net.fortuna.ical4j.model.component.VToDo
 import spock.lang.Specification
 
-class JotToDoMapperTest extends Specification {
+class VToDoMapperTest extends Specification {
 
     def 'test todo deserialization'() {
         given: 'a json string'
@@ -52,7 +52,7 @@ class JotToDoMapperTest extends Specification {
   ],
   "attachments": [
     {
-      "fmttype": "string",
+      "fmttype": "application/msword",
       "url": "http://example.com"
     }
   ],
@@ -92,7 +92,7 @@ class JotToDoMapperTest extends Specification {
   "structured-data": [
     {
       "value": "text",
-      "fmttype": "string",
+      "fmttype": "application/xml",
       "schema": "string",
       "text": "string"
     }
@@ -101,7 +101,7 @@ class JotToDoMapperTest extends Specification {
 
         and: 'an object mapper'
         SimpleModule module = []
-        module.addDeserializer(VToDo, new JotToDoMapper())
+        module.addDeserializer(VToDo, new VToDoMapper())
         ObjectMapper mapper = []
         mapper.registerModule(module)
 
@@ -132,12 +132,12 @@ DESCRIPTION:string\r
 CATEGORIES:string\r
 COMMENTS:string\r
 RESOURCES;ALTREP="CID:part3.msg.970415T083000@example.com":07cc67f4-45d6-494b-adac-09b5cbc7e2b5\r
-ATTACHMENTS;FMTTYPE=string:http://example.com\r
+ATTACHMENTS;FMTTYPE=application/msword:http://example.com\r
 RELATED-TO;RELTYPE=PARENT:07cc67f4-45d6-494b-adac-09b5cbc7e2b5\r
 ATTENDEES;MEMBER="mailto:DEV-GROUP@example.com";ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=FALSE;CN=string;DIR="http://example.com";LANGUAGE=en-US:mailto:joecool@example.com\r
 CONTACTS:string\r
 STYLED-DESCRIPTION;FMTTYPE=text/html;VALUE=TEXT:true\r
-STRUCTURED-DATA;VALUE=text;FMTTYPE=string:string\r
+STRUCTURED-DATA;VALUE=text;FMTTYPE=application/xml:string\r
 END:VTODO\r\n'''
     }
 }

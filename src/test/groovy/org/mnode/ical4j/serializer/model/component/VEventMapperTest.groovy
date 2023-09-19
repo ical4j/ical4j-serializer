@@ -1,11 +1,11 @@
-package org.mnode.ical4j.serializer.jot
+package org.mnode.ical4j.serializer.model.component
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.module.SimpleModule
 import net.fortuna.ical4j.model.component.VEvent
 import spock.lang.Specification
 
-class JotEventMapperTest extends Specification {
+class VEventMapperTest extends Specification {
 
     def 'test event deserialization'() {
         given: 'a json string'
@@ -54,7 +54,7 @@ class JotEventMapperTest extends Specification {
   ],
   "attach": [
     {
-      "fmttype": "string",
+      "fmttype": "application/msword",
       "url": "http://example.com"
     }
   ],
@@ -104,7 +104,7 @@ class JotEventMapperTest extends Specification {
   "structured-data": [
     {
       "value": "text",
-      "fmttype": "string",
+      "fmttype": "application/xml",
       "schema": "string",
       "text": "string"
     }
@@ -113,7 +113,7 @@ class JotEventMapperTest extends Specification {
 
         and: 'an object mapper'
         SimpleModule module = []
-        module.addDeserializer(VEvent, new JotEventMapper())
+        module.addDeserializer(VEvent, new VEventMapper())
         ObjectMapper mapper = []
         mapper.registerModule(module)
 
@@ -143,7 +143,7 @@ CREATED:20190824T141522Z\r
 CATEGORIES:string\r
 COMMENT;ALTREP=string:string\r
 RESOURCES;ALTREP="CID:part3.msg.970415T083000@example.com":07cc67f4-45d6-494b-adac-09b5cbc7e2b5\r
-ATTACH;FMTTYPE=string:http://example.com\r
+ATTACH;FMTTYPE=application/msword:http://example.com\r
 RELATED-TO;RELTYPE=PARENT:07cc67f4-45d6-494b-adac-09b5cbc7e2b5\r
 RDATE:20190824T141522Z\r
 EXDATE:20190824T141522Z\r
@@ -151,7 +151,7 @@ ATTENDEE;MEMBER="mailto:DEV-GROUP@example.com";ROLE=REQ-PARTICIPANT;PARTSTAT=NEE
 TRANSP:OPAQUE\r
 CONTACT;ALTREP=string:string\r
 STYLED-DESCRIPTION;FMTTYPE=text/html;VALUE=TEXT:true\r
-STRUCTURED-DATA;VALUE=text;FMTTYPE=string:string\r
+STRUCTURED-DATA;VALUE=text;FMTTYPE=application/xml:string\r
 END:VEVENT\r\n'''
     }
 }

@@ -1,11 +1,11 @@
-package org.mnode.ical4j.serializer.jot
+package org.mnode.ical4j.serializer.model.component
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.module.SimpleModule
 import net.fortuna.ical4j.model.component.VJournal
 import spock.lang.Specification
 
-class JotJournalMapperTest extends Specification {
+class VJournalMapperTest extends Specification {
 
     def 'test journal deserialization'() {
         given: 'a json string'
@@ -39,7 +39,7 @@ class JotJournalMapperTest extends Specification {
   ],
   "attach": [
     {
-      "fmttype": "string",
+      "fmttype": "application/msword",
       "binary": "string"
     }
   ],
@@ -86,7 +86,7 @@ class JotJournalMapperTest extends Specification {
   "structured-data": [
     {
       "value": "text",
-      "fmttype": "string",
+      "fmttype": "application/xml",
       "schema": "string",
       "text": "string"
     }
@@ -95,7 +95,7 @@ class JotJournalMapperTest extends Specification {
 
         and: 'an object mapper'
         SimpleModule module = []
-        module.addDeserializer(VJournal, new JotJournalMapper())
+        module.addDeserializer(VJournal, new VJournalMapper())
         ObjectMapper mapper = []
         mapper.registerModule(module)
 
@@ -118,14 +118,14 @@ class JotJournalMapperTest extends Specification {
                 'LAST-MODIFIED:20190824T141522Z\r\n' +
                 'CATEGORIES:string\r\n' +
                 'COMMENT;ALTREP=string:string\r\n' +
-                'ATTACH;FMTTYPE=string:string\r\n' +
+                'ATTACH;FMTTYPE=application/msword:string\r\n' +
                 'RELATED-TO;RELTYPE=PARENT:07cc67f4-45d6-494b-adac-09b5cbc7e2b5\r\n' +
                 'RDATE:20190824T141522Z\r\n' +
                 'EXDATE:20190824T141522Z\r\n' +
                 'ATTENDEE;MEMBER="mailto:DEV-GROUP@example.com";ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=FALSE;CN=string;DIR="http://example.com";LANGUAGE=en-US:mailto:joecool@example.com\r\n' +
                 'CONTACT;ALTREP=string:string\r\n' +
                 'STYLED-DESCRIPTION;FMTTYPE=text/html;VALUE=TEXT:true\r\n' +
-                'STRUCTURED-DATA;VALUE=text;FMTTYPE=string:string\r\n' +
+                'STRUCTURED-DATA;VALUE=text;FMTTYPE=application/xml:string\r\n' +
                 'END:VJOURNAL\r\n'
     }
 }
