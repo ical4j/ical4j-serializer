@@ -1,16 +1,16 @@
-package org.mnode.ical4j.serializer.schema
+package org.mnode.ical4j.serializer.jsonld
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.module.SimpleModule
 import net.fortuna.ical4j.model.component.VAvailability
 import org.mnode.ical4j.serializer.AbstractSerializerTest
 
-class SchemaServiceSerializerTest extends AbstractSerializerTest {
+class ServiceJsonLdSerializerTest extends AbstractSerializerTest {
 
     def 'test service serialization'() {
         given: 'an object mapper'
         SimpleModule module = []
-        module.addSerializer(VAvailability, new SchemaServiceSerializer())
+        module.addSerializer(VAvailability, new ServiceJsonLdSerializer())
         ObjectMapper mapper = []
         mapper.registerModule(module)
 

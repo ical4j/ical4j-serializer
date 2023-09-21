@@ -1,14 +1,14 @@
-package org.mnode.ical4j.serializer.schema;
+package org.mnode.ical4j.serializer.jsonld;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import net.fortuna.ical4j.vcard.PropertyName;
 import net.fortuna.ical4j.vcard.VCard;
 
-public class SchemaPersonBuilder extends AbstractSchemaBuilder<VCard> {
+public class OrganizationJsonLdBuilder extends AbstractJsonLdBuilder<VCard> {
 
-    public SchemaPersonBuilder() {
-        super("Person");
+    public OrganizationJsonLdBuilder() {
+        super("Organization");
     }
 
     @Override
@@ -18,10 +18,11 @@ public class SchemaPersonBuilder extends AbstractSchemaBuilder<VCard> {
         putIfNotAbsent("name", node, component.getProperty(PropertyName.FN.toString()));
         putIfNotAbsent("email", node, component.getProperty(PropertyName.EMAIL.toString()));
         putIfNotAbsent("image", node, component.getProperty(PropertyName.PHOTO.toString()));
-        putIfNotAbsent("jobTitle", node, component.getProperty(PropertyName.TITLE.toString()));
+        putIfNotAbsent("logo", node, component.getProperty(PropertyName.LOGO.toString()));
         putIfNotAbsent("telephone", node, component.getProperty(PropertyName.TEL.toString()));
         putIfNotAbsent("url", node, component.getProperty(PropertyName.URL.toString()));
         setObject("address", node, component.getProperty(PropertyName.ADR.toString()));
+        setObject("member", node, component.getProperty(PropertyName.MEMBER.toString()));
         return node;
     }
 }

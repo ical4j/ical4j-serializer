@@ -1,16 +1,16 @@
-package org.mnode.ical4j.serializer.schema
+package org.mnode.ical4j.serializer.jsonld
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.module.SimpleModule
 import net.fortuna.ical4j.model.component.VJournal
 import org.mnode.ical4j.serializer.AbstractSerializerTest
 
-class SchemaCreativeWorkSerializerTest extends AbstractSerializerTest {
+class CreativeWorkJsonLdSerializerTest extends AbstractSerializerTest {
 
     def 'test creative work serialization'() {
         given: 'an object mapper'
         SimpleModule module = []
-        module.addSerializer(VJournal, new SchemaCreativeWorkSerializer())
+        module.addSerializer(VJournal, new CreativeWorkJsonLdSerializer())
         ObjectMapper mapper = []
         mapper.registerModule(module)
 

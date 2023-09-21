@@ -1,16 +1,16 @@
-package org.mnode.ical4j.serializer.schema
+package org.mnode.ical4j.serializer.jsonld
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.module.SimpleModule
 import net.fortuna.ical4j.model.component.VToDo
 import org.mnode.ical4j.serializer.AbstractSerializerTest
 
-class SchemaActionSerializerTest extends AbstractSerializerTest {
+class ActionJsonLdSerializerTest extends AbstractSerializerTest {
 
     def 'test action serialization'() {
         given: 'an object mapper'
         SimpleModule module = []
-        module.addSerializer(VToDo, new SchemaActionSerializer())
+        module.addSerializer(VToDo, new ActionJsonLdSerializer())
         ObjectMapper mapper = []
         mapper.registerModule(module)
 

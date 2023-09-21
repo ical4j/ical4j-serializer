@@ -1,12 +1,12 @@
-package org.mnode.ical4j.serializer.schema;
+package org.mnode.ical4j.serializer.jsonld;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import net.fortuna.ical4j.vcard.property.Address;
 
-public class SchemaPostalAddressBuilder extends AbstractSchemaBuilder<Address> {
+public class PostalAddressJsonLdBuilder extends AbstractJsonLdBuilder<Address> {
 
-    public SchemaPostalAddressBuilder() {
+    public PostalAddressJsonLdBuilder() {
         super("PostalAddress");
     }
 

@@ -1,14 +1,14 @@
-package org.mnode.ical4j.serializer.schema;
+package org.mnode.ical4j.serializer.jsonld;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import net.fortuna.ical4j.model.Property;
-import net.fortuna.ical4j.model.component.VEvent;
+import net.fortuna.ical4j.model.component.VAvailability;
 
-public class SchemaEventBuilder extends AbstractSchemaBuilder<VEvent> {
+public class ServiceJsonLdBuilder extends AbstractJsonLdBuilder<VAvailability> {
 
-    public SchemaEventBuilder() {
-        super("Event");
+    public ServiceJsonLdBuilder() {
+        super("Service");
     }
 
     @Override
@@ -18,9 +18,6 @@ public class SchemaEventBuilder extends AbstractSchemaBuilder<VEvent> {
         putIfNotAbsent("name", node, component.getProperty(Property.SUMMARY));
         putIfNotAbsent("description", node, component.getProperty(Property.DESCRIPTION));
         putIfNotAbsent("url", node, component.getProperty(Property.URL));
-        putIfNotAbsent("startDate", node, component.getProperty(Property.DTSTART));
-        putIfNotAbsent("endDate", node, component.getProperty(Property.DTEND));
-        putIfNotAbsent("location", node, component.getProperty(Property.LOCATION));
         return node;
     }
 }

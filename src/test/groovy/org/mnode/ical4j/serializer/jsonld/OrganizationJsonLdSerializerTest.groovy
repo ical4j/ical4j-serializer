@@ -1,16 +1,16 @@
-package org.mnode.ical4j.serializer.schema
+package org.mnode.ical4j.serializer.jsonld
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.module.SimpleModule
 import net.fortuna.ical4j.vcard.VCard
 import org.mnode.ical4j.serializer.AbstractSerializerTest
 
-class SchemaOrganizationSerializerTest extends AbstractSerializerTest {
+class OrganizationJsonLdSerializerTest extends AbstractSerializerTest {
 
     def 'test organization serialization'() {
         given: 'an object mapper'
         SimpleModule module = []
-        module.addSerializer(VCard, new SchemaOrganizationSerializer())
+        module.addSerializer(VCard, new OrganizationJsonLdSerializer())
         ObjectMapper mapper = []
         mapper.registerModule(module)
 

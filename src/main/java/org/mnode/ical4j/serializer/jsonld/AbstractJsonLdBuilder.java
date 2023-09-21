@@ -1,4 +1,4 @@
-package org.mnode.ical4j.serializer.schema;
+package org.mnode.ical4j.serializer.jsonld;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -9,17 +9,17 @@ import org.mnode.ical4j.serializer.JsonBuilder;
 
 import java.util.Optional;
 
-public abstract class AbstractSchemaBuilder<T> implements JsonBuilder {
+public abstract class AbstractJsonLdBuilder<T> implements JsonBuilder {
 
     private final String schemaType;
 
     protected T component;
 
-    public AbstractSchemaBuilder(String schemaType) {
+    public AbstractJsonLdBuilder(String schemaType) {
         this.schemaType = schemaType;
     }
 
-    public AbstractSchemaBuilder<T> component(T component) {
+    public AbstractJsonLdBuilder<T> component(T component) {
         this.component = component;
         return this;
     }
@@ -35,7 +35,7 @@ public abstract class AbstractSchemaBuilder<T> implements JsonBuilder {
 
     protected ObjectNode setObject(String propertyName, ObjectNode node, Optional<Property> property) {
         if (property.isPresent() && property.get() instanceof Address) {
-            JsonNode address = new SchemaPostalAddressBuilder().component((Address) property.get()).build();
+            JsonNode address = new PostalAddressJsonLdBuilder().component((Address) property.get()).build();
             node.set(propertyName, address);
         }
         return node;

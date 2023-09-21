@@ -1,16 +1,16 @@
-package org.mnode.ical4j.serializer.schema
+package org.mnode.ical4j.serializer.jsonld
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.module.SimpleModule
 import net.fortuna.ical4j.model.component.VEvent
 import org.mnode.ical4j.serializer.AbstractSerializerTest
 
-class SchemaEventSerializerTest extends AbstractSerializerTest {
+class EventJsonLdSerializerTest extends AbstractSerializerTest {
 
     def 'test event serialization'() {
         given: 'an object mapper'
         SimpleModule module = []
-        module.addSerializer(VEvent, new SchemaEventSerializer())
+        module.addSerializer(VEvent, new EventJsonLdSerializer())
         ObjectMapper mapper = []
         mapper.registerModule(module)
 

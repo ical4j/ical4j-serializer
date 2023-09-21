@@ -1,16 +1,15 @@
-package org.mnode.ical4j.serializer.schema;
+package org.mnode.ical4j.serializer.jsonld;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
-import net.fortuna.ical4j.model.Component;
 
 import java.io.IOException;
 
-public abstract class AbstractSchemaCalendarSerializer<T extends Component> extends StdSerializer<T> {
+public abstract class AbstractJsonLdSerializer<T> extends StdSerializer<T> {
 
-    public AbstractSchemaCalendarSerializer(Class<T> t) {
+    public AbstractJsonLdSerializer(Class<T> t) {
         super(t);
     }
 
