@@ -2,7 +2,6 @@ package org.mnode.ical4j.serializer.model
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.module.SimpleModule
-import net.fortuna.ical4j.model.ComponentList
 import spock.lang.Specification
 
 class ComponentListMapperTest extends Specification {
@@ -143,7 +142,7 @@ class ComponentListMapperTest extends Specification {
         mapper.registerModule(module)
 
         when: 'the event is deserialized'
-        ComponentList<?> componentList = mapper.readValue(json, ComponentList)
+        List<?> componentList = mapper.readValue(json, List)
 
         then: 'event matches expected result'
         componentList.getFirst("VEVENT").get() as String == '''BEGIN:VEVENT\r
