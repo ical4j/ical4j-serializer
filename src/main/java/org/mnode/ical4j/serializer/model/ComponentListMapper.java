@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import net.fortuna.ical4j.model.Component;
+import net.fortuna.ical4j.model.ComponentList;
 import org.mnode.ical4j.serializer.JsonMapper;
 import org.mnode.ical4j.serializer.model.component.VAvailabilityMapper;
 import org.mnode.ical4j.serializer.model.component.VEventMapper;
@@ -16,7 +17,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ComponentListMapper extends StdDeserializer<List<? extends Component>> implements JsonMapper {
+public class ComponentListMapper extends StdDeserializer<ComponentList<? extends Component>> implements JsonMapper {
 
     private final VEventMapper vEventMapper;
     private final VToDoMapper vToDoMapper;
@@ -37,7 +38,7 @@ public class ComponentListMapper extends StdDeserializer<List<? extends Componen
     }
 
     @Override
-    public List<? extends Component> deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JacksonException {
+    public ComponentList<? extends Component> deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JacksonException {
         List<Component> components = new ArrayList<>();
 
         while (JsonToken.FIELD_NAME.equals(p.nextToken())) {
@@ -59,6 +60,6 @@ public class ComponentListMapper extends StdDeserializer<List<? extends Componen
             }
         }
 
-        return components;
+        return new ComponentList<>(components);
     }
 }
