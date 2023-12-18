@@ -1,4 +1,4 @@
-package org.mnode.ical4j.serializer.jscontact;
+package org.mnode.ical4j.serializer.jmap;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

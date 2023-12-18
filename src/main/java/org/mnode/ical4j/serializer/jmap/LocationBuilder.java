@@ -1,4 +1,4 @@
-package org.mnode.ical4j.serializer.jscalendar;
+package org.mnode.ical4j.serializer.jmap;
 
 import net.fortuna.ical4j.model.LocationType;
 

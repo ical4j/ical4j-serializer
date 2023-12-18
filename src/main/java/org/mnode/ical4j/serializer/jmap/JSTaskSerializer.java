@@ -1,8 +1,9 @@
-package org.mnode.ical4j.serializer.jscalendar;
+package org.mnode.ical4j.serializer.jmap;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import net.fortuna.ical4j.model.ConstraintViolationException;
 import net.fortuna.ical4j.model.component.VToDo;
@@ -27,5 +28,18 @@ public class JSTaskSerializer extends StdSerializer<VToDo> {
     private JsonNode buildJSTask(VToDo toDo) throws ConstraintViolationException {
         AbstractJSCalendarBuilder<VToDo> builder = new JSTaskBuilder().component(toDo);
         return builder.build();
+    }
+
+    public static class JSTaskBuilder extends AbstractJSCalendarBuilder<VToDo> {
+
+        public JSTaskBuilder() {
+            super("jstask");
+        }
+
+        @Override
+        public JsonNode build() {
+            ObjectNode jsTask = createObjectNode();
+            return jsTask;
+        }
     }
 }
