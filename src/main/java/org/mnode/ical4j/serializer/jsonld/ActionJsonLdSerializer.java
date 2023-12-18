@@ -1,6 +1,8 @@
 package org.mnode.ical4j.serializer.jsonld;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import net.fortuna.ical4j.model.Property;
 import net.fortuna.ical4j.model.component.VToDo;
 
 /**
@@ -15,7 +17,30 @@ public class ActionJsonLdSerializer extends AbstractJsonLdSerializer<VToDo> {
 
     @Override
     protected JsonNode buildSchema(VToDo component) {
-        AbstractJsonLdBuilder<VToDo> builder = new ActionJsonLdBuilder().component(component);
+        AbstractNodeBuilder<VToDo> builder = new ActionNodeBuilder().component(component);
         return builder.build();
+    }
+
+    /**
+     * <a href="https://schema.org/Action">Action</a>
+     */
+    public static class ActionNodeBuilder extends AbstractNodeBuilder<VToDo> {
+
+        public ActionNodeBuilder() {
+            super("Action");
+        }
+
+        @Override
+        public JsonNode build() {
+            ObjectNode node = createObjectNode();
+            putIfNotAbsent("@id", node, Property.UID);
+            putIfNotAbsent("name", node, Property.SUMMARY);
+            putIfNotAbsent("description", node, Property.DESCRIPTION);
+            putIfNotAbsent("url", node, Property.URL);
+            putIfNotAbsent("startTime", node, Property.DTSTART);
+            putIfNotAbsent("endTime", node, Property.DUE);
+            putIfNotAbsent("actionStatus", node, Property.STATUS);
+            return node;
+        }
     }
 }
