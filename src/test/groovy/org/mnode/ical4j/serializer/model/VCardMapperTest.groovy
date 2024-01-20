@@ -9,7 +9,11 @@ class VCardMapperTest extends Specification {
 
     def 'test card deserialization'() {
         given: 'a json string'
-        String json = '''{"uid":"1"}'''
+        String json = '''{
+  "kind": "individual",
+  "n": ";;;;;;",
+  "categories": "contacts"
+}'''
 
         and: 'an object mapper'
         SimpleModule module = []
@@ -21,8 +25,10 @@ class VCardMapperTest extends Specification {
         VCard card = mapper.readValue(json, VCard)
 
         then: 'card matches expected result'
-        card as String == 'BEGIN:VCARD\r\n' +
-                'UID:1\r\n' +
-                'END:VCARD\r\n'
+        card as String == '''BEGIN:VCARD\r
+KIND:individual\r
+N:;;;;\r
+CATEGORIES:contacts\r
+END:VCARD\r\n'''
     }
 }
