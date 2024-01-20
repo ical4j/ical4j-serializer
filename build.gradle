@@ -10,6 +10,7 @@ plugins {
 
 repositories {
     mavenCentral()
+    mavenLocal()
     // sonatype snapshots
     maven {
         url 'https://oss.sonatype.org/content/repositories/snapshots/'
@@ -29,6 +30,10 @@ dependencies {
             "org.mnode.ical4j:ical4j-vcard:$ical4jVCardVersion",
             "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion",
             "com.fasterxml.jackson.dataformat:jackson-dataformat-xml:$jacksonVersion"
+
+    implementation "org.ical4j:ical4j-template:$ical4jTemplateVersion"
+
+    implementation 'com.j2html:j2html:1.6.0'
 
     compileOnly 'org.osgi:osgi.core:8.0.0',
             'org.osgi:org.osgi.service.component.annotations:1.5.0',
