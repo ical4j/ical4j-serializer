@@ -4,7 +4,7 @@ import org.apache.commons.codec.StringEncoder;
 
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
-import java.util.function.Function;
+import java.util.function.UnaryOperator;
 
 /**
  * Support for encoding iCalendar value strings as JCal value strings.
@@ -26,9 +26,9 @@ public class JCalEncoder implements StringEncoder {
     public static final JCalEncoder UTCOFFSET = new JCalEncoder(s ->
             ZoneOffset.of(s).toString());
 
-    private final Function<String, String> function;
+    private final UnaryOperator<String> function;
 
-    public JCalEncoder(Function<String, String> function) {
+    public JCalEncoder(UnaryOperator<String> function) {
         this.function = function;
     }
 
