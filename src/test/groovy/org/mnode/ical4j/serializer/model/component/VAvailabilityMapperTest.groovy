@@ -46,9 +46,10 @@ class VAvailabilityMapperTest extends Specification {
         VAvailability availability = mapper.readValue(json, VAvailability)
 
         then: 'availability matches expected result'
-        availability as String == '''BEGIN:VAVAILABILITY\r
+        availability as String ==~ /BEGIN:VAVAILABILITY\r
+DTSTAMP:\d{8}T\d{6}Z\r
 UID:07cc67f4-45d6-494b-adac-09b5cbc7e2b5\r
-ORGANIZER;CN=string;DIR="http://example.com";SENT-BY="mailto:joecool@example.com";LANGUAGE=en-US:mailto:jane_doe@example.com\r
+ORGANIZER;CN=string;DIR="http:\/\/example.com";SENT-BY="mailto:joecool@example.com";LANGUAGE=en-US:mailto:jane_doe@example.com\r
 SUMMARY:string\r
 DTSTART:20190824T141522Z\r
 DTEND:20190824T141522Z\r
@@ -62,6 +63,6 @@ LAST-MODIFIED:20190824T141522Z\r
 CREATED:20190824T141522Z\r
 DURATION:PT15M\r
 BUSYTYPE:BUSY\r
-END:VAVAILABILITY\r\n'''
+END:VAVAILABILITY\r\n/
     }
 }

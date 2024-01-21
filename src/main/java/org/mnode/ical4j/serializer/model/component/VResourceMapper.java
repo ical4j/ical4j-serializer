@@ -4,21 +4,21 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import net.fortuna.ical4j.data.DefaultParameterFactorySupplier;
 import net.fortuna.ical4j.data.DefaultPropertyFactorySupplier;
-import net.fortuna.ical4j.model.component.VToDo;
+import net.fortuna.ical4j.model.component.VResource;
 import org.mnode.ical4j.serializer.model.AbstractContentMapper;
 
 import java.io.IOException;
 
-public class VToDoMapper extends AbstractContentMapper<VToDo> {
+public class VResourceMapper extends AbstractContentMapper<VResource> {
 
-    public VToDoMapper(Class<VToDo> t) {
+    public VResourceMapper(Class<VResource> t) {
         super(t);
         setPropertyFactories(new DefaultPropertyFactorySupplier().get());
         setParameterFactories(new DefaultParameterFactorySupplier().get());
     }
 
     @Override
-    public VToDo deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
-        return map(p, new VToDo(false));
+    public VResource deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+        return map(p, new VResource());
     }
 }
