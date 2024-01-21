@@ -12,7 +12,7 @@
 [CalDAV]: https://tools.ietf.org/html/rfc4791
 [JSON Feed]: https://www.jsonfeed.org/version/1.1/
 
-The purpose of this library is to provide custom marshalling between iCal4j objects and other formats.
+The purpose of this library is to provide custom marshalling between iCal4j objects and JSON/XML-based formats.
 
 ## Overview
 
@@ -32,11 +32,16 @@ when translating between iCalendar objects and this JSON format.
 This format is a good choice when unambiguous interoperability is required, as in theory if an agent supports
 the iCalendar specification then it should be reasonably trivial to have equivalent support for this format.
 
+### jCard - The JSON format for vCard
+
+As iCal4j includes a vCard object representation, it also makes sense to support JSON conversion of this
+object model. [jCard] provides a specification for converting JSON to/from vCard data.
+
 ### xCal - The XML Format for iCalendar
 
 TBD.
 
-### JSCalendar - A JSON representation of calendar data 
+### JMAP - A JSON representation of calendar/contact data 
 
 [JSCalendar] is a relatively new format
 (currently a draft specification), and aims to simplify the data representation of iCalendar data by focusing
@@ -46,11 +51,6 @@ availability.
 
 This format is good for calendar agents that do not yet have support for iCalendar, but would like to support
 interoperability with other calendar agents. As this is still a draft standard it is subject to change.
-
-### jCard - The JSON format for vCard
-
-As iCal4j includes a vCard object representation, it also makes sense to support JSON conversion of this
-object model. [jCard] provides a specification for converting JSON to/from vCard data.
 
 ### JSCard - A JSON representation for contact data
 
