@@ -10,7 +10,7 @@ import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
 import java.time.temporal.TemporalQuery;
-import java.util.function.Function;
+import java.util.function.UnaryOperator;
 
 /**
  * Support for decoding JCal value strings to iCalendar value strings.
@@ -61,9 +61,9 @@ public class JCalDecoder implements StringDecoder {
         }
     }
 
-    private final Function<String, String> function;
+    private final UnaryOperator<String> function;
 
-    public JCalDecoder(Function<String, String> function) {
+    public JCalDecoder(UnaryOperator<String> function) {
         this.function = function;
     }
 

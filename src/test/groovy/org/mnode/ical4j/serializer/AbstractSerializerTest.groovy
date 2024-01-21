@@ -12,10 +12,10 @@ import spock.lang.Specification
 class AbstractSerializerTest extends Specification {
 
     @Shared
-    Calendar calendar1, calendar2
+    Calendar calendar1, calendar2, calendar3
 
     @Shared
-    VEvent event1, event2
+    VEvent event1, event2, event3
 
     @Shared
     VFreeBusy freebusy1
@@ -36,7 +36,7 @@ class AbstractSerializerTest extends Specification {
     Available available1
 
     @Shared
-    VCard card1, card2, card3
+    VCard card1, card2, card3, card4
 
     def setupSpec() {
         ContentBuilder builder = []
@@ -59,6 +59,13 @@ class AbstractSerializerTest extends Specification {
             xproperty 'x-test', value: 'test-value'
         }
 
+        event3 = builder.vevent() {
+            dtstart '20240101'
+            summary 'New Years Day'
+            categories 'holidays'
+            categories 'international,global'
+        }
+
         calendar1 = builder.calendar() {
             prodid '-//Ben Fortuna//iCal4j 3.1//EN'
             version '2.0'
@@ -68,6 +75,13 @@ class AbstractSerializerTest extends Specification {
         }
 
         calendar2 = Calendars.load('src/test/resources/samples/justin.ics')
+
+        calendar3 = builder.calendar() {
+            name 'International Public Holidays'
+            description 'Globally recognized public holidays'
+            categories 'holidays'
+            categories 'global'
+        }
 
         net.fortuna.ical4j.vcard.ContentBuilder vcardBuilder = []
         card1 = vcardBuilder.vcard() {
@@ -86,6 +100,14 @@ class AbstractSerializerTest extends Specification {
             uid '3'
             logo 'http://example.org/acme-logo.png'
             adr ';;20341 Whitworth Institute 405 N. Whitworth;Seattle;WA;98052'
+        }
+
+        card4 = vcardBuilder.vcard() {
+            fn 'Acme Inc.'
+            uid '3'
+            logo 'http://example.org/acme-logo.png'
+            adr ';;20341 Whitworth Institute 405 N. Whitworth;Seattle;WA;98052'
+            email 'info@example.com'
         }
 
         freebusy1 = builder.vfreebusy() { uid '123'}
