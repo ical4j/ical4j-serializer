@@ -19,6 +19,10 @@ public class JCalEncoder implements StringEncoder {
             DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss[X]").format(
                     DateTimeFormatter.ofPattern("yyyyMMdd'T'HHmmss[X]").parse(s)));
 
+    public static final JCalEncoder INSTANT = new JCalEncoder(s ->
+            DateTimeFormatter.ISO_INSTANT.format(
+                    DateTimeFormatter.ofPattern("yyyyMMdd'T'HHmmss'Z'").withZone(ZoneOffset.UTC).parse(s)));
+
     public static final JCalEncoder TIME = new JCalEncoder(s ->
             DateTimeFormatter.ofPattern("HH:mm:ss[X]").format(
                     DateTimeFormatter.ofPattern("HHmmss[X]").parse(s)));
