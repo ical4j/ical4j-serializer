@@ -5,10 +5,11 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import net.fortuna.ical4j.model.component.VEvent;
-import org.mnode.ical4j.serializer.model.AbstractJsonBuilder;
-import org.mnode.ical4j.serializer.model.ComponentJsonBuilder;
+import org.mnode.ical4j.serializer.model.JsonObjectBuilder;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Convert iCal4j {@link VEvent} objects to JSON format.
@@ -17,6 +18,13 @@ import java.io.IOException;
  * Jot JSON separates calendars and components into separate (not nested) JSON structures.
  */
 public class VEventSerializer extends StdSerializer<VEvent> {
+
+    /**
+     * A subset of VEVENT properties supported by JOT notation.
+     */
+    private static final List<String> JOT_PROPS = Arrays.asList("UID", "ORGANIZER", "LOCATION", "RESOURCES",
+            "ATTACH", "RELATED-TO", "ATTENDEE", "TRIGGER", "COMMENT", "CONTACT", "FREEBUSY",
+            "DTSTART", "SUMMARY", "CATEGORIES", "DESCRIPTION", "RECURRENCE-ID");
 
     public VEventSerializer(Class<VEvent> t) {
         super(t);
@@ -28,7 +36,7 @@ public class VEventSerializer extends StdSerializer<VEvent> {
     }
 
     private JsonNode buildEvent(VEvent event) {
-        AbstractJsonBuilder<VEvent> builder = new ComponentJsonBuilder<VEvent>().component(event);
+        JsonObjectBuilder builder = new JsonObjectBuilder(event, JOT_PROPS);
         return builder.build();
     }
 }

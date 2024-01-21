@@ -23,6 +23,7 @@ class CalendarSerializerTest extends AbstractSerializerTest {
         where:
         calendar    | expectedSerialized
         calendar1   | '{"uid":"123"}'
-        calendar2   | '{"uid":"1","name":"Just In","description":"","source":"https://www.abc.net.au/news/feed/51120/rss.xml","url":"https://www.abc.net.au/news/justin/","image":"https://www.abc.net.au/news/image/8413416-1x1-144x144.png","last-modified":"20210304T055223Z"}'
+        calendar2   | '{"uid":"1","image":"https://www.abc.net.au/news/image/8413416-1x1-144x144.png","description":"","source":"https://www.abc.net.au/news/feed/51120/rss.xml","last-modified":"20210304T055223Z","url":"https://www.abc.net.au/news/justin/","name":"Just In"}'
+        calendar3   | '{"description":"Globally recognized public holidays","categories":["holidays","global"],"name":"International Public Holidays"}'
     }
 }

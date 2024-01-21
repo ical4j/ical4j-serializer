@@ -7,6 +7,8 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import net.fortuna.ical4j.model.Calendar;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Convert iCal4j {@link Calendar} objects to JSON format.
@@ -15,6 +17,12 @@ import java.io.IOException;
  * Jot JSON separates calendars and components into separate (not nested) JSON structures.
  */
 public class CalendarSerializer extends StdSerializer<Calendar> {
+
+    /**
+     * A subset of calendar properties supported by JOT notation.
+     */
+    private static final List<String> JOT_PROPS = Arrays.asList("UID", "LAST-MODIFIED", "URL", "REFRESH",
+            "SOURCE", "COLOR", "NAME", "DESCRIPTION", "CATEGORIES", "IMAGE");
 
     public CalendarSerializer(Class<Calendar> t) {
         super(t);
@@ -26,7 +34,7 @@ public class CalendarSerializer extends StdSerializer<Calendar> {
     }
 
     private JsonNode buildCalendar(Calendar calendar) {
-        AbstractJsonBuilder<Calendar> builder = new CalendarJsonBuilder().component(calendar);
+        JsonObjectBuilder builder = new JsonObjectBuilder(calendar, JOT_PROPS);
         return builder.build();
     }
 }

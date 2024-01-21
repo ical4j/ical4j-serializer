@@ -5,6 +5,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.mnode.ical4j.serializer.JsonBuilder;
 
+/**
+ * Build JSON objects from iCalendar and vCard objects.
+ * @param <T>
+ */
 public abstract class AbstractJsonBuilder<T> implements JsonBuilder {
 
     protected T component;

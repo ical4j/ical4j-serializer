@@ -5,10 +5,11 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import net.fortuna.ical4j.model.component.VToDo;
-import org.mnode.ical4j.serializer.model.AbstractJsonBuilder;
-import org.mnode.ical4j.serializer.model.ComponentJsonBuilder;
+import org.mnode.ical4j.serializer.model.JsonObjectBuilder;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Convert iCal4j {@link VToDo} objects to JSON format.
@@ -17,6 +18,12 @@ import java.io.IOException;
  * model JSON separates calendars and components into separate (not nested) JSON structures.
  */
 public class VToDoSerializer extends StdSerializer<VToDo> {
+
+    /**
+     * A subset of VTODO properties supported by JOT notation.
+     */
+    private static final List<String> JOT_PROPS = Arrays.asList("UID", "ORGANIZER", "LOCATION", "RESOURCES",
+            "ATTACH", "RELATED-TO", "ATTENDEE", "TRIGGER", "COMMENT", "CONTACT", "FREEBUSY", "SUMMARY");
 
     public VToDoSerializer(Class<VToDo> t) {
         super(t);
@@ -28,7 +35,7 @@ public class VToDoSerializer extends StdSerializer<VToDo> {
     }
 
     private JsonNode buildTodo(VToDo toDo) {
-        AbstractJsonBuilder<VToDo> builder = new ComponentJsonBuilder<VToDo>().component(toDo);
+        JsonObjectBuilder builder = new JsonObjectBuilder(toDo, JOT_PROPS);
         return builder.build();
     }
 }

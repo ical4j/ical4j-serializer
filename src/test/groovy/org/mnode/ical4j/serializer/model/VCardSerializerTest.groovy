@@ -22,7 +22,7 @@ class VCardSerializerTest extends AbstractSerializerTest {
 
         where:
         card    | expectedSerialized
-        card1   | '{"uid":"1"}'
-        card2   | '{"uid":"2"}'
+        card1   | '{"uid":"1","fn":"Test Card"}'
+        card2   | '{"uid":"2","fn":"Jane Doe","adr":";;20341 Whitworth Institute 405 N. Whitworth;Seattle;WA;98052;;"}'
     }
 }
