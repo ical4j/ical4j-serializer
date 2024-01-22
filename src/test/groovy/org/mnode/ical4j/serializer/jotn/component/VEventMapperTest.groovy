@@ -165,6 +165,7 @@ END:VEVENT\r\n'''
         String json = '''{
   "dtstart": "2024-01-01",
   "summary": "New Years Day",
+  "concept": "https://ical4j.org/extensions/concepts/observances/OBSERVANCE",
   "categories": ["holidays", "international,global"]
 }'''
         when: 'the event is deserialized'
@@ -174,6 +175,7 @@ END:VEVENT\r\n'''
         event as String == '''BEGIN:VEVENT\r
 DTSTART:20240101\r
 SUMMARY:New Years Day\r
+CONCEPT:https://ical4j.org/extensions/concepts/observances/OBSERVANCE\r
 CATEGORIES:holidays\r
 CATEGORIES:international,global\r
 END:VEVENT\r\n'''

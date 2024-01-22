@@ -28,8 +28,12 @@ public class VEventMapper extends AbstractContentMapper<VEvent> {
         // apply template if specified..
         Optional<Concept> concept = event.getProperty("CONCEPT");
         if (concept.isPresent()) {
-            UnaryOperator<VEvent> template = new TemplateFactory().newInstance(concept.get());
-            template.apply(event);
+            try {
+                UnaryOperator<VEvent> template = new TemplateFactory().newInstance(concept.get());
+                template.apply(event);
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+            }
         }
         return event;
     }
