@@ -24,7 +24,7 @@ public class VEventSerializer extends StdSerializer<VEvent> {
      */
     private static final List<String> JOT_PROPS = Arrays.asList("UID", "ORGANIZER", "LOCATION", "RESOURCES",
             "ATTACH", "RELATED-TO", "ATTENDEE", "TRIGGER", "COMMENT", "CONTACT", "FREEBUSY",
-            "DTSTART", "SUMMARY", "CATEGORIES", "DESCRIPTION", "RECURRENCE-ID");
+            "DTSTART", "SUMMARY", "CATEGORIES", "DESCRIPTION", "RECURRENCE-ID", "CONCEPT");
 
     public VEventSerializer(Class<VEvent> t) {
         super(t);
