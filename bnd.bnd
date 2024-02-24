@@ -1,3 +1,2 @@
 Export-Package: org.mnode.ical4j.serializer
-Automatic-Module-Name: org.mnode.ical4j.serializer
 Bundle-License: https://raw.githubusercontent.com/ical4j/ical4j/master/LICENSE.txt

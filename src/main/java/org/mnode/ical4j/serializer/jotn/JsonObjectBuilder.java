@@ -4,9 +4,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import net.fortuna.ical4j.model.Parameter;
 import net.fortuna.ical4j.model.Property;
 import net.fortuna.ical4j.model.PropertyContainer;
-import net.fortuna.ical4j.model.parameter.Value;
 import org.mnode.ical4j.serializer.JsonBuilder;
 
 import java.util.List;
@@ -78,7 +78,7 @@ public class JsonObjectBuilder implements JsonBuilder {
             case "ORGANIZER":
                 return "cal-address";
             default:
-                Optional<Value> value = prop.getParameter("VALUE");
+                Optional<Parameter> value = prop.getParameter("VALUE");
                 return value.map(value1 -> value1.getValue().toLowerCase()).orElse("value");
         }
     }

@@ -165,6 +165,7 @@ END:VEVENT\r\n'''
         String json = '''{
   "dtstart": "2024-01-01",
   "summary": "New Years Day",
+  "concept": "ical4j:concept:observance:observance",
   "categories": ["holidays", "international,global"]
 }'''
         when: 'the event is deserialized'
@@ -174,6 +175,7 @@ END:VEVENT\r\n'''
         event as String == '''BEGIN:VEVENT\r
 DTSTART:20240101\r
 SUMMARY:New Years Day\r
+CONCEPT:ical4j:concept:observance:observance\r
 CATEGORIES:holidays\r
 CATEGORIES:international,global\r
 END:VEVENT\r\n'''
@@ -182,7 +184,7 @@ END:VEVENT\r\n'''
     def 'test template deserialization'() {
         given: 'a json string'
         String json = '''{
-"concept": "https://ical4j.org/extensions/concept/event/MEETING",
+"concept": "ical4j:concept:event:meeting",
 "dtstart": "2023-11-24T09:30:00Z",
 "dtend": "2023-11-24T10:30:00Z",
 "summary": "Sample meeting"
@@ -196,7 +198,7 @@ END:VEVENT\r\n'''
 DTSTART:20231124T093000Z\r
 DTEND:20231124T103000Z\r
 SUMMARY:Sample meeting\r
-CONCEPT:https://ical4j.org/extensions/concept/event/MEETING\r
+CONCEPT:ical4j:concept:event:meeting\r
 END:VEVENT\r\n'''
     }
 }
