@@ -3,7 +3,6 @@ package org.mnode.ical4j.serializer.jotn;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import net.fortuna.ical4j.model.Calendar;
 
 import java.io.IOException;
@@ -16,7 +15,7 @@ import java.util.List;
  * NOTE: Conversion to jot is "lossy" in that child components are ignored. This is intentional as
  * Jot JSON separates calendars and components into separate (not nested) JSON structures.
  */
-public class CalendarSerializer extends StdSerializer<Calendar> {
+public class CalendarSerializer extends AbstractContentSerializer<Calendar> {
 
     /**
      * A subset of calendar properties supported by JOT notation.
@@ -25,7 +24,11 @@ public class CalendarSerializer extends StdSerializer<Calendar> {
             "SOURCE", "COLOR", "NAME", "DESCRIPTION", "CATEGORIES", "IMAGE");
 
     public CalendarSerializer(Class<Calendar> t) {
-        super(t);
+        super(t, JOT_PROPS);
+    }
+
+    public CalendarSerializer(Class<Calendar> t, String...filteredProps) {
+        super(t, Arrays.asList(filteredProps));
     }
 
     @Override
@@ -34,7 +37,6 @@ public class CalendarSerializer extends StdSerializer<Calendar> {
     }
 
     private JsonNode buildCalendar(Calendar calendar) {
-        JsonObjectBuilder builder = new JsonObjectBuilder(calendar, JOT_PROPS);
-        return builder.build();
+        return newBuilder(calendar).build();
     }
 }

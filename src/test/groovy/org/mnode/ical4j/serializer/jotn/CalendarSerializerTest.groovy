@@ -10,7 +10,7 @@ class CalendarSerializerTest extends AbstractSerializerTest {
     def 'test calendar serialization'() {
         given: 'an object mapper'
         SimpleModule module = []
-        module.addSerializer(Calendar, new CalendarSerializer())
+        module.addSerializer(Calendar, new CalendarSerializer(null))
         ObjectMapper mapper = []
         mapper.registerModule(module)
 
