@@ -35,7 +35,6 @@ public interface JsonBuilder {
             case "trigger":
             case "created":
             case "last-modified":
-            case "recurrence-id":
             case "dtstamp":
                 return JCalEncoder.INSTANT.encode(property.getValue());
             case "dtstart":
@@ -43,6 +42,7 @@ public interface JsonBuilder {
             case "rdate":
             case "exdate":
             case "due":
+            case "recurrence-id":
                 if (property.getParameters("VALUE").contains(Value.DATE)) {
                     return JCalEncoder.DATE.encode(property.getValue());
                 } else {
