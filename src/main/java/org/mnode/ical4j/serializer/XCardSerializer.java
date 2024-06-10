@@ -12,9 +12,11 @@ import net.fortuna.ical4j.model.Parameter;
 import net.fortuna.ical4j.model.Property;
 import net.fortuna.ical4j.vcard.ParameterName;
 import net.fortuna.ical4j.vcard.VCard;
+import net.fortuna.ical4j.vcard.parameter.Value;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Support for serialization of {@link VCard} objects according to the XCard specification.
@@ -75,9 +77,9 @@ public class XCardSerializer extends StdSerializer<VCard> {
 
     private String getPropertyType(Property property) {
         // handle property type overrides via VALUE param..
-        Parameter value = property.getRequiredParameter(ParameterName.VALUE.toString());
-        if (value != null) {
-            return value.getValue().toLowerCase();
+        Optional<Value> value = property.getParameter(ParameterName.VALUE);
+        if (value.isPresent()) {
+            return value.get().getValue().toLowerCase();
         }
 
         switch (property.getName()) {

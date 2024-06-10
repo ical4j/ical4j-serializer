@@ -12,6 +12,7 @@ import org.mnode.ical4j.serializer.JsonBuilder;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.groupingBy;
 
@@ -26,7 +27,7 @@ public class JsonObjectBuilder implements JsonBuilder {
 
     public JsonObjectBuilder(PropertyContainer propertyContainer, List<String> propertyNames) {
         this.propertyContainer = propertyContainer;
-        this.propertyNames = propertyNames;
+        this.propertyNames = propertyNames.stream().map(String::toUpperCase).collect(Collectors.toList());
     }
 
     public JsonNode build() {

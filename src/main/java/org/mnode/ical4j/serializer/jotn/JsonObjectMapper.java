@@ -105,7 +105,7 @@ public interface JsonObjectMapper extends JsonMapper {
                 PARTSTAT, RANGE, RELATED, RELTYPE,
                 ROLE, RSVP, SCHEDULE_AGENT, SCHEDULE_STATUS,
                 SENT_BY, TYPE, TZID, VALUE, VVENUE).contains(fieldName.toUpperCase()) ||
-                fieldName.startsWith("x-");
+                fieldName.toUpperCase().startsWith("X-");
     }
 
 }

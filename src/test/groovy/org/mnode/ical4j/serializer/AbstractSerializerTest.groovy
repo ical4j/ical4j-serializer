@@ -56,7 +56,7 @@ class AbstractSerializerTest extends Specification {
             organizer 'johnd@example.com', parameters: parameters { cn 'John Doe' }
             dtstart '20100810', parameters: parameters { value 'DATE' }
             description 'Test Description 2', parameters: parameters { xparameter name: 'x-format', value: 'text/plain' }
-            xproperty 'x-test', value: 'test-value'
+            'X-test' 'test-value'
         }
 
         event3 = builder.vevent() {

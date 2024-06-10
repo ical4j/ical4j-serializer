@@ -7,13 +7,7 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
-import net.fortuna.ical4j.model.Calendar;
-import net.fortuna.ical4j.model.Component;
-import net.fortuna.ical4j.model.Parameter;
-import net.fortuna.ical4j.model.Property;
-import net.fortuna.ical4j.model.component.VEvent;
-import net.fortuna.ical4j.model.component.VTimeZone;
-import net.fortuna.ical4j.model.component.VToDo;
+import net.fortuna.ical4j.model.*;
 import net.fortuna.ical4j.model.parameter.Value;
 
 import java.io.IOException;
@@ -68,16 +62,8 @@ public class JCalSerializer extends StdSerializer<Calendar> {
         cArray.add(componentprops);
 
         ArrayNode subcomponents = mapper.createArrayNode();
-        if (component instanceof VEvent) {
-            for (Component c : ((VEvent) component).getAlarms()) {
-                subcomponents.add(buildComponentArray(c));
-            }
-        } else if (component instanceof VToDo) {
-            for (Component c : ((VToDo) component).getAlarms()) {
-                subcomponents.add(buildComponentArray(c));
-            }
-        } else if (component instanceof VTimeZone) {
-            for (Component c : ((VTimeZone) component).getObservances()) {
+        if (component instanceof ComponentContainer) {
+            for (Component c : ((ComponentContainer<?>) component).getComponents()) {
                 subcomponents.add(buildComponentArray(c));
             }
         }
