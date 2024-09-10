@@ -26,9 +26,9 @@ public abstract class AbstractNodeBuilder<T extends PropertyListAccessor> implem
     }
 
     protected ObjectNode createObjectNode() {
-        ObjectMapper mapper = new ObjectMapper();
+        var mapper = new ObjectMapper();
 
-        ObjectNode node = mapper.createObjectNode();
+        var node = mapper.createObjectNode();
         node.put("@context", "https://schema.org");
         node.put("@type", schemaType);
         return node;

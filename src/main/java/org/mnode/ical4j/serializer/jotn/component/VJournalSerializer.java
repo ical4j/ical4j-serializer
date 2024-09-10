@@ -35,7 +35,7 @@ public class VJournalSerializer extends StdSerializer<VJournal> {
     }
 
     private JsonNode buildJournal(VJournal journal) {
-        JsonObjectBuilder builder = new JsonObjectBuilder(journal, JOT_PROPS);
+        var builder = new JsonObjectBuilder(journal, JOT_PROPS);
         return builder.build();
     }
 }

@@ -25,7 +25,7 @@ public interface JsonObjectMapper extends JsonMapper {
 
         while (!JsonToken.END_OBJECT.equals(p.nextToken())) {
             assertCurrentToken(p, JsonToken.FIELD_NAME);
-            String propertyName = p.currentName();
+            var propertyName = p.currentName();
             try {
                 if (JsonToken.START_ARRAY.equals(p.nextToken())) {
                     container.addAll(parsePropertyList(p, propertyName));
@@ -68,10 +68,10 @@ public interface JsonObjectMapper extends JsonMapper {
      * @throws ParseException
      */
     default Property parseProperty(JsonParser p, String propertyName) throws IOException, URISyntaxException, ParseException {
-        PropertyBuilder propertyBuilder = new PropertyBuilder(getPropertyFactories());
+        var propertyBuilder = new PropertyBuilder(getPropertyFactories());
         propertyBuilder.name(propertyName);
         if (JsonToken.START_ARRAY.equals(p.currentToken())) {
-            StringBuilder b = new StringBuilder();
+            var b = new StringBuilder();
             while (!JsonToken.END_ARRAY.equals(p.nextToken())) {
                 assertCurrentToken(p, JsonToken.VALUE_STRING);
                 b.append(p.getText());

@@ -5,7 +5,6 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import net.fortuna.ical4j.model.Parameter;
@@ -37,21 +36,21 @@ public class XCardSerializer extends StdSerializer<VCard> {
     }
 
     private JsonNode buildVCard(VCard card) {
-        ObjectNode root = objectMapper.createObjectNode();
-        ObjectNode vcard = root.putObject("vcard");
+        var root = objectMapper.createObjectNode();
+        var vcard = root.putObject("vcard");
 
-        ObjectNode cardprops = vcard.putObject("properties");
-        for (Property p : card.getProperties()) {
+        var cardprops = vcard.putObject("properties");
+        for (var p : card.getProperties()) {
             cardprops.putIfAbsent(p.getName().toLowerCase(), buildPropertyNode(p));
         }
         return root;
     }
 
     private JsonNode buildPropertyNode(Property property) {
-        ObjectNode pArray = objectMapper.createObjectNode();
+        var pArray = objectMapper.createObjectNode();
         pArray.putIfAbsent("parameters", buildParamsObject(property.getParameters()));
 
-        String propertyType = getPropertyType(property);
+        var propertyType = getPropertyType(property);
         switch (propertyType) {
             case "date":
                 pArray.put(propertyType, JCalEncoder.DATE.encode(property.getValue()));
@@ -147,8 +146,8 @@ public class XCardSerializer extends StdSerializer<VCard> {
     }
 
     private JsonNode buildParamsObject(List<Parameter> parameterList) {
-        ObjectNode params = objectMapper.createObjectNode();
-        for (Parameter p : parameterList) {
+        var params = objectMapper.createObjectNode();
+        for (var p : parameterList) {
             params.put(p.getName().toLowerCase(), p.getValue().toLowerCase());
         }
         return params;

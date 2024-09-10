@@ -32,7 +32,7 @@ public class VAlarmSerializer extends StdSerializer<VAlarm> {
     }
 
     private JsonNode buildAlarm(VAlarm alarm) {
-        JsonObjectBuilder builder = new JsonObjectBuilder(alarm, JOT_PROPS);
+        var builder = new JsonObjectBuilder(alarm, JOT_PROPS);
         return builder.build();
     }
 }

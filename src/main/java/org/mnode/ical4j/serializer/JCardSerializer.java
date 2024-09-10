@@ -4,8 +4,6 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import net.fortuna.ical4j.model.Parameter;
 import net.fortuna.ical4j.model.Property;
@@ -33,13 +31,13 @@ public class JCardSerializer extends StdSerializer<VCard> {
     }
 
     private JsonNode buildVCard(VCard card) {
-        ObjectMapper mapper = new ObjectMapper();
+        var mapper = new ObjectMapper();
 
-        ArrayNode vcard = mapper.createArrayNode();
+        var vcard = mapper.createArrayNode();
         vcard.add("vcard");
 
-        ArrayNode vcardprops = mapper.createArrayNode();
-        for (Property p : card.getProperties()) {
+        var vcardprops = mapper.createArrayNode();
+        for (var p : card.getProperties()) {
             vcardprops.add(buildPropertyArray(p));
         }
         vcard.add(vcardprops);
@@ -48,9 +46,9 @@ public class JCardSerializer extends StdSerializer<VCard> {
     }
 
     private JsonNode buildPropertyArray(Property property) {
-        ObjectMapper mapper = new ObjectMapper();
+        var mapper = new ObjectMapper();
 
-        ArrayNode pArray = mapper.createArrayNode();
+        var pArray = mapper.createArrayNode();
         pArray.add(property.getName().toLowerCase());
         pArray.add(buildParamsObject(property.getParameters()));
         pArray.add(getPropertyType(property));
@@ -113,10 +111,10 @@ public class JCardSerializer extends StdSerializer<VCard> {
     }
 
     private JsonNode buildParamsObject(List<Parameter> parameterList) {
-        ObjectMapper mapper = new ObjectMapper();
+        var mapper = new ObjectMapper();
 
-        ObjectNode params = mapper.createObjectNode();
-        for (Parameter p : parameterList) {
+        var params = mapper.createObjectNode();
+        for (var p : parameterList) {
             params.put(p.getName().toLowerCase(), p.getValue().toLowerCase());
         }
         return params;

@@ -32,7 +32,7 @@ public class AvailableSerializer extends StdSerializer<Available> {
     }
 
     private JsonNode buildAvailable(Available available) {
-        JsonObjectBuilder builder = new JsonObjectBuilder(available, JOT_PROPS);
+        var builder = new JsonObjectBuilder(available, JOT_PROPS);
         return builder.build();
     }
 }

@@ -35,7 +35,7 @@ public class VAvailabilitySerializer extends StdSerializer<VAvailability> {
     }
 
     private JsonNode buildAvailability(VAvailability availability) {
-        JsonObjectBuilder builder = new JsonObjectBuilder(availability, JOT_PROPS);
+        var builder = new JsonObjectBuilder(availability, JOT_PROPS);
         return builder.build();
     }
 }

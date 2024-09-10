@@ -26,7 +26,7 @@ public class VCardSerializer extends StdSerializer<VCard> {
     }
 
     private JsonNode buildCard(VCard card) {
-        JsonObjectBuilder builder = new JsonObjectBuilder(card,
+        var builder = new JsonObjectBuilder(card,
                 Arrays.stream(PropertyName.values()).map(PropertyName::toString).collect(Collectors.toList()));
         return builder.build();
     }

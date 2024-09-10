@@ -31,7 +31,7 @@ public class VLocationSerializer extends StdSerializer<VLocation> {
     }
 
     private JsonNode buildLocation(VLocation location) {
-        JsonObjectBuilder builder = new JsonObjectBuilder(location, JOT_PROPS);
+        var builder = new JsonObjectBuilder(location, JOT_PROPS);
         return builder.build();
     }
 }

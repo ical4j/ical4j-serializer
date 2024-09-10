@@ -39,7 +39,7 @@ public class JCalMapper extends JsonDeserializer<Calendar> implements JsonMapper
 
     @Override
     public Calendar deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
-        Calendar calendar = new Calendar();
+        var calendar = new Calendar();
         assertTextValue(p, "vcalendar");
         // calendar properties..
         assertNextToken(p, JsonToken.START_ARRAY);
@@ -81,7 +81,7 @@ public class JCalMapper extends JsonDeserializer<Calendar> implements JsonMapper
 
     private Property parseProperty(JsonParser p) throws IOException, URISyntaxException, ParseException {
         assertCurrentToken(p, JsonToken.START_ARRAY);
-        PropertyBuilder propertyBuilder = new PropertyBuilder(propertyFactories);
+        var propertyBuilder = new PropertyBuilder(propertyFactories);
         propertyBuilder.name(p.nextTextValue());
         // property params..
         assertNextToken(p, JsonToken.START_OBJECT);
@@ -94,7 +94,7 @@ public class JCalMapper extends JsonDeserializer<Calendar> implements JsonMapper
         }
 
         // propertyType
-        String propertyType = p.nextTextValue();
+        var propertyType = p.nextTextValue();
         switch (propertyType) {
             case "date":
                 propertyBuilder.parameter(Value.DATE);

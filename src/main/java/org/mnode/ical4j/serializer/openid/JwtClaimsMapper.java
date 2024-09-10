@@ -29,7 +29,7 @@ public class JwtClaimsMapper extends StdDeserializer<VCard> implements JsonMappe
 
     @Override
     public VCard deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
-        VCard card = new VCard();
+        var card = new VCard();
         // should have at least one field..
         assertNextToken(p, JsonToken.FIELD_NAME);
         while (p.getCurrentToken() != JsonToken.END_OBJECT) {
@@ -44,7 +44,7 @@ public class JwtClaimsMapper extends StdDeserializer<VCard> implements JsonMappe
     }
 
     private Property parseProperty(JsonParser p) throws IOException, URISyntaxException, ParseException {
-        String propertyName = p.currentName();
+        var propertyName = p.currentName();
         assertNextToken(p, JsonToken.VALUE_STRING);
         switch (propertyName) {
             case "name": return new Name(p.getValueAsString());
@@ -56,12 +56,12 @@ public class JwtClaimsMapper extends StdDeserializer<VCard> implements JsonMappe
     }
 
     private Address parseAddress(JsonNode n) {
-        String formatted = n.get("formatted").asText();
-        String street = n.get("street_address").asText();
-        String locality = n.get("locality").asText();
-        String region = n.get("region").asText();
-        String postal_code = n.get("postal_code").asText();
-        String country = n.get("country").asText();
+        var formatted = n.get("formatted").asText();
+        var street = n.get("street_address").asText();
+        var locality = n.get("locality").asText();
+        var region = n.get("region").asText();
+        var postal_code = n.get("postal_code").asText();
+        var country = n.get("country").asText();
 
         return new Address(null, null, street, locality, region, postal_code, country);
     }

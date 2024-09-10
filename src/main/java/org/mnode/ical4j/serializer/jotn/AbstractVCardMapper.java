@@ -43,7 +43,7 @@ public abstract class AbstractVCardMapper<T> extends StdDeserializer<T> implemen
         String value = null;
         List<Parameter> parameters = new ArrayList<>();
         if (JsonToken.START_ARRAY.equals(p.currentToken())) {
-            StringBuilder b = new StringBuilder();
+            var b = new StringBuilder();
             while (!JsonToken.END_ARRAY.equals(p.nextToken())) {
                 assertCurrentToken(p, JsonToken.VALUE_STRING);
                 b.append(p.getText());

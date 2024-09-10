@@ -31,7 +31,7 @@ public class VResourceSerializer extends StdSerializer<VResource> {
     }
 
     private JsonNode buildResource(VResource resource) {
-        JsonObjectBuilder builder = new JsonObjectBuilder(resource, JOT_PROPS);
+        var builder = new JsonObjectBuilder(resource, JOT_PROPS);
         return builder.build();
     }
 }

@@ -18,11 +18,11 @@ public class VCardMapper extends AbstractVCardMapper<VCard> {
 
     @Override
     public VCard deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
-        VCard card = new VCard();
+        var card = new VCard();
         assertCurrentToken(p, JsonToken.START_OBJECT);
         while (!JsonToken.END_OBJECT.equals(p.nextToken())) {
             assertCurrentToken(p, JsonToken.FIELD_NAME);
-            String propertyName = p.currentName();
+            var propertyName = p.currentName();
             try {
                 if (JsonToken.START_ARRAY.equals(p.nextToken())) {
                     card.addAll(parsePropertyList(propertyName, p));

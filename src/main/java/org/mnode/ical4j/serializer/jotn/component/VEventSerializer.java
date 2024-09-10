@@ -36,7 +36,7 @@ public class VEventSerializer extends StdSerializer<VEvent> {
     }
 
     private JsonNode buildEvent(VEvent event) {
-        JsonObjectBuilder builder = new JsonObjectBuilder(event, JOT_PROPS);
+        var builder = new JsonObjectBuilder(event, JOT_PROPS);
         return builder.build();
     }
 }

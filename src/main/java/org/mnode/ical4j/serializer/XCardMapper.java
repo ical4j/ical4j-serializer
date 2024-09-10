@@ -40,7 +40,7 @@ public class XCardMapper extends StdDeserializer<VCard> implements JsonMapper {
 
     @Override
     public VCard deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
-        VCard card = new VCard();
+        var card = new VCard();
         assertNextName(p, "vcalendar");
         assertNextToken(p, JsonToken.START_OBJECT);
         // calendar properties..
@@ -57,9 +57,9 @@ public class XCardMapper extends StdDeserializer<VCard> implements JsonMapper {
     }
 
     private Property parseProperty(JsonParser p) throws IOException, URISyntaxException, ParseException {
-        String propertyName = p.currentName();
+        var propertyName = p.currentName();
         assertNextToken(p, JsonToken.START_OBJECT);
-        PropertyBuilder propertyBuilder = new PropertyBuilder(propertyFactories);
+        var propertyBuilder = new PropertyBuilder(propertyFactories);
         propertyBuilder.name(propertyName);
         // property params..
         assertNextName(p, "parameters");
@@ -75,7 +75,7 @@ public class XCardMapper extends StdDeserializer<VCard> implements JsonMapper {
             }
         }
         // propertyType
-        String propertyType = p.nextFieldName();
+        var propertyType = p.nextFieldName();
         switch (propertyType) {
             case "date":
                 propertyBuilder.parameter(Value.DATE);

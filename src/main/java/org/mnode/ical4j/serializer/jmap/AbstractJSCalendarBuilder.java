@@ -21,9 +21,9 @@ public abstract class AbstractJSCalendarBuilder<T> implements JsonBuilder {
     }
 
     protected ObjectNode createObjectNode() {
-        ObjectMapper mapper = new ObjectMapper();
+        var mapper = new ObjectMapper();
 
-        ObjectNode node = mapper.createObjectNode();
+        var node = mapper.createObjectNode();
         node.put("@type", objectType);
         return node;
     }

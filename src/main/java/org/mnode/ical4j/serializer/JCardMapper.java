@@ -37,7 +37,7 @@ public class JCardMapper extends StdDeserializer<VCard> implements JsonMapper {
 
     @Override
     public VCard deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
-        VCard card = new VCard();
+        var card = new VCard();
         assertTextValue(p, "vcard");
         // card properties..
         assertNextToken(p, JsonToken.START_ARRAY);
@@ -53,17 +53,17 @@ public class JCardMapper extends StdDeserializer<VCard> implements JsonMapper {
 
     private Property parseProperty(JsonParser p) throws IOException, URISyntaxException, ParseException, DecoderException {
         assertCurrentToken(p, JsonToken.START_ARRAY);
-        String propName = p.nextTextValue();
+        var propName = p.nextTextValue();
         // property params..
         assertNextToken(p, JsonToken.START_OBJECT);
         List<Parameter> params = new ArrayList<>();
         while (!JsonToken.END_OBJECT.equals(p.nextToken())) {
-            Parameter parameter = parameterFactoryRegistry.getFactory(p.currentName()).createParameter(p.getText());
+            var parameter = parameterFactoryRegistry.getFactory(p.currentName()).createParameter(p.getText());
             params.add(parameter);
         }
 
         // propertyType
-        String propertyType = p.nextTextValue();
+        var propertyType = p.nextTextValue();
         switch (propertyType) {
             case "binary":
                 params.add(Value.BINARY);
@@ -77,7 +77,7 @@ public class JCardMapper extends StdDeserializer<VCard> implements JsonMapper {
                 params.add(Value.URI);
         }
 
-        String value = p.nextTextValue();
+        var value = p.nextTextValue();
         assertNextToken(p, JsonToken.END_ARRAY);
 
         return propertyFactoryRegistry.getFactory(propName).createProperty(new ParameterList(params), value);

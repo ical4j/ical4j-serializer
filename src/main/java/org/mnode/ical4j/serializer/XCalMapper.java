@@ -39,7 +39,7 @@ public class XCalMapper extends StdDeserializer<Calendar> implements JsonMapper 
 
     @Override
     public Calendar deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
-        Calendar calendar = new Calendar();
+        var calendar = new Calendar();
         assertNextName(p, "vcalendar");
         assertNextToken(p, JsonToken.START_OBJECT);
         // calendar properties..
@@ -69,7 +69,7 @@ public class XCalMapper extends StdDeserializer<Calendar> implements JsonMapper 
     }
 
     private Component parseComponent(JsonParser p) throws IOException, URISyntaxException, ParseException {
-        String componentName = p.currentName();
+        var componentName = p.currentName();
         assertNextToken(p, JsonToken.START_OBJECT);
         ComponentBuilder<?> componentBuilder = new ComponentBuilder<>(componentFactories);
         componentBuilder.name(componentName);
@@ -92,9 +92,9 @@ public class XCalMapper extends StdDeserializer<Calendar> implements JsonMapper 
     }
 
     private Property parseProperty(JsonParser p) throws IOException, URISyntaxException, ParseException {
-        String propertyName = p.currentName();
+        var propertyName = p.currentName();
         assertNextToken(p, JsonToken.START_OBJECT);
-        PropertyBuilder propertyBuilder = new PropertyBuilder(propertyFactories);
+        var propertyBuilder = new PropertyBuilder(propertyFactories);
         propertyBuilder.name(propertyName);
         // property params..
         assertNextName(p, "parameters");
@@ -110,7 +110,7 @@ public class XCalMapper extends StdDeserializer<Calendar> implements JsonMapper 
             }
         }
         // propertyType
-        String propertyType = p.nextFieldName();
+        var propertyType = p.nextFieldName();
         switch (propertyType) {
             case "date":
                 propertyBuilder.parameter(Value.DATE);

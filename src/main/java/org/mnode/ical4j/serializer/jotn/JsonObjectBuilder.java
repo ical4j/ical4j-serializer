@@ -31,9 +31,9 @@ public class JsonObjectBuilder implements JsonBuilder {
     }
 
     public JsonNode build() {
-        ObjectMapper mapper = new ObjectMapper();
+        var mapper = new ObjectMapper();
 
-        ObjectNode node = mapper.createObjectNode();
+        var node = mapper.createObjectNode();
 
         Map<String, List<Property>> propertyMap = propertyContainer.getProperties().stream()
                 .filter(p -> propertyNames.contains(p.getName()))
@@ -41,12 +41,12 @@ public class JsonObjectBuilder implements JsonBuilder {
 
         //xxx: add single properties as string node
         // add multiple properties as array node
-        for (String propName : propertyMap.keySet()) {
+        for (var propName : propertyMap.keySet()) {
             List<Property> props = propertyMap.get(propName);
             if (props.size() == 1) {
                 putProperty(node, props.get(0));
             } else {
-                ArrayNode arrayNode = node.putArray(propName.toLowerCase());
+                var arrayNode = node.putArray(propName.toLowerCase());
                 props.forEach(p -> putProperty(arrayNode, p));
             }
         }
@@ -57,7 +57,7 @@ public class JsonObjectBuilder implements JsonBuilder {
         if (prop.getParameters().isEmpty()) {
             node.put(prop.getName().toLowerCase(), prop.getValue());
         } else {
-            ObjectNode pobj = node.putObject(prop.getName().toLowerCase());
+            var pobj = node.putObject(prop.getName().toLowerCase());
             prop.getParameters().forEach(p -> pobj.put(p.getName().toLowerCase(), p.getValue()));
             pobj.put(valueFieldName(prop), encodeValue(prop));
         }
@@ -68,7 +68,7 @@ public class JsonObjectBuilder implements JsonBuilder {
         if (prop.getParameters().isEmpty()) {
             node.add(prop.getValue());
         } else {
-            ObjectNode pobj = node.addObject();
+            var pobj = node.addObject();
             pobj.put(valueFieldName(prop), encodeValue(prop));
         }
         return node;

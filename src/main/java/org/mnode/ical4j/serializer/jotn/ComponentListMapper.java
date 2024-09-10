@@ -42,7 +42,7 @@ public class ComponentListMapper extends StdDeserializer<ComponentList<? extends
         List<Component> components = new ArrayList<>();
 
         while (JsonToken.FIELD_NAME.equals(p.nextToken())) {
-            String componentType = p.currentName();
+            var componentType = p.currentName();
             assertNextToken(p, JsonToken.START_OBJECT);
             switch (componentType) {
                 case "event":

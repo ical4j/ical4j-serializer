@@ -5,7 +5,6 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import net.fortuna.ical4j.model.Calendar;
@@ -40,40 +39,40 @@ public class XCalSerializer extends StdSerializer<Calendar> {
     }
 
     private JsonNode buildVCalendar(Calendar calendar) {
-        ObjectNode icalendar = objectMapper.createObjectNode();
-        ObjectNode vcalendar = icalendar.putObject("vcalendar");
+        var icalendar = objectMapper.createObjectNode();
+        var vcalendar = icalendar.putObject("vcalendar");
 
-        ObjectNode vcalprops = vcalendar.putObject("properties");
-        for (Property p : calendar.getProperties()) {
+        var vcalprops = vcalendar.putObject("properties");
+        for (var p : calendar.getProperties()) {
             vcalprops.putIfAbsent(p.getName().toLowerCase(), buildPropertyNode(p));
         }
 
-        ObjectNode vcalcomponents = vcalendar.putObject("components");
-        for (Component c : calendar.getComponents()) {
+        var vcalcomponents = vcalendar.putObject("components");
+        for (var c : calendar.getComponents()) {
             vcalcomponents.putIfAbsent(c.getName().toLowerCase(), buildComponentArray(c));
         }
         return icalendar;
     }
 
     private JsonNode buildComponentArray(Component component) {
-        ObjectNode cArray = objectMapper.createObjectNode();
+        var cArray = objectMapper.createObjectNode();
 
-        ObjectNode componentprops = cArray.putObject("properties");
-        for (Property p : component.getProperties()) {
+        var componentprops = cArray.putObject("properties");
+        for (var p : component.getProperties()) {
             componentprops.putIfAbsent(p.getName().toLowerCase(), buildPropertyNode(p));
         }
 
-        ObjectNode subcomponents = cArray.putObject("components");
+        var subcomponents = cArray.putObject("components");
         if (component instanceof VEvent) {
-            for (Component c : ((VEvent) component).getAlarms()) {
+            for (var c : ((VEvent) component).getAlarms()) {
                 subcomponents.putIfAbsent(c.getName().toLowerCase(), buildComponentArray(c));
             }
         } else if (component instanceof VToDo) {
-            for (Component c : ((VToDo) component).getAlarms()) {
+            for (var c : ((VToDo) component).getAlarms()) {
                 subcomponents.putIfAbsent(c.getName().toLowerCase(), buildComponentArray(c));
             }
         } else if (component instanceof VTimeZone) {
-            for (Component c : ((VTimeZone) component).getObservances()) {
+            for (var c : ((VTimeZone) component).getObservances()) {
                 subcomponents.putIfAbsent(c.getName().toLowerCase(), buildComponentArray(c));
             }
         }
@@ -81,10 +80,10 @@ public class XCalSerializer extends StdSerializer<Calendar> {
     }
 
     private JsonNode buildPropertyNode(Property property) {
-        ObjectNode pArray = objectMapper.createObjectNode();
+        var pArray = objectMapper.createObjectNode();
         pArray.putIfAbsent("parameters", buildParamsObject(property.getParameters()));
 
-        String propertyType = getPropertyType(property);
+        var propertyType = getPropertyType(property);
         switch (propertyType) {
             case "date":
                 pArray.put(propertyType, JCalEncoder.DATE.encode(property.getValue()));
@@ -180,8 +179,8 @@ public class XCalSerializer extends StdSerializer<Calendar> {
     }
 
     private JsonNode buildParamsObject(List<Parameter> parameterList) {
-        ObjectNode params = objectMapper.createObjectNode();
-        for (Parameter p : parameterList) {
+        var params = objectMapper.createObjectNode();
+        for (var p : parameterList) {
             params.put(p.getName().toLowerCase(), p.getValue().toLowerCase());
         }
         return params;

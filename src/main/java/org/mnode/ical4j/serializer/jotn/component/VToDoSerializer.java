@@ -35,7 +35,7 @@ public class VToDoSerializer extends StdSerializer<VToDo> {
     }
 
     private JsonNode buildTodo(VToDo toDo) {
-        JsonObjectBuilder builder = new JsonObjectBuilder(toDo, JOT_PROPS);
+        var builder = new JsonObjectBuilder(toDo, JOT_PROPS);
         return builder.build();
     }
 }

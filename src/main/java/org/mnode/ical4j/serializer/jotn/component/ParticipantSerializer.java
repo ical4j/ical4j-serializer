@@ -31,7 +31,7 @@ public class ParticipantSerializer extends StdSerializer<Participant> {
     }
 
     private JsonNode buildParticipant(Participant participant) {
-        JsonObjectBuilder builder = new JsonObjectBuilder(participant, JOT_PROPS);
+        var builder = new JsonObjectBuilder(participant, JOT_PROPS);
         return builder.build();
     }
 }
