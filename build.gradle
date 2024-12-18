@@ -1,12 +1,10 @@
 plugins {
-    id 'java'
     id 'groovy'
     id "biz.aQute.bnd.builder" version "5.1.2"
     id 'java-library'
     id 'maven-publish'
     id 'signing'
     id 'pl.allegro.tech.build.axion-release' version '1.13.6'
-    id 'org.javamodularity.moduleplugin' version '1.8.13'
 }
 
 repositories {
@@ -51,19 +49,18 @@ dependencies {
 }
 
 test {
-    moduleOptions {
-        runOnClasspath = true
-    }
     useJUnitPlatform()
 }
 
 javadoc {
     options {
         links 'https://docs.oracle.com/en/java/javase/11/docs/api/',
-            'http://ical4j.github.io/docs/ical4j/api/3.1.0/',
-            'http://fasterxml.github.io/jackson-core/javadoc/2.13/',
-            'http://fasterxml.github.io/jackson-databind/javadoc/2.13/',
-            'http://fasterxml.github.io/jackson-dataformat-xml/javadoc/2.13/'
+            'https://javadoc.io/doc/org.mnode.ical4j/ical4j/latest',
+            'https://javadoc.io/doc/org.mnode.ical4j/ical4j-vcard/latest',
+            'https://javadoc.io/doc/org.mnode.ical4j/ical4j-extensions/latest',
+            'https://javadoc.io/doc/com.fasterxml.jackson.core/jackson-core/latest',
+            'https://javadoc.io/doc/com.fasterxml.jackson.core/jackson-databind/latest',
+            'https://javadoc.io/doc/com.fasterxml.jackson.core/jackson-dataformat-xml/latest'
     }
 }
 
