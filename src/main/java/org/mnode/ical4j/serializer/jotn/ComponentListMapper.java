@@ -7,11 +7,11 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import net.fortuna.ical4j.model.Component;
 import net.fortuna.ical4j.model.ComponentList;
+import net.fortuna.ical4j.model.component.VAvailability;
+import net.fortuna.ical4j.model.component.VEvent;
+import net.fortuna.ical4j.model.component.VJournal;
+import net.fortuna.ical4j.model.component.VToDo;
 import org.mnode.ical4j.serializer.JsonMapper;
-import org.mnode.ical4j.serializer.jotn.component.VAvailabilityMapper;
-import org.mnode.ical4j.serializer.jotn.component.VEventMapper;
-import org.mnode.ical4j.serializer.jotn.component.VJournalMapper;
-import org.mnode.ical4j.serializer.jotn.component.VToDoMapper;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,10 +19,10 @@ import java.util.List;
 
 public class ComponentListMapper extends StdDeserializer<ComponentList<? extends Component>> implements JsonMapper {
 
-    private final VEventMapper vEventMapper;
-    private final VToDoMapper vToDoMapper;
-    private final VJournalMapper vJournalMapper;
-    private final VAvailabilityMapper vAvailabilityMapper;
+    private final ContentMapper<VEvent> vEventMapper;
+    private final ContentMapper<VToDo> vToDoMapper;
+    private final ContentMapper<VJournal> vJournalMapper;
+    private final ContentMapper<VAvailability> vAvailabilityMapper;
 
 
     public ComponentListMapper() {
@@ -31,10 +31,10 @@ public class ComponentListMapper extends StdDeserializer<ComponentList<? extends
 
     public ComponentListMapper(Class<?> vc) {
         super(vc);
-        this.vEventMapper = new VEventMapper(null);
-        this.vToDoMapper = new VToDoMapper(null);
-        this.vJournalMapper = new VJournalMapper(null);
-        this.vAvailabilityMapper = new VAvailabilityMapper(null);
+        this.vEventMapper = new ContentMapper<>(VEvent::new);
+        this.vToDoMapper = new ContentMapper<>(VToDo::new);
+        this.vJournalMapper = new ContentMapper<>(VJournal::new);
+        this.vAvailabilityMapper = new ContentMapper<>(VAvailability::new);
     }
 
     @Override
