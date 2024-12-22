@@ -6,108 +6,99 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import net.fortuna.ical4j.data.DefaultParameterFactorySupplier;
 import net.fortuna.ical4j.data.DefaultPropertyFactorySupplier;
-import net.fortuna.ical4j.model.*;
-import net.fortuna.ical4j.model.component.*;
+import net.fortuna.ical4j.model.Property;
+import net.fortuna.ical4j.model.PropertyBuilder;
+import net.fortuna.ical4j.model.PropertyFactory;
 import net.fortuna.ical4j.model.parameter.Value;
-import net.fortuna.ical4j.vcard.VCard;
+import net.fortuna.ical4j.vcard.Entity;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.text.ParseException;
-import java.util.Arrays;
 import java.util.List;
 
 /**
- * Support for deserialization of {@link VCard} objects encoded according to the XCard specification.
+ * Support for deserialization of {@link Entity} objects encoded according to the XCard specification.
  */
-public class XCardMapper extends StdDeserializer<VCard> implements JsonMapper {
+public class XCardMapper extends StdDeserializer<Entity> implements JsonMapper {
 
-    private final List<ParameterFactory<?>> parameterFactories;
+    private final PropertyMapper propertyMapper;
 
-    private final List<PropertyFactory<?>> propertyFactories;
-
-    private final List<ComponentFactory<?>> componentFactories;
+    private final ParameterMapper parameterMapper;
 
     public XCardMapper(Class<?> vc) {
         super(vc);
-        parameterFactories = new DefaultParameterFactorySupplier().get();
-        propertyFactories = new DefaultPropertyFactorySupplier().get();
-        componentFactories = Arrays.asList(new Available.Factory(), new Daylight.Factory(), new Standard.Factory(),
-                new VAlarm.Factory(), new VAvailability.Factory(), new VEvent.Factory(),
-                new VFreeBusy.Factory(), new VJournal.Factory(), new VTimeZone.Factory(),
-                new VToDo.Factory(), new VVenue.Factory());
+        propertyMapper = new PropertyMapperImpl(new DefaultPropertyFactorySupplier().get());
+        parameterMapper = new ParameterMapperImpl(new DefaultParameterFactorySupplier().get());
     }
 
     @Override
-    public VCard deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
-        var card = new VCard();
-        assertNextName(p, "vcalendar");
-        assertNextToken(p, JsonToken.START_OBJECT);
-        // calendar properties..
-        assertNextName(p, "properties");
+    public Entity deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+        var card = new Entity();
+        assertNextName(p, "vcard");
         assertNextToken(p, JsonToken.START_OBJECT);
         while (!JsonToken.END_OBJECT.equals(p.nextToken())) {
-            try {
-                card.add(parseProperty(p));
-            } catch (URISyntaxException | ParseException e) {
-                throw new IllegalArgumentException(e);
-            }
+            card.add(propertyMapper.map(p));
         }
         return card;
     }
 
-    private Property parseProperty(JsonParser p) throws IOException, URISyntaxException, ParseException {
-        var propertyName = p.currentName();
-        assertNextToken(p, JsonToken.START_OBJECT);
-        var propertyBuilder = new PropertyBuilder(propertyFactories);
-        propertyBuilder.name(propertyName);
-        // property params..
-        assertNextName(p, "parameters");
-        // test for empty parameters..
-        if (p.nextToken() != JsonToken.VALUE_STRING) {
-            assertCurrentToken(p, JsonToken.START_OBJECT);
-            while (!JsonToken.END_OBJECT.equals(p.nextToken())) {
-                try {
-                    propertyBuilder.parameter(parseParameter(p, parameterFactories));
-                } catch (IOException e) {
-                    throw new IllegalArgumentException(e);
+    class PropertyMapperImpl implements PropertyMapper {
+
+        private final List<PropertyFactory<?>> propertyFactories;
+
+        public PropertyMapperImpl(List<PropertyFactory<?>> propertyFactories) {
+            this.propertyFactories = propertyFactories;
+        }
+
+        @Override
+        public Property map(JsonParser p) throws IOException {
+            var builder = new PropertyBuilder(propertyFactories);
+            builder.name(p.currentName());
+            assertNextToken(p, JsonToken.START_OBJECT);
+            // property params..
+            assertNextName(p, "parameters");
+            // test for empty parameters..
+            if (p.nextToken() != JsonToken.VALUE_STRING) {
+                assertCurrentToken(p, JsonToken.START_OBJECT);
+                while (!JsonToken.END_OBJECT.equals(p.nextToken())) {
+                    try {
+                        builder.parameter(parameterMapper.map(p));
+                    } catch (IOException e) {
+                        throw new IllegalArgumentException(e);
+                    }
                 }
             }
+            // propertyType
+            var propertyType = p.nextFieldName();
+            switch (propertyType) {
+                case "date":
+                    builder.parameter(Value.DATE);
+                    builder.value(JCalDecoder.DATE.decode(p.nextTextValue()));
+                    break;
+                case "date-time":
+                    builder.parameter(Value.DATE_TIME);
+                    builder.value(JCalDecoder.DATE_TIME.decode(p.nextTextValue()));
+                    break;
+                case "time":
+                    builder.parameter(Value.TIME);
+                    builder.value(JCalDecoder.TIME.decode(p.nextTextValue()));
+                    break;
+                case "utc-offset":
+                    builder.parameter(Value.UTC_OFFSET);
+                    builder.value(JCalDecoder.UTCOFFSET.decode(p.nextTextValue()));
+                    break;
+                case "binary":
+                    builder.parameter(Value.BINARY);
+                case "duration":
+                    builder.parameter(Value.DURATION);
+                case "period":
+                    builder.parameter(Value.PERIOD);
+                case "uri":
+                    builder.parameter(Value.URI);
+                default:
+                    builder.value(p.nextTextValue());
+            }
+            assertNextToken(p, JsonToken.END_OBJECT);
+            return builder.build();
         }
-        // propertyType
-        var propertyType = p.nextFieldName();
-        switch (propertyType) {
-            case "date":
-                propertyBuilder.parameter(Value.DATE);
-                propertyBuilder.value(JCalDecoder.DATE.decode(p.nextTextValue()));
-                break;
-            case "date-time":
-                propertyBuilder.parameter(Value.DATE_TIME);
-                propertyBuilder.value(JCalDecoder.DATE_TIME.decode(p.nextTextValue()));
-                break;
-            case "time":
-                propertyBuilder.parameter(Value.TIME);
-                propertyBuilder.value(JCalDecoder.TIME.decode(p.nextTextValue()));
-                break;
-            case "utc-offset":
-                propertyBuilder.parameter(Value.UTC_OFFSET);
-                propertyBuilder.value(JCalDecoder.UTCOFFSET.decode(p.nextTextValue()));
-                break;
-            case "binary":
-                propertyBuilder.parameter(Value.BINARY);
-            case "duration":
-                propertyBuilder.parameter(Value.DURATION);
-            case "period":
-                propertyBuilder.parameter(Value.PERIOD);
-            case "uri":
-                propertyBuilder.parameter(Value.URI);
-            default:
-                propertyBuilder.value(p.nextTextValue());
-        }
-
-        assertNextToken(p, JsonToken.END_OBJECT);
-
-//        return propertyBuilder.build();
-        return null;
     }
 }

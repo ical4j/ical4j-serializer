@@ -2,7 +2,7 @@ package org.mnode.ical4j.serializer.openid
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.module.SimpleModule
-import net.fortuna.ical4j.vcard.VCard
+import net.fortuna.ical4j.vcard.Entity
 import spock.lang.Specification
 
 class JwtClaimsMapperTest extends Specification {
@@ -15,12 +15,12 @@ class JwtClaimsMapperTest extends Specification {
 
         and: 'an object mapper'
         SimpleModule module = []
-        module.addDeserializer(VCard, new JwtClaimsMapper())
+        module.addDeserializer(Entity, new JwtClaimsMapper())
         ObjectMapper mapper = []
         mapper.registerModule(module)
 
         when: 'the jwt string is deserialized'
-        VCard card = mapper.readValue(jwt, VCard)
+        def card = mapper.readValue(jwt, Entity)
 
         then: 'card matches expected result'
         card as String == '''BEGIN:VCARD\r

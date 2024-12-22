@@ -3,6 +3,7 @@ package org.mnode.ical4j.serializer.jotn.component
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.module.SimpleModule
 import net.fortuna.ical4j.model.component.Available
+import org.mnode.ical4j.serializer.jotn.ContentMapper
 import spock.lang.Specification
 
 class AvailableMapperTest extends Specification {
@@ -43,7 +44,7 @@ class AvailableMapperTest extends Specification {
 
         and: 'an object mapper'
         SimpleModule module = []
-        module.addDeserializer(Available, new AvailableMapper())
+        module.addDeserializer(Available, new ContentMapper<Available>(Available::new))
         ObjectMapper mapper = []
         mapper.registerModule(module)
 

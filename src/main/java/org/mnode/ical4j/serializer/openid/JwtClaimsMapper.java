@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import net.fortuna.ical4j.model.Property;
-import net.fortuna.ical4j.vcard.VCard;
+import net.fortuna.ical4j.vcard.Entity;
 import net.fortuna.ical4j.vcard.property.Address;
 import net.fortuna.ical4j.vcard.property.Email;
 import net.fortuna.ical4j.vcard.property.Name;
@@ -21,26 +21,26 @@ import java.text.ParseException;
 /**
  * See https://openid.net/specs/openid-connect-core-1_0.html#StandardClaims for mapping.
  */
-public class JwtClaimsMapper extends StdDeserializer<VCard> implements JsonMapper {
+public class JwtClaimsMapper extends StdDeserializer<Entity> implements JsonMapper {
 
     public JwtClaimsMapper(Class<?> vc) {
         super(vc);
     }
 
     @Override
-    public VCard deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
-        var card = new VCard();
+    public Entity deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+        var entity = new Entity();
         // should have at least one field..
         assertNextToken(p, JsonToken.FIELD_NAME);
         while (p.getCurrentToken() != JsonToken.END_OBJECT) {
             try {
-                card.add(parseProperty(p));
+                entity.add(parseProperty(p));
             } catch (URISyntaxException | ParseException e) {
                 throw new IllegalArgumentException(e);
             }
             p.nextToken();
         }
-        return card;
+        return entity;
     }
 
     private Property parseProperty(JsonParser p) throws IOException, URISyntaxException, ParseException {

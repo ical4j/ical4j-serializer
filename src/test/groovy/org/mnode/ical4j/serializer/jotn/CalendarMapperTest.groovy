@@ -28,7 +28,7 @@ class CalendarMapperTest extends Specification {
 
         and: 'an object mapper'
         SimpleModule module = []
-        module.addDeserializer(Calendar, new CalendarMapper())
+        module.addDeserializer(Calendar, new ContentMapper<Calendar>(Calendar::new))
         ObjectMapper mapper = []
         mapper.registerModule(module)
 
