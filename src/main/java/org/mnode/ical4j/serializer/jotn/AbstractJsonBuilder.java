@@ -19,10 +19,9 @@ public abstract class AbstractJsonBuilder<T> implements JsonBuilder {
     }
 
     protected ObjectNode createObjectNode() {
-        ObjectMapper mapper = new ObjectMapper();
+        var mapper = new ObjectMapper();
 
-        ObjectNode node = mapper.createObjectNode();
-        return node;
+        return mapper.createObjectNode();
     }
 
     /**

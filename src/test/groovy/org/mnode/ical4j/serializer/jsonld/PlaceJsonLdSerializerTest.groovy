@@ -2,7 +2,7 @@ package org.mnode.ical4j.serializer.jsonld
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.module.SimpleModule
-import net.fortuna.ical4j.vcard.VCard
+import net.fortuna.ical4j.vcard.Entity
 import org.mnode.ical4j.serializer.AbstractSerializerTest
 
 class PlaceJsonLdSerializerTest extends AbstractSerializerTest {
@@ -10,7 +10,7 @@ class PlaceJsonLdSerializerTest extends AbstractSerializerTest {
     def 'test place serialization'() {
         given: 'an object mapper'
         SimpleModule module = []
-        module.addSerializer(VCard, new PlaceJsonLdSerializer())
+        module.addSerializer(Entity, new PlaceJsonLdSerializer())
         ObjectMapper mapper = []
         mapper.registerModule(module)
 
@@ -22,6 +22,6 @@ class PlaceJsonLdSerializerTest extends AbstractSerializerTest {
 
         where:
         card   | expectedSerialized
-        card1  | '{"@context":"https://schema.org","@type":"Place","@id":"1","name":"Test Card"}'
+        entity1 | '{"@context":"https://schema.org","@type":"Place","@id":"1","name":"Test Card"}'
     }
 }

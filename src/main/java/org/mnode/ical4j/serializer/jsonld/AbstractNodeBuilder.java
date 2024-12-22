@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import net.fortuna.ical4j.model.PropertyListAccessor;
-import net.fortuna.ical4j.vcard.VCard;
+import net.fortuna.ical4j.vcard.Entity;
 import net.fortuna.ical4j.vcard.property.Address;
 import org.mnode.ical4j.serializer.JsonBuilder;
 
@@ -26,9 +26,9 @@ public abstract class AbstractNodeBuilder<T extends PropertyListAccessor> implem
     }
 
     protected ObjectNode createObjectNode() {
-        ObjectMapper mapper = new ObjectMapper();
+        var mapper = new ObjectMapper();
 
-        ObjectNode node = mapper.createObjectNode();
+        var node = mapper.createObjectNode();
         node.put("@context", "https://schema.org");
         node.put("@type", schemaType);
         return node;
@@ -47,7 +47,7 @@ public abstract class AbstractNodeBuilder<T extends PropertyListAccessor> implem
     protected ObjectNode setObject(String propertyName, ObjectNode node, String property) {
         Optional<?> prop = component.getProperty(property);
         if (prop.isPresent() && prop.get() instanceof Address) {
-            JsonNode address = new PostalAddressNodeBuilder().component((VCard) component).build();
+            JsonNode address = new PostalAddressNodeBuilder().component((Entity) component).build();
             node.set(propertyName, address);
         }
         return node;
@@ -56,7 +56,7 @@ public abstract class AbstractNodeBuilder<T extends PropertyListAccessor> implem
     protected ObjectNode setObject(String propertyName, ObjectNode node, Enum<?> property) {
         Optional<?> prop = component.getProperty(property);
         if (prop.isPresent() && prop.get() instanceof Address) {
-            JsonNode address = new PostalAddressNodeBuilder().component((VCard) component).build();
+            JsonNode address = new PostalAddressNodeBuilder().component((Entity) component).build();
             node.set(propertyName, address);
         }
         return node;

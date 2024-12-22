@@ -146,9 +146,10 @@ class ComponentListMapperTest extends Specification {
         ComponentList<?> componentList = mapper.readValue(json, ComponentList)
 
         then: 'event matches expected result'
-        componentList.getFirst("VEVENT").get() as String == '''BEGIN:VEVENT\r
+        componentList.getFirst("VEVENT").get() as String ==~ /BEGIN:VEVENT\r
+DTSTAMP:\d{8}T\d{6}Z\r
 UID:07cc67f4-45d6-494b-adac-09b5cbc7e2b5\r
-ORGANIZER;CN=string;DIR="http://example.com";SENT-BY="mailto:joecool@example.com";LANGUAGE=en-US:mailto:jane_doe@example.com\r
+ORGANIZER;CN=string;DIR="http:\/\/example.com";SENT-BY="mailto:joecool@example.com";LANGUAGE=en-US:mailto:jane_doe@example.com\r
 SUMMARY:string\r
 DTSTART:20190824T141522Z\r
 SEQUENCE:0\r
@@ -160,7 +161,7 @@ DTEND:20190824T141522Z\r
 DURATION:PT15M\r
 RRULE:FREQ=WEEKLY\r
 DESCRIPTION:string\r
-URL:http://example.com\r
+URL:http:\/\/example.com\r
 GEO:49.8932;40.3834\r
 LOCATION:The venue\r
 LAST-MODIFIED:20190824T141522Z\r
@@ -168,15 +169,15 @@ CREATED:20190824T141522Z\r
 CATEGORIES:string\r
 COMMENT;ALTREP=string:string\r
 RESOURCES;ALTREP="CID:part3.msg.970415T083000@example.com":07cc67f4-45d6-494b-adac-09b5cbc7e2b5\r
-ATTACH;FMTTYPE=application/msword:http://example.com\r
+ATTACH;FMTTYPE=application\/msword:http:\/\/example.com\r
 RELATED-TO;RELTYPE=PARENT:07cc67f4-45d6-494b-adac-09b5cbc7e2b5\r
 RDATE:20190824T141522Z\r
 EXDATE:20190824T141522Z\r
-ATTENDEE;MEMBER="mailto:DEV-GROUP@example.com";ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=FALSE;CN=string;DIR="http://example.com";LANGUAGE=en-US:mailto:joecool@example.com\r
+ATTENDEE;MEMBER="mailto:DEV-GROUP@example.com";ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=FALSE;CN=string;DIR="http:\/\/example.com";LANGUAGE=en-US:mailto:joecool@example.com\r
 TRANSP:OPAQUE\r
 CONTACT;ALTREP=string:string\r
-STYLED-DESCRIPTION;FMTTYPE=text/html;VALUE=TEXT:true\r
-STRUCTURED-DATA;VALUE=text;FMTTYPE=application/xml:string\r
-END:VEVENT\r\n'''
+STYLED-DESCRIPTION;FMTTYPE=text\/html;VALUE=TEXT:true\r
+STRUCTURED-DATA;VALUE=TEXT;FMTTYPE=application\/xml:string\r
+END:VEVENT\r\n/
     }
 }

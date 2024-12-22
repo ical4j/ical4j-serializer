@@ -3,6 +3,7 @@ package org.mnode.ical4j.serializer.jotn.component
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.module.SimpleModule
 import net.fortuna.ical4j.model.component.VJournal
+import org.mnode.ical4j.serializer.jotn.ContentMapper
 import spock.lang.Specification
 
 class VJournalMapperTest extends Specification {
@@ -95,7 +96,7 @@ class VJournalMapperTest extends Specification {
 
         and: 'an object mapper'
         SimpleModule module = []
-        module.addDeserializer(VJournal, new VJournalMapper())
+        module.addDeserializer(VJournal, new ContentMapper<VJournal>(VJournal::new))
         ObjectMapper mapper = []
         mapper.registerModule(module)
 
@@ -103,29 +104,30 @@ class VJournalMapperTest extends Specification {
         VJournal journal = mapper.readValue(json, VJournal)
 
         then: 'journal matches expected result'
-        journal as String == 'BEGIN:VJOURNAL\r\n' +
-                'UID:07cc67f4-45d6-494b-adac-09b5cbc7e2b5\r\n' +
-                'ORGANIZER;CN=string;DIR="http://example.com";SENT-BY="mailto:joecool@example.com";LANGUAGE=en-US:mailto:jane_doe@example.com\r\n' +
-                'SUMMARY:string\r\n' +
-                'DTSTAMP:20190824T141522Z\r\n' +
-                'SEQUENCE:0\r\n' +
-                'RECURRENCE-ID:20190824T141522Z\r\n' +
-                'CLASS:PUBLIC\r\n' +
-                'STATUS:DRAFT\r\n' +
-                'RRULE:FREQ=WEEKLY\r\n' +
-                'DESCRIPTION:string\r\n' +
-                'URL:http://example.com\r\n' +
-                'LAST-MODIFIED:20190824T141522Z\r\n' +
-                'CATEGORIES:string\r\n' +
-                'COMMENT;ALTREP=string:string\r\n' +
-                'ATTACH;FMTTYPE=application/msword:string\r\n' +
-                'RELATED-TO;RELTYPE=PARENT:07cc67f4-45d6-494b-adac-09b5cbc7e2b5\r\n' +
-                'RDATE:20190824T141522Z\r\n' +
-                'EXDATE:20190824T141522Z\r\n' +
-                'ATTENDEE;MEMBER="mailto:DEV-GROUP@example.com";ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=FALSE;CN=string;DIR="http://example.com";LANGUAGE=en-US:mailto:joecool@example.com\r\n' +
-                'CONTACT;ALTREP=string:string\r\n' +
-                'STYLED-DESCRIPTION;FMTTYPE=text/html;VALUE=TEXT:true\r\n' +
-                'STRUCTURED-DATA;VALUE=text;FMTTYPE=application/xml:string\r\n' +
-                'END:VJOURNAL\r\n'
+        journal as String ==~ /BEGIN:VJOURNAL\r
+DTSTAMP:\d{8}T\d{6}Z\r
+UID:07cc67f4-45d6-494b-adac-09b5cbc7e2b5\r
+ORGANIZER;CN=string;DIR="http:\/\/example.com";SENT-BY="mailto:joecool@example.com";LANGUAGE=en-US:mailto:jane_doe@example.com\r
+SUMMARY:string\r
+DTSTAMP:20190824T141522Z\r
+SEQUENCE:0\r
+RECURRENCE-ID:20190824T141522Z\r
+CLASS:PUBLIC\r
+STATUS:DRAFT\r
+RRULE:FREQ=WEEKLY\r
+DESCRIPTION:string\r
+URL:http:\/\/example.com\r
+LAST-MODIFIED:20190824T141522Z\r
+CATEGORIES:string\r
+COMMENT;ALTREP=string:string\r
+ATTACH;FMTTYPE=application\/msword:string\r
+RELATED-TO;RELTYPE=PARENT:07cc67f4-45d6-494b-adac-09b5cbc7e2b5\r
+RDATE:20190824T141522Z\r
+EXDATE:20190824T141522Z\r
+ATTENDEE;MEMBER="mailto:DEV-GROUP@example.com";ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=FALSE;CN=string;DIR="http:\/\/example.com";LANGUAGE=en-US:mailto:joecool@example.com\r
+CONTACT;ALTREP=string:string\r
+STYLED-DESCRIPTION;FMTTYPE=text\/html;VALUE=TEXT:true\r
+STRUCTURED-DATA;VALUE=TEXT;FMTTYPE=application\/xml:string\r
+END:VJOURNAL\r\n/
     }
 }

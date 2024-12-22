@@ -3,6 +3,7 @@ package org.mnode.ical4j.serializer.jotn.component
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.module.SimpleModule
 import net.fortuna.ical4j.model.component.VFreeBusy
+import org.mnode.ical4j.serializer.jotn.ContentMapper
 import spock.lang.Specification
 
 class VFreeBusyMapperTest extends Specification {
@@ -65,7 +66,7 @@ class VFreeBusyMapperTest extends Specification {
 
         and: 'an object mapper'
         SimpleModule module = []
-        module.addDeserializer(VFreeBusy, new VFreeBusyMapper())
+        module.addDeserializer(VFreeBusy, new ContentMapper<VFreeBusy>(VFreeBusy::new))
         ObjectMapper mapper = []
         mapper.registerModule(module)
 
@@ -73,17 +74,18 @@ class VFreeBusyMapperTest extends Specification {
         VFreeBusy freeBusy = mapper.readValue(json, VFreeBusy)
 
         then: 'freebusy matches expected result'
-        freeBusy as String == 'BEGIN:VFREEBUSY\r\n' +
-                'UID:07cc67f4-45d6-494b-adac-09b5cbc7e2b5\r\n' +
-                'ORGANIZER;CN=string;DIR="http://example.com";SENT-BY="mailto:joecool@example.com";LANGUAGE=en-US:mailto:jane_doe@example.com\r\n' +
-                'DTSTART:20190824T141522Z\r\n' +
-                'DTEND:20190824T141522Z\r\n' +
-                'URL:http://www.example.com/calendar/busytime/jsmith.ifb\r\n' +
-                'FBPERIODS;FBTYPE=BUSY:PT5H30M\r\n' +
-                'ATTENDEE;MEMBER="mailto:DEV-GROUP@example.com";ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=FALSE;CN=string;DIR="http://example.com";LANGUAGE=en-US:mailto:joecool@example.com\r\n' +
-                'COMMENT;ALTREP=string:string\r\n' +
-                'CONTACT;ALTREP=string:string\r\n' +
-                'STYLED-DESCRIPTION;FMTTYPE=text/html;VALUE=TEXT:true\r\n' +
-                'END:VFREEBUSY\r\n'
+        freeBusy as String ==~ /BEGIN:VFREEBUSY\r
+DTSTAMP:\d{8}T\d{6}Z\r
+UID:07cc67f4-45d6-494b-adac-09b5cbc7e2b5\r
+ORGANIZER;CN=string;DIR="http:\/\/example.com";SENT-BY="mailto:joecool@example.com";LANGUAGE=en-US:mailto:jane_doe@example.com\r
+DTSTART:20190824T141522Z\r
+DTEND:20190824T141522Z\r
+URL:http:\/\/www.example.com\/calendar\/busytime\/jsmith.ifb\r
+FBPERIODS;FBTYPE=BUSY:PT5H30M\r
+ATTENDEE;MEMBER="mailto:DEV-GROUP@example.com";ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=FALSE;CN=string;DIR="http:\/\/example.com";LANGUAGE=en-US:mailto:joecool@example.com\r
+COMMENT;ALTREP=string:string\r
+CONTACT;ALTREP=string:string\r
+STYLED-DESCRIPTION;FMTTYPE=text\/html;VALUE=TEXT:true\r
+END:VFREEBUSY\r\n/
     }
 }

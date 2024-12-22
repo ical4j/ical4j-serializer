@@ -4,8 +4,6 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import net.fortuna.ical4j.model.*;
 import net.fortuna.ical4j.model.parameter.Value;
@@ -29,19 +27,19 @@ public class JCalSerializer extends StdSerializer<Calendar> {
     }
 
     private JsonNode buildVCalendar(Calendar calendar) {
-        ObjectMapper mapper = new ObjectMapper();
+        var mapper = new ObjectMapper();
 
-        ArrayNode vcalendar = mapper.createArrayNode();
+        var vcalendar = mapper.createArrayNode();
         vcalendar.add("vcalendar");
 
-        ArrayNode vcalprops = mapper.createArrayNode();
-        for (Property p : calendar.getProperties()) {
+        var vcalprops = mapper.createArrayNode();
+        for (var p : calendar.getProperties()) {
             vcalprops.add(buildPropertyArray(p));
         }
         vcalendar.add(vcalprops);
 
-        ArrayNode vcalcomponents = mapper.createArrayNode();
-        for (Component c : calendar.getComponents()) {
+        var vcalcomponents = mapper.createArrayNode();
+        for (var c : calendar.getComponents()) {
             vcalcomponents.add(buildComponentArray(c));
         }
         vcalendar.add(vcalcomponents);
@@ -50,20 +48,20 @@ public class JCalSerializer extends StdSerializer<Calendar> {
     }
 
     private JsonNode buildComponentArray(Component component) {
-        ObjectMapper mapper = new ObjectMapper();
+        var mapper = new ObjectMapper();
 
-        ArrayNode cArray = mapper.createArrayNode();
+        var cArray = mapper.createArrayNode();
         cArray.add(component.getName().toLowerCase());
 
-        ArrayNode componentprops = mapper.createArrayNode();
-        for (Property p : component.getProperties()) {
+        var componentprops = mapper.createArrayNode();
+        for (var p : component.getProperties()) {
             componentprops.add(buildPropertyArray(p));
         }
         cArray.add(componentprops);
 
-        ArrayNode subcomponents = mapper.createArrayNode();
+        var subcomponents = mapper.createArrayNode();
         if (component instanceof ComponentContainer) {
-            for (Component c : ((ComponentContainer<?>) component).getComponents()) {
+            for (var c : ((ComponentContainer<?>) component).getComponents()) {
                 subcomponents.add(buildComponentArray(c));
             }
         }
@@ -73,13 +71,13 @@ public class JCalSerializer extends StdSerializer<Calendar> {
     }
 
     private JsonNode buildPropertyArray(Property property) {
-        ObjectMapper mapper = new ObjectMapper();
+        var mapper = new ObjectMapper();
 
-        ArrayNode pArray = mapper.createArrayNode();
+        var pArray = mapper.createArrayNode();
         pArray.add(property.getName().toLowerCase());
         pArray.add(buildParamsObject(property.getParameters()));
 
-        String propertyType = getPropertyType(property);
+        var propertyType = getPropertyType(property);
         pArray.add(propertyType);
         switch (propertyType) {
             case "date":
@@ -176,10 +174,10 @@ public class JCalSerializer extends StdSerializer<Calendar> {
     }
 
     private JsonNode buildParamsObject(List<Parameter> parameterList) {
-        ObjectMapper mapper = new ObjectMapper();
+        var mapper = new ObjectMapper();
 
-        ObjectNode params = mapper.createObjectNode();
-        for (Parameter p : parameterList) {
+        var params = mapper.createObjectNode();
+        for (var p : parameterList) {
             params.put(p.getName().toLowerCase(), p.getValue().toLowerCase());
         }
         return params;

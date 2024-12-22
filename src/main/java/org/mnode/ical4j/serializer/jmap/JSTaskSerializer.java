@@ -3,7 +3,6 @@ package org.mnode.ical4j.serializer.jmap;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import net.fortuna.ical4j.model.ConstraintViolationException;
 import net.fortuna.ical4j.model.component.VToDo;
@@ -38,7 +37,7 @@ public class JSTaskSerializer extends StdSerializer<VToDo> {
 
         @Override
         public JsonNode build() {
-            ObjectNode jsTask = createObjectNode();
+            var jsTask = createObjectNode();
             return jsTask;
         }
     }

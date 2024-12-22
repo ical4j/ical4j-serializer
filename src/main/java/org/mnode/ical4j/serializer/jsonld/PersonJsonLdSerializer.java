@@ -1,23 +1,22 @@
 package org.mnode.ical4j.serializer.jsonld;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
+import net.fortuna.ical4j.vcard.Entity;
 import net.fortuna.ical4j.vcard.PropertyName;
-import net.fortuna.ical4j.vcard.VCard;
 
-public class PersonJsonLdSerializer extends AbstractJsonLdSerializer<VCard> {
+public class PersonJsonLdSerializer extends AbstractJsonLdSerializer<Entity> {
 
-    public PersonJsonLdSerializer(Class<VCard> t) {
+    public PersonJsonLdSerializer(Class<Entity> t) {
         super(t);
     }
 
     @Override
-    protected JsonNode buildSchema(VCard card) {
-        AbstractNodeBuilder<VCard> builder = new PersonNodeBuilder().component(card);
+    protected JsonNode buildSchema(Entity card) {
+        AbstractNodeBuilder<Entity> builder = new PersonNodeBuilder().component(card);
         return builder.build();
     }
 
-    public static class PersonNodeBuilder extends AbstractNodeBuilder<VCard> {
+    public static class PersonNodeBuilder extends AbstractNodeBuilder<Entity> {
 
         public PersonNodeBuilder() {
             super("Person");
@@ -25,7 +24,7 @@ public class PersonJsonLdSerializer extends AbstractJsonLdSerializer<VCard> {
 
         @Override
         public JsonNode build() {
-            ObjectNode node = createObjectNode();
+            var node = createObjectNode();
             putIfNotAbsent("@id", node, PropertyName.UID);
             putIfNotAbsent("name", node, PropertyName.FN);
             putIfNotAbsent("email", node, PropertyName.EMAIL);

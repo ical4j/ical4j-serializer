@@ -2,7 +2,6 @@ package org.mnode.ical4j.serializer.atom;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import org.mnode.ical4j.serializer.JsonBuilder;
 
@@ -19,12 +18,6 @@ public abstract class AbstractFeedBuilder<T> implements JsonBuilder {
     public AbstractFeedBuilder<T> component(T component) {
         this.component = component;
         return this;
-    }
-
-    protected ObjectNode createObjectNode() {
-        ObjectNode node = mapper.createObjectNode();
-        node.putArray("items");
-        return node;
     }
 
     /**

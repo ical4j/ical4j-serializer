@@ -22,7 +22,7 @@ class VCardMapperTest extends Specification {
         mapper.registerModule(module)
 
         when: 'the card is deserialized'
-        VCard card = mapper.readValue(json, VCard)
+        def card = mapper.readValue(json, VCard)
 
         then: 'card matches expected result'
         card as String == '''BEGIN:VCARD\r

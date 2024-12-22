@@ -1,7 +1,6 @@
 package org.mnode.ical4j.serializer.jsonld;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import net.fortuna.ical4j.model.Property;
 import net.fortuna.ical4j.model.component.VEvent;
 
@@ -25,7 +24,7 @@ public class EventJsonLdSerializer extends AbstractJsonLdSerializer<VEvent> {
 
         @Override
         public JsonNode build() {
-            ObjectNode node = createObjectNode();
+            var node = createObjectNode();
             putIfNotAbsent("@id", node, Property.UID);
             putIfNotAbsent("name", node, Property.SUMMARY);
             putIfNotAbsent("description", node, Property.DESCRIPTION);

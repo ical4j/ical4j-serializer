@@ -28,7 +28,7 @@ public abstract class AbstractFeedBuilder<T> implements JsonBuilder {
     }
 
     protected ObjectNode createObjectNode() {
-        ObjectNode node = mapper.createObjectNode();
+        var node = mapper.createObjectNode();
         node.put("version", version);
         node.putArray("items");
         return node;

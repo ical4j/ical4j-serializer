@@ -3,6 +3,7 @@ package org.mnode.ical4j.serializer.jotn.component
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.module.SimpleModule
 import net.fortuna.ical4j.model.component.VAvailability
+import org.mnode.ical4j.serializer.jotn.ContentMapper
 import spock.lang.Specification
 
 class VAvailabilityMapperTest extends Specification {
@@ -38,7 +39,7 @@ class VAvailabilityMapperTest extends Specification {
 
         and: 'an object mapper'
         SimpleModule module = []
-        module.addDeserializer(VAvailability, new VAvailabilityMapper())
+        module.addDeserializer(VAvailability, new ContentMapper<VAvailability>(VAvailability::new))
         ObjectMapper mapper = []
         mapper.registerModule(module)
 

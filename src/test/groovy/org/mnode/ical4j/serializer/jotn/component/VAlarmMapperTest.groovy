@@ -3,6 +3,7 @@ package org.mnode.ical4j.serializer.jotn.component
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.module.SimpleModule
 import net.fortuna.ical4j.model.component.VAlarm
+import org.mnode.ical4j.serializer.jotn.ContentMapper
 import spock.lang.Specification
 
 class VAlarmMapperTest extends Specification {
@@ -53,7 +54,7 @@ class VAlarmMapperTest extends Specification {
 
         and: 'an object mapper'
         SimpleModule module = []
-        module.addDeserializer(VAlarm, new VAlarmMapper())
+        module.addDeserializer(VAlarm, new ContentMapper<VAlarm>(VAlarm::new))
         ObjectMapper mapper = []
         mapper.registerModule(module)
 

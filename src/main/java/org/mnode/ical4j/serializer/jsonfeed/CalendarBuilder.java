@@ -2,7 +2,6 @@ package org.mnode.ical4j.serializer.jsonfeed;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import net.fortuna.ical4j.model.Calendar;
 import net.fortuna.ical4j.model.Property;
 import net.fortuna.ical4j.model.property.Source;
@@ -14,7 +13,7 @@ public class CalendarBuilder extends AbstractFeedBuilder<Calendar> {
 
     @Override
     public JsonNode build() {
-        ObjectNode node = createObjectNode();
+        var node = createObjectNode();
         component.getProperties().forEach(property -> {
             switch (property.getName()) {
                 // skip properties that have no meaning in JSON Feed..

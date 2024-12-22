@@ -3,6 +3,7 @@ package org.mnode.ical4j.serializer.jotn.component
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.module.SimpleModule
 import net.fortuna.ical4j.model.component.VToDo
+import org.mnode.ical4j.serializer.jotn.ContentMapper
 import spock.lang.Specification
 
 class VToDoMapperTest extends Specification {
@@ -101,7 +102,7 @@ class VToDoMapperTest extends Specification {
 
         and: 'an object mapper'
         SimpleModule module = []
-        module.addDeserializer(VToDo, new VToDoMapper())
+        module.addDeserializer(VToDo, new ContentMapper<VToDo>(VToDo::new))
         ObjectMapper mapper = []
         mapper.registerModule(module)
 
@@ -109,9 +110,10 @@ class VToDoMapperTest extends Specification {
         VToDo toDo = mapper.readValue(json, VToDo)
 
         then: 'todo matches expected result'
-        toDo as String == '''BEGIN:VTODO\r
+        toDo as String ==~ /BEGIN:VTODO\r
+DTSTAMP:\d{8}T\d{6}Z\r
 UID:07cc67f4-45d6-494b-adac-09b5cbc7e2b5\r
-ORGANIZER;CN=string;DIR="http://example.com";SENT-BY="mailto:joecool@example.com";LANGUAGE=en-US:mailto:jane_doe@example.com\r
+ORGANIZER;CN=string;DIR="http:\/\/example.com";SENT-BY="mailto:joecool@example.com";LANGUAGE=en-US:mailto:jane_doe@example.com\r
 SUMMARY:string\r
 DTSTART:20190824T141522Z\r
 SEQUENCE:0\r
@@ -122,7 +124,7 @@ STATUS:NEEDS-ACTION\r
 DUE:20190824T141522Z\r
 DURATION:PT15M\r
 RRULE:FREQ=WEEKLY\r
-URL:http://example.com\r
+URL:http:\/\/example.com\r
 GEO:49.8932;40.3834\r
 LOCATION:The venue\r
 LAST-MODIFIED:20190824T141522Z\r
@@ -132,12 +134,12 @@ DESCRIPTION:string\r
 CATEGORIES:string\r
 COMMENTS:string\r
 RESOURCES;ALTREP="CID:part3.msg.970415T083000@example.com":07cc67f4-45d6-494b-adac-09b5cbc7e2b5\r
-ATTACHMENTS;FMTTYPE=application/msword:http://example.com\r
+ATTACHMENTS;FMTTYPE=application\/msword:http:\/\/example.com\r
 RELATED-TO;RELTYPE=PARENT:07cc67f4-45d6-494b-adac-09b5cbc7e2b5\r
-ATTENDEES;MEMBER="mailto:DEV-GROUP@example.com";ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=FALSE;CN=string;DIR="http://example.com";LANGUAGE=en-US:mailto:joecool@example.com\r
+ATTENDEES;MEMBER="mailto:DEV-GROUP@example.com";ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=FALSE;CN=string;DIR="http:\/\/example.com";LANGUAGE=en-US:mailto:joecool@example.com\r
 CONTACTS:string\r
-STYLED-DESCRIPTION;FMTTYPE=text/html;VALUE=TEXT:true\r
-STRUCTURED-DATA;VALUE=text;FMTTYPE=application/xml:string\r
-END:VTODO\r\n'''
+STYLED-DESCRIPTION;FMTTYPE=text\/html;VALUE=TEXT:true\r
+STRUCTURED-DATA;VALUE=TEXT;FMTTYPE=application\/xml:string\r
+END:VTODO\r\n/
     }
 }
