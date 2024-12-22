@@ -1,22 +1,22 @@
 package org.mnode.ical4j.serializer.jsonld;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import net.fortuna.ical4j.vcard.Entity;
 import net.fortuna.ical4j.vcard.PropertyName;
-import net.fortuna.ical4j.vcard.VCard;
 
-public class OrganizationJsonLdSerializer extends AbstractJsonLdSerializer<VCard> {
+public class OrganizationJsonLdSerializer extends AbstractJsonLdSerializer<Entity> {
 
-    public OrganizationJsonLdSerializer(Class<VCard> t) {
+    public OrganizationJsonLdSerializer(Class<Entity> t) {
         super(t);
     }
 
     @Override
-    protected JsonNode buildSchema(VCard card) {
-        AbstractNodeBuilder<VCard> builder = new OrganizationNodeBuilder().component(card);
+    protected JsonNode buildSchema(Entity entity) {
+        AbstractNodeBuilder<Entity> builder = new OrganizationNodeBuilder().component(entity);
         return builder.build();
     }
 
-    public static class OrganizationNodeBuilder extends AbstractNodeBuilder<VCard> {
+    public static class OrganizationNodeBuilder extends AbstractNodeBuilder<Entity> {
 
         public OrganizationNodeBuilder() {
             super("Organization");

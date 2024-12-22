@@ -2,7 +2,7 @@ package org.mnode.ical4j.serializer.jsonld
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.module.SimpleModule
-import net.fortuna.ical4j.vcard.VCard
+import net.fortuna.ical4j.vcard.Entity
 import org.mnode.ical4j.serializer.AbstractSerializerTest
 
 class PersonJsonLdSerializerTest extends AbstractSerializerTest {
@@ -10,7 +10,7 @@ class PersonJsonLdSerializerTest extends AbstractSerializerTest {
     def 'test person serialization'() {
         given: 'an object mapper'
         SimpleModule module = []
-        module.addSerializer(VCard, new PersonJsonLdSerializer())
+        module.addSerializer(Entity, new PersonJsonLdSerializer())
         ObjectMapper mapper = []
         mapper.registerModule(module)
 
@@ -22,7 +22,7 @@ class PersonJsonLdSerializerTest extends AbstractSerializerTest {
 
         where:
         card   | expectedSerialized
-        card1  | '{"@context":"https://schema.org","@type":"Person","@id":"1","name":"Test Card"}'
-        card2  | '{"@context":"https://schema.org","@type":"Person","@id":"2","name":"Jane Doe","address":{"@context":"https://schema.org","@type":"PostalAddress","addressLocality":"Seattle","addressRegion":"WA","postalCode":"98052","streetAddress":"20341 Whitworth Institute 405 N. Whitworth"}}'
+        entity1 | '{"@context":"https://schema.org","@type":"Person","@id":"1","name":"Test Card"}'
+        entity2 | '{"@context":"https://schema.org","@type":"Person","@id":"2","name":"Jane Doe","address":{"@context":"https://schema.org","@type":"PostalAddress","addressLocality":"Seattle","addressRegion":"WA","postalCode":"98052","streetAddress":"20341 Whitworth Institute 405 N. Whitworth"}}'
     }
 }

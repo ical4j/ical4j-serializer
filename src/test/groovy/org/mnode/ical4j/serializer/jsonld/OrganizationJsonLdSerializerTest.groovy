@@ -2,7 +2,7 @@ package org.mnode.ical4j.serializer.jsonld
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.module.SimpleModule
-import net.fortuna.ical4j.vcard.VCard
+import net.fortuna.ical4j.vcard.Entity
 import org.mnode.ical4j.serializer.AbstractSerializerTest
 
 class OrganizationJsonLdSerializerTest extends AbstractSerializerTest {
@@ -10,7 +10,7 @@ class OrganizationJsonLdSerializerTest extends AbstractSerializerTest {
     def 'test organization serialization'() {
         given: 'an object mapper'
         SimpleModule module = []
-        module.addSerializer(VCard, new OrganizationJsonLdSerializer())
+        module.addSerializer(Entity, new OrganizationJsonLdSerializer())
         ObjectMapper mapper = []
         mapper.registerModule(module)
 
@@ -22,7 +22,7 @@ class OrganizationJsonLdSerializerTest extends AbstractSerializerTest {
 
         where:
         card   | expectedSerialized
-        card1  | '{"@context":"https://schema.org","@type":"Organization","@id":"1","name":"Test Card"}'
-        card3  | '{"@context":"https://schema.org","@type":"Organization","@id":"3","name":"Acme Inc.","logo":"http//exampleorg/acme+logopn","address":{"@context":"https://schema.org","@type":"PostalAddress","addressLocality":"Seattle","addressRegion":"WA","postalCode":"98052","streetAddress":"20341 Whitworth Institute 405 N. Whitworth"}}'
+        entity1 | '{"@context":"https://schema.org","@type":"Organization","@id":"1","name":"Test Card"}'
+        entity3 | '{"@context":"https://schema.org","@type":"Organization","@id":"3","name":"Acme Inc.","logo":"http//exampleorg/acme+logopn","address":{"@context":"https://schema.org","@type":"PostalAddress","addressLocality":"Seattle","addressRegion":"WA","postalCode":"98052","streetAddress":"20341 Whitworth Institute 405 N. Whitworth"}}'
     }
 }

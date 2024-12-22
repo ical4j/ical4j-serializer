@@ -2,7 +2,7 @@ package org.mnode.ical4j.serializer.jotn
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.module.SimpleModule
-import net.fortuna.ical4j.vcard.VCard
+import net.fortuna.ical4j.vcard.Entity
 import org.mnode.ical4j.serializer.AbstractSerializerTest
 
 class VCardSerializerTest extends AbstractSerializerTest {
@@ -10,7 +10,7 @@ class VCardSerializerTest extends AbstractSerializerTest {
     def 'test card serialization'() {
         given: 'an object mapper'
         SimpleModule module = []
-        module.addSerializer(VCard, new VCardSerializer())
+        module.addSerializer(Entity, new VCardSerializer())
         ObjectMapper mapper = []
         mapper.registerModule(module)
 
@@ -22,7 +22,7 @@ class VCardSerializerTest extends AbstractSerializerTest {
 
         where:
         card    | expectedSerialized
-        card1   | '{"uid":"1","fn":"Test Card"}'
-        card2   | '{"uid":"2","fn":"Jane Doe","adr":";;20341 Whitworth Institute 405 N. Whitworth;Seattle;WA;98052;;"}'
+        entity1 | '{"uid":"1","fn":"Test Card"}'
+        entity2 | '{"uid":"2","fn":"Jane Doe","adr":";;20341 Whitworth Institute 405 N. Whitworth;Seattle;WA;98052;;"}'
     }
 }

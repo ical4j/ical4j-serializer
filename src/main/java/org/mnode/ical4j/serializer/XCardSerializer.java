@@ -9,8 +9,8 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import net.fortuna.ical4j.model.Parameter;
 import net.fortuna.ical4j.model.Property;
+import net.fortuna.ical4j.vcard.Entity;
 import net.fortuna.ical4j.vcard.ParameterName;
-import net.fortuna.ical4j.vcard.VCard;
 import net.fortuna.ical4j.vcard.parameter.Value;
 
 import java.io.IOException;
@@ -18,29 +18,29 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Support for serialization of {@link VCard} objects according to the XCard specification.
+ * Support for serialization of {@link Entity} objects according to the XCard specification.
  */
 @JsonRootName(value = "vcards")
-public class XCardSerializer extends StdSerializer<VCard> {
+public class XCardSerializer extends StdSerializer<Entity> {
 
     private ObjectMapper objectMapper;
 
-    public XCardSerializer(Class<VCard> t) {
+    public XCardSerializer(Class<Entity> t) {
         super(t);
         this.objectMapper = new XmlMapper(); //.builder().enable(SerializationFeature.WRAP_ROOT_VALUE)
     }
 
     @Override
-    public void serialize(VCard value, JsonGenerator gen, SerializerProvider provider) throws IOException {
+    public void serialize(Entity value, JsonGenerator gen, SerializerProvider provider) throws IOException {
         gen.writeTree(buildVCard(value));
     }
 
-    private JsonNode buildVCard(VCard card) {
+    private JsonNode buildVCard(Entity entity) {
         var root = objectMapper.createObjectNode();
         var vcard = root.putObject("vcard");
 
         var cardprops = vcard.putObject("properties");
-        for (var p : card.getProperties()) {
+        for (var p : entity.getProperties()) {
             cardprops.putIfAbsent(p.getName().toLowerCase(), buildPropertyNode(p));
         }
         return root;

@@ -2,14 +2,14 @@ package org.mnode.ical4j.serializer
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.module.SimpleModule
-import net.fortuna.ical4j.vcard.VCard
+import net.fortuna.ical4j.vcard.Entity
 
 class JCardSerializerTest extends AbstractSerializerTest {
 
     def 'test card serialization'() {
         given: 'an object mapper'
         SimpleModule module = []
-        module.addSerializer(VCard, new JCardSerializer())
+        module.addSerializer(Entity, new JCardSerializer())
         ObjectMapper mapper = []
         mapper.registerModule(module)
 
@@ -21,6 +21,6 @@ class JCardSerializerTest extends AbstractSerializerTest {
 
         where:
         card    | expectedSerialized
-        card1   | '["vcard",[["fn",{},"text","Test Card"],["uid",{},"uri","1"]]]'
+        entity1 | '["vcard",[["fn",{},"text","Test Card"],["uid",{},"uri","1"]]]'
     }
 }

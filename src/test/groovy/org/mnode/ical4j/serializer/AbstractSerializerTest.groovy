@@ -5,7 +5,7 @@ import net.fortuna.ical4j.model.ContentBuilder
 import net.fortuna.ical4j.model.component.*
 import net.fortuna.ical4j.model.property.Attach
 import net.fortuna.ical4j.util.Calendars
-import net.fortuna.ical4j.vcard.VCard
+import net.fortuna.ical4j.vcard.Entity
 import spock.lang.Shared
 import spock.lang.Specification
 
@@ -36,7 +36,7 @@ class AbstractSerializerTest extends Specification {
     Available available1
 
     @Shared
-    VCard card1, card2, card3, card4
+    Entity entity1, entity2, entity3, entity4
 
     def setupSpec() {
         ContentBuilder builder = []
@@ -84,25 +84,25 @@ class AbstractSerializerTest extends Specification {
         }
 
         net.fortuna.ical4j.vcard.ContentBuilder vcardBuilder = []
-        card1 = vcardBuilder.vcard() {
+        entity1 = vcardBuilder.entity {
             fn 'Test Card'
             uid '1'
         }
 
-        card2 = vcardBuilder.vcard() {
+        entity2 = vcardBuilder.entity {
             fn 'Jane Doe'
             uid '2'
             adr ';;20341 Whitworth Institute 405 N. Whitworth;Seattle;WA;98052'
         }
 
-        card3 = vcardBuilder.vcard() {
+        entity3 = vcardBuilder.entity {
             fn 'Acme Inc.'
             uid '3'
             logo 'http://example.org/acme-logo.png'
             adr ';;20341 Whitworth Institute 405 N. Whitworth;Seattle;WA;98052'
         }
 
-        card4 = vcardBuilder.vcard() {
+        entity4 = vcardBuilder.entity {
             fn 'Acme Inc.'
             uid '3'
             logo 'http://example.org/acme-logo.png'
