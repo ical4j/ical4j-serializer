@@ -122,7 +122,9 @@ public class ContentMapper<T extends PropertyContainer> extends JsonDeserializer
                 }
             } else {
                 assertCurrentScalarValue(p);
-                propertyBuilder.value(decodeValue(propertyName != null ? propertyName : p.currentName(), p.getText()));
+                if (!p.getText().isBlank()) {
+                    propertyBuilder.value(decodeValue(propertyName != null ? propertyName : p.currentName(), p.getText()));
+                }
             }
 
             return propertyBuilder.build();
