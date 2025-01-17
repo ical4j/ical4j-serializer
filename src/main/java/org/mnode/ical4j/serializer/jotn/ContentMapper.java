@@ -6,10 +6,7 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import net.fortuna.ical4j.data.DefaultParameterFactorySupplier;
 import net.fortuna.ical4j.data.DefaultPropertyFactorySupplier;
-import net.fortuna.ical4j.model.Property;
-import net.fortuna.ical4j.model.PropertyBuilder;
-import net.fortuna.ical4j.model.PropertyContainer;
-import net.fortuna.ical4j.model.PropertyFactory;
+import net.fortuna.ical4j.model.*;
 import org.mnode.ical4j.serializer.JsonMapper;
 import org.mnode.ical4j.serializer.ParameterMapper;
 import org.mnode.ical4j.serializer.ParameterMapperImpl;
@@ -100,7 +97,8 @@ public class ContentMapper<T extends PropertyContainer> extends JsonDeserializer
         @Override
         public Property map(JsonParser p) throws IOException {
             var propertyBuilder = new PropertyBuilder(propertyFactories);
-            propertyBuilder.name(propertyName != null ? propertyName.toUpperCase() : p.currentName().toUpperCase());
+//            propertyBuilder.name(propertyName != null ? propertyName.toUpperCase() : p.currentName().toUpperCase());
+            String propName = parsePropertyName(p, propertyBuilder);
             if (JsonToken.START_ARRAY.equals(p.currentToken())) {
                 var b = new StringBuilder();
                 while (!JsonToken.END_ARRAY.equals(p.nextToken())) {
@@ -117,17 +115,39 @@ public class ContentMapper<T extends PropertyContainer> extends JsonDeserializer
                         propertyBuilder.parameter(parameterMapper.map(p));
                     } else {
                         assertNextScalarValue(p);
-                        propertyBuilder.value(decodeValue(propertyName != null ? propertyName : p.currentName(), p.getText()));
+                        propertyBuilder.value(decodeValue(propName, p.getText()));
                     }
                 }
             } else {
                 assertCurrentScalarValue(p);
                 if (!p.getText().isBlank()) {
-                    propertyBuilder.value(decodeValue(propertyName != null ? propertyName : p.currentName(), p.getText()));
+                    propertyBuilder.value(decodeValue(propName, p.getText()));
                 }
             }
 
             return propertyBuilder.build();
+        }
+
+        private String parsePropertyName(JsonParser parser, PropertyBuilder builder) throws IOException {
+            // if name already set return..
+            if (propertyName != null) {
+                builder.name(propertyName.toUpperCase());
+                return propertyName;
+            } else {
+                String[] name = parser.currentName().split("[\\[\\]\\s]+");
+                builder.name(name[0].toUpperCase());
+                if (name.length > 1) {
+                    // parse inline params..
+                    for (int i = 1; i < name.length; i++) {
+                        String[] params = name[i].split("[,\\s]+");
+                        for (String param : params) {
+                            String[] p = param.split(":");
+                            builder.parameter(new ParameterBuilder().name(p[0]).value(p[1]).build());
+                        }
+                    }
+                }
+                return name[0];
+            }
         }
 
         private boolean isParameter(String fieldName) {
