@@ -22,7 +22,7 @@ public class JCalDecoder implements StringDecoder {
 
     public static final JCalDecoder DATE_TIME = new JCalDecoder(s ->
             DateTimeFormatter.ofPattern("yyyyMMdd'T'HHmmssX").withZone(ZoneOffset.UTC)
-                    .format(DateTimeFormatter.ofPattern("yyyy'-'MM'-'dd'T'HH':'mm':'ss[X]")
+                    .format(DateTimeFormatter.ofPattern("yyyy'-'MM'-'dd'T'HH':'mm[':'ss[X]]")
                             .parseBest(s, new InstantTemporalQuery(), new LocalDateTimeTemporalQuery())));
 
     public static final JCalDecoder INSTANT = new JCalDecoder(s ->

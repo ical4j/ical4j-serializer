@@ -1,8 +1,6 @@
 module ical4j.serializer {
-    requires java.base;
     requires ical4j.core;
     requires ical4j.vcard;
-    requires ical4j.extensions;
 
     requires com.fasterxml.jackson.databind;
     requires com.fasterxml.jackson.dataformat.xml;

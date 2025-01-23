@@ -205,4 +205,45 @@ DTEND:20231124T103000Z\r
 SUMMARY:Sample meeting\r
 END:VEVENT\r\n/
     }
+
+    def 'test inline parameters'() {
+        given: 'a json string'
+        String json = '''{
+"dtstart[value:date]": "2023-11-24",
+"dtend[value:date]": "2023-11-24",
+"summary": "All day event"
+}
+'''
+        when: 'the event is deserialized'
+        VEvent event = mapper.readValue(json, VEvent)
+
+        then: 'event matches expected result'
+        event as String ==~ /BEGIN:VEVENT\r
+DTSTAMP:\d{8}T\d{6}Z\r
+DTSTART;VALUE=date:20231124\r
+DTEND;VALUE=date:20231124\r
+SUMMARY:All day event\r
+END:VEVENT\r\n/
+    }
+
+    def 'test ingoring empty properties'() {
+        given: 'a json string'
+        String json = '''{
+"dtstart[value:date]": "2023-11-24",
+"dtend[value:date]": "2023-11-24",
+"summary": "All day event",
+"description": ""
+}
+'''
+        when: 'the event is deserialized'
+        VEvent event = mapper.readValue(json, VEvent)
+
+        then: 'event matches expected result'
+        event as String ==~ /BEGIN:VEVENT\r
+DTSTAMP:\d{8}T\d{6}Z\r
+DTSTART;VALUE=date:20231124\r
+DTEND;VALUE=date:20231124\r
+SUMMARY:All day event\r
+END:VEVENT\r\n/
+    }
 }
