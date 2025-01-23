@@ -51,7 +51,11 @@ public class ContentMapper<T extends PropertyContainer> extends JsonDeserializer
                 if (JsonToken.START_ARRAY.equals(p.nextToken())) {
                     container.addAll(parsePropertyList(p, propertyName));
                 } else {
-                    container.add(propertyMapper.map(p));
+                    try {
+                        container.add(propertyMapper.map(p));
+                    } catch (IllegalArgumentException e) {
+                        // skip invalid properties..
+                    }
                 }
             } catch (URISyntaxException | ParseException e) {
                 throw new IllegalArgumentException(e);
@@ -73,7 +77,11 @@ public class ContentMapper<T extends PropertyContainer> extends JsonDeserializer
     private List<Property> parsePropertyList(JsonParser p, String propertyName) throws IOException, URISyntaxException, ParseException {
         List<Property> properties = new ArrayList<>();
         while (!JsonToken.END_ARRAY.equals(p.nextToken())) {
-            properties.add(new PropertyMapperImpl(new DefaultPropertyFactorySupplier().get(), propertyName).map(p));
+            try {
+                properties.add(new PropertyMapperImpl(new DefaultPropertyFactorySupplier().get(), propertyName).map(p));
+            } catch (IllegalArgumentException e) {
+                // skip invalid properties..
+            }
         }
         return properties;
     }
@@ -115,14 +123,18 @@ public class ContentMapper<T extends PropertyContainer> extends JsonDeserializer
                         propertyBuilder.parameter(parameterMapper.map(p));
                     } else {
                         assertNextScalarValue(p);
+                        if (p.getText().isBlank()) {
+                            throw new IllegalArgumentException("Empty string");
+                        }
                         propertyBuilder.value(decodeValue(propName, p.getText()));
                     }
                 }
             } else {
                 assertCurrentScalarValue(p);
-                if (!p.getText().isBlank()) {
-                    propertyBuilder.value(decodeValue(propName, p.getText()));
+                if (p.getText().isBlank()) {
+                    throw new IllegalArgumentException("Empty string");
                 }
+                propertyBuilder.value(decodeValue(propName, p.getText()));
             }
 
             return propertyBuilder.build();

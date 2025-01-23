@@ -48,6 +48,9 @@ public interface JsonMapper {
     }
 
     default String decodeValue(String propertyName, String value) {
+        if (value.isBlank()) {
+            throw new IllegalArgumentException("Empty string");
+        }
         switch (propertyName) {
             case "trigger":
             case "created":
