@@ -6,6 +6,11 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import net.fortuna.ical4j.vcard.VCard;
 import org.mnode.ical4j.serializer.JsonBuilder;
 
+/**
+ * Abstract base class for building JSContact objects in JSON format.
+ * This class provides a common structure for contact builders that
+ * serialize components into JSON nodes.
+ */
 public abstract class AbstractJSContactBuilder implements JsonBuilder {
 
     protected VCard component;

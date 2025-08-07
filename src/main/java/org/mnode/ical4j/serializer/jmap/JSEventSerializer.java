@@ -9,6 +9,10 @@ import net.fortuna.ical4j.model.component.VEvent;
 
 import java.io.IOException;
 
+/**
+ * Serializer for JMAP JSEvent objects, which represent calendar events.
+ * This class extends StdSerializer to provide custom serialization logic for VEvent components.
+ */
 public class JSEventSerializer extends StdSerializer<VEvent> {
 
     public JSEventSerializer(Class<VEvent> t) {

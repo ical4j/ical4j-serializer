@@ -9,6 +9,10 @@ import net.fortuna.ical4j.vcard.VCard;
 
 import java.io.IOException;
 
+/**
+ * Serializer for JMAP JSCardGroup objects, which represent a group of vCards.
+ * This class extends StdSerializer to provide custom serialization logic for vCards.
+ */
 public class JSCardSerializer extends StdSerializer<VCard> {
 
     public JSCardSerializer(Class<VCard> t) {

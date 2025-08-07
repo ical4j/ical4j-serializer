@@ -10,6 +10,10 @@ import net.fortuna.ical4j.model.Property;
 
 import java.io.IOException;
 
+/**
+ * Serializer for JMAP JSGroup objects, which represent a group of calendar components.
+ * This class extends StdSerializer to provide custom serialization logic for Calendar components.
+ */
 public class JSGroupSerializer extends StdSerializer<Calendar> {
 
     public JSGroupSerializer(Class<Calendar> t) {

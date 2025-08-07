@@ -9,6 +9,10 @@ import net.fortuna.ical4j.model.component.VToDo;
 
 import java.io.IOException;
 
+/**
+ * Serializer for JMAP JSTask objects, which represent tasks in a calendar.
+ * This class extends StdSerializer to provide custom serialization logic for VToDo components.
+ */
 public class JSTaskSerializer extends StdSerializer<VToDo> {
 
     public JSTaskSerializer(Class<VToDo> t) {
