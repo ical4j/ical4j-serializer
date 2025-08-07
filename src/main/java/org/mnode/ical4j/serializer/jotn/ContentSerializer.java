@@ -8,6 +8,12 @@ import net.fortuna.ical4j.model.PropertyContainer;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Serializer for iCalendar and vCard content in JOT notation.
+ * This class extends JsonSerializer to provide custom serialization logic for PropertyContainer objects.
+ *
+ * @param <T> the type of PropertyContainer to serialize
+ */
 public class ContentSerializer<T extends PropertyContainer> extends JsonSerializer<T> {
 
     private final List<String> propertyNames;

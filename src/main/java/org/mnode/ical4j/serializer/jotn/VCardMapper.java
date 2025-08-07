@@ -24,6 +24,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Deserializer for vCard entities in JOT notation.
+ * This class extends JsonDeserializer to provide custom deserialization logic for vCard entities,
+ * mapping JSON properties to vCard properties and parameters.
+ */
 public class VCardMapper extends JsonDeserializer<Entity> implements JsonMapper {
 
     private final PropertyMapper propertyMapper;

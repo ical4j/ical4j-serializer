@@ -17,6 +17,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Deserializer for a list of iCal4j components, specifically for JOT notation.
+ * This class extends StdDeserializer to provide custom deserialization logic for
+ * a list of components, which can include VEvent, VToDo, VJournal, and VAvailability.
+ * It uses ContentMapper to handle the deserialization of each specific component type.
+ */
 public class ComponentListMapper extends StdDeserializer<ComponentList<? extends Component>> implements JsonMapper {
 
     private final ContentMapper<VEvent> vEventMapper;
