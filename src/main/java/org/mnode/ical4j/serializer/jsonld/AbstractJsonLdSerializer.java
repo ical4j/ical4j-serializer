@@ -8,6 +8,14 @@ import net.fortuna.ical4j.model.PropertyListAccessor;
 
 import java.io.IOException;
 
+/**
+ * Abstract base class for JSON-LD serializers that handle serialization of iCal4j components
+ * extending {@link PropertyListAccessor}.
+ * <p>
+ * This class provides a template method for serializing components to JSON-LD format.
+ *
+ * @param <T> the type of component to be serialized, extending {@link PropertyListAccessor}
+ */
 public abstract class AbstractJsonLdSerializer<T extends PropertyListAccessor> extends StdSerializer<T> {
 
     public AbstractJsonLdSerializer(Class<T> t) {

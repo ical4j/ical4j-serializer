@@ -10,6 +10,12 @@ import org.mnode.ical4j.serializer.JsonBuilder;
 
 import java.util.Optional;
 
+/**
+ * Abstract base class for building JSON-LD nodes from iCal4j components.
+ * This class provides common functionality for creating JSON nodes and managing the component properties.
+ *
+ * @param <T> the type of component to be built into a JSON-LD node, extending {@link PropertyListAccessor}
+ */
 public abstract class AbstractNodeBuilder<T extends PropertyListAccessor> implements JsonBuilder {
 
     private final String schemaType;

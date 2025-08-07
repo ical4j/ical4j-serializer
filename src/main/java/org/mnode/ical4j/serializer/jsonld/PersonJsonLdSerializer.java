@@ -4,6 +4,12 @@ import com.fasterxml.jackson.databind.JsonNode;
 import net.fortuna.ical4j.vcard.Entity;
 import net.fortuna.ical4j.vcard.PropertyName;
 
+/**
+ * Serializes an iCal4j {@link Entity} object representing an organization to JSON-LD format.
+ * This class extends {@link AbstractJsonLdSerializer} to provide custom serialization for organization components.
+ * <p>
+ * The serialized output includes properties such as UID, name, email, image, logo, telephone, URL, address, and members.
+ */
 public class PersonJsonLdSerializer extends AbstractJsonLdSerializer<Entity> {
 
     public PersonJsonLdSerializer(Class<Entity> t) {

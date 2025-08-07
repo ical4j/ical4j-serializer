@@ -4,6 +4,12 @@ import com.fasterxml.jackson.databind.JsonNode;
 import net.fortuna.ical4j.vcard.Entity;
 import net.fortuna.ical4j.vcard.PropertyName;
 
+/**
+ * Serializes an iCal4j {@link Entity} object representing a place to JSON-LD format.
+ * This class extends {@link AbstractJsonLdSerializer} to provide custom serialization for place components.
+ * <p>
+ * The serialized output includes properties such as UID, name, image, URL, and address.
+ */
 public class PlaceJsonLdSerializer extends AbstractJsonLdSerializer<Entity> {
 
     public PlaceJsonLdSerializer(Class<Entity> t) {

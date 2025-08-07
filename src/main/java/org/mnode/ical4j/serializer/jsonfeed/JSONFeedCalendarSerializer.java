@@ -8,6 +8,10 @@ import net.fortuna.ical4j.model.Calendar;
 
 import java.io.IOException;
 
+/**
+ * Serialize an iCal4j {@link Calendar} object to JSON Feed format.
+ * This class extends {@link StdSerializer} to provide custom serialization for Calendar objects.
+ */
 public class JSONFeedCalendarSerializer extends StdSerializer<Calendar> {
 
     public JSONFeedCalendarSerializer(Class<Calendar> t) {

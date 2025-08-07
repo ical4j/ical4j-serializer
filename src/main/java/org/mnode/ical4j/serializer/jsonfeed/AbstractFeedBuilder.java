@@ -5,6 +5,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.mnode.ical4j.serializer.JsonBuilder;
 
+/**
+ * Abstract base class for building JSON feed objects.
+ * This class provides common functionality for creating JSON nodes and managing the version of the feed.
+ *
+ * @param <T> the type of component to be built into a JSON feed
+ */
 public abstract class AbstractFeedBuilder<T> implements JsonBuilder {
 
     private final String version;

@@ -4,6 +4,12 @@ import com.fasterxml.jackson.databind.JsonNode;
 import net.fortuna.ical4j.model.Property;
 import net.fortuna.ical4j.model.component.VJournal;
 
+/**
+ * Serializes an iCal4j {@link VJournal} object to JSON-LD format.
+ * This class extends {@link AbstractJsonLdSerializer} to provide custom serialization for journal components.
+ * <p>
+ * The serialized output includes properties such as UID, summary, description, and URL.
+ */
 public class CreativeWorkJsonLdSerializer extends AbstractJsonLdSerializer<VJournal> {
 
     public CreativeWorkJsonLdSerializer(Class<VJournal> t) {

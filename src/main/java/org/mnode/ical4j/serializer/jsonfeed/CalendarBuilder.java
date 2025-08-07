@@ -6,6 +6,10 @@ import net.fortuna.ical4j.model.Calendar;
 import net.fortuna.ical4j.model.Property;
 import net.fortuna.ical4j.model.property.Source;
 
+/**
+ * Builds a JSON representation of an iCal4j {@link Calendar} object for JSON Feed format.
+ * This class extends {@link AbstractFeedBuilder} to provide specific functionality for calendar components.
+ */
 public class CalendarBuilder extends AbstractFeedBuilder<Calendar> {
 
     public CalendarBuilder() {
