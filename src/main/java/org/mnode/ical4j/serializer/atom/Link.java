@@ -8,6 +8,11 @@ import com.fasterxml.jackson.dataformat.xml.ser.ToXmlGenerator;
 
 import java.io.IOException;
 
+/**
+ * Represents a link in an Atom feed, providing serialization capabilities.
+ * This class implements {@link JsonSerializable} to allow for JSON serialization
+ * of the link's attributes.
+ */
 public class Link implements JsonSerializable {
 
     private String rel;

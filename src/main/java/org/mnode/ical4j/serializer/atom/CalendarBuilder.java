@@ -5,6 +5,11 @@ import net.fortuna.ical4j.model.Calendar;
 import net.fortuna.ical4j.model.Property;
 import net.fortuna.ical4j.model.property.Source;
 
+/**
+ * Builds a JSON representation of a Calendar object according to the Atom Feed specification.
+ * This class extends {@link AbstractFeedBuilder} to provide a structured way to serialize
+ * calendar properties and components into a JSON node.
+ */
 public class CalendarBuilder extends AbstractFeedBuilder<Calendar> {
 
     public CalendarBuilder() {

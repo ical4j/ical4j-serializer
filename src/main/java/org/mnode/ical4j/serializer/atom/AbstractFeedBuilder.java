@@ -5,6 +5,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import org.mnode.ical4j.serializer.JsonBuilder;
 
+/**
+ * Abstract base class for building Atom feeds in JSON format.
+ * This class provides a common structure for feed builders that
+ * serialize components into JSON nodes.
+ *
+ * @param <T> the type of component to be serialized
+ */
 public abstract class AbstractFeedBuilder<T> implements JsonBuilder {
 
     protected T component;

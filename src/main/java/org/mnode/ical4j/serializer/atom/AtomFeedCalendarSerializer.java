@@ -8,6 +8,10 @@ import net.fortuna.ical4j.model.Calendar;
 
 import java.io.IOException;
 
+/**
+ * Support for serialization of {@link Calendar} objects according to the Atom Feed specification.
+ * This serializer builds a JSON representation of the calendar using an {@link AbstractFeedBuilder}.
+ */
 public class AtomFeedCalendarSerializer extends StdSerializer<Calendar> {
 
     public AtomFeedCalendarSerializer(Class<Calendar> t) {

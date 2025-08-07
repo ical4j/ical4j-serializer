@@ -10,6 +10,10 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Implementation of {@link ParameterMapper} that constructs parameters from a JSON parser.
+ * This implementation supports boolean values as well as string values.
+ */
 public class ParameterMapperImpl implements ParameterMapper {
 
     private final List<ParameterFactory<?>> parameterFactories;

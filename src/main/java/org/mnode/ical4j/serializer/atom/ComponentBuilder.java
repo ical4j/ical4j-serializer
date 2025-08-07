@@ -5,6 +5,13 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import net.fortuna.ical4j.model.Component;
 import net.fortuna.ical4j.model.Property;
 
+/**
+ * Builds a JSON representation of a Component object according to the Atom Feed specification.
+ * This class extends {@link AbstractFeedBuilder} to provide a structured way to serialize
+ * component properties into a JSON node.
+ *
+ * @param <T> the type of component to be serialized
+ */
 public class ComponentBuilder<T extends Component> extends AbstractFeedBuilder<T> {
 
     private final ObjectNode node;
