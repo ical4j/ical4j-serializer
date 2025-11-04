@@ -22,7 +22,7 @@ class EventJsonLdSerializerTest extends AbstractSerializerTest {
 
         where:
         event   | expectedSerialized
-        event1  | '{"@context":"https://schema.org","@type":"Event","@id":"1","name":"Test Event 1","startDate":"20090810"}'
-        event2  | '{"@context":"https://schema.org","@type":"Event","@id":"2","name":"Test Event 2","description":"Test Description 2","startDate":"20100810"}'
+        event1  | '{"@context":"https://schema.org","@type":"Event","@id":"1","name":"Test Event 1","startDate":"2009-08-10"}'
+        event2  | '{"@context":"https://schema.org","@type":"Event","@id":"2","name":"Test Event 2","description":"Test Description 2","startDate":"2010-08-10"}'
     }
 }

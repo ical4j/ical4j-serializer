@@ -32,13 +32,13 @@ public class ActionJsonLdSerializer extends AbstractJsonLdSerializer<VToDo> {
         @Override
         public JsonNode build() {
             var node = createObjectNode();
-            putIfNotAbsent("@id", node, Property.UID);
-            putIfNotAbsent("name", node, Property.SUMMARY);
-            putIfNotAbsent("description", node, Property.DESCRIPTION);
-            putIfNotAbsent("url", node, Property.URL);
-            putIfNotAbsent("startTime", node, Property.DTSTART);
-            putIfNotAbsent("endTime", node, Property.DUE);
-            putIfNotAbsent("actionStatus", node, Property.STATUS);
+            putIfNotAbsent("@id", node, component.getProperty(Property.UID));
+            putIfNotAbsent("name", node, component.getProperty(Property.SUMMARY));
+            putIfNotAbsent("description", node, component.getProperty(Property.DESCRIPTION));
+            putIfNotAbsent("url", node, component.getProperty(Property.URL));
+            putIfNotAbsent("startTime", node, component.getProperty(Property.DTSTART));
+            putIfNotAbsent("endTime", node, component.getProperty(Property.DUE));
+            putIfNotAbsent("actionStatus", node, component.getProperty(Property.STATUS));
             return node;
         }
     }

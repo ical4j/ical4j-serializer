@@ -31,13 +31,13 @@ public class PersonJsonLdSerializer extends AbstractJsonLdSerializer<Entity> {
         @Override
         public JsonNode build() {
             var node = createObjectNode();
-            putIfNotAbsent("@id", node, PropertyName.UID);
-            putIfNotAbsent("name", node, PropertyName.FN);
-            putIfNotAbsent("email", node, PropertyName.EMAIL);
-            putIfNotAbsent("image", node, PropertyName.PHOTO);
-            putIfNotAbsent("jobTitle", node, PropertyName.TITLE);
-            putIfNotAbsent("telephone", node, PropertyName.TEL);
-            putIfNotAbsent("url", node, PropertyName.URL);
+            putIfNotAbsent("@id", node, component.getProperty(PropertyName.UID));
+            putIfNotAbsent("name", node, component.getProperty(PropertyName.FN));
+            putIfNotAbsent("email", node, component.getProperty(PropertyName.EMAIL));
+            putIfNotAbsent("image", node, component.getProperty(PropertyName.PHOTO));
+            putIfNotAbsent("jobTitle", node, component.getProperty(PropertyName.TITLE));
+            putIfNotAbsent("telephone", node, component.getProperty(PropertyName.TEL));
+            putIfNotAbsent("url", node, component.getProperty(PropertyName.URL));
             setObject("address", node, PropertyName.ADR);
             return node;
         }

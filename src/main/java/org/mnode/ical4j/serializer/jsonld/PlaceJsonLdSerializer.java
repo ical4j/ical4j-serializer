@@ -31,10 +31,10 @@ public class PlaceJsonLdSerializer extends AbstractJsonLdSerializer<Entity> {
         @Override
         public JsonNode build() {
             var node = createObjectNode();
-            putIfNotAbsent("@id", node, PropertyName.UID);
-            putIfNotAbsent("name", node, PropertyName.FN);
-            putIfNotAbsent("image", node, PropertyName.PHOTO);
-            putIfNotAbsent("url", node, PropertyName.URL);
+            putIfNotAbsent("@id", node, component.getProperty(PropertyName.UID));
+            putIfNotAbsent("name", node, component.getProperty(PropertyName.FN));
+            putIfNotAbsent("image", node, component.getProperty(PropertyName.PHOTO));
+            putIfNotAbsent("url", node, component.getProperty(PropertyName.URL));
             setObject("address", node, PropertyName.ADR);
             return node;
         }

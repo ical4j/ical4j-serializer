@@ -31,10 +31,10 @@ public class ServiceJsonLdSerializer extends AbstractJsonLdSerializer<VAvailabil
         @Override
         public JsonNode build() {
             var node = createObjectNode();
-            putIfNotAbsent("@id", node, Property.UID);
-            putIfNotAbsent("name", node, Property.SUMMARY);
-            putIfNotAbsent("description", node, Property.DESCRIPTION);
-            putIfNotAbsent("url", node, Property.URL);
+            putIfNotAbsent("@id", node, component.getProperty(Property.UID));
+            putIfNotAbsent("name", node, component.getProperty(Property.SUMMARY));
+            putIfNotAbsent("description", node, component.getProperty(Property.DESCRIPTION));
+            putIfNotAbsent("url", node, component.getProperty(Property.URL));
             return node;
         }
     }

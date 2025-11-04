@@ -31,13 +31,13 @@ public class EventJsonLdSerializer extends AbstractJsonLdSerializer<VEvent> {
         @Override
         public JsonNode build() {
             var node = createObjectNode();
-            putIfNotAbsent("@id", node, Property.UID);
-            putIfNotAbsent("name", node, Property.SUMMARY);
-            putIfNotAbsent("description", node, Property.DESCRIPTION);
-            putIfNotAbsent("url", node, Property.URL);
-            putIfNotAbsent("startDate", node, Property.DTSTART);
-            putIfNotAbsent("endDate", node, Property.DTEND);
-            putIfNotAbsent("location", node, Property.LOCATION);
+            putIfNotAbsent("@id", node, component.getProperty(Property.UID));
+            putIfNotAbsent("name", node, component.getProperty(Property.SUMMARY));
+            putIfNotAbsent("description", node, component.getProperty(Property.DESCRIPTION));
+            putIfNotAbsent("url", node, component.getProperty(Property.URL));
+            putIfNotAbsent("startDate", node, component.getProperty(Property.DTSTART));
+            putIfNotAbsent("endDate", node, component.getProperty(Property.DTEND));
+            putIfNotAbsent("location", node, component.getProperty(Property.LOCATION));
             return node;
         }
     }

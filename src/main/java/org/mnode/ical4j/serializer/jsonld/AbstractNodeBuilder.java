@@ -40,16 +40,6 @@ public abstract class AbstractNodeBuilder<T extends PropertyListAccessor> implem
         return node;
     }
 
-    protected ObjectNode putIfNotAbsent(String propertyName, ObjectNode node, String property) {
-        component.getProperty(property).ifPresent(value -> node.put(propertyName, value.getValue()));
-        return node;
-    }
-
-    protected ObjectNode putIfNotAbsent(String propertyName, ObjectNode node, Enum<?> property) {
-        component.getProperty(property).ifPresent(value -> node.put(propertyName, value.getValue()));
-        return node;
-    }
-
     protected ObjectNode setObject(String propertyName, ObjectNode node, String property) {
         Optional<?> prop = component.getProperty(property);
         if (prop.isPresent() && prop.get() instanceof Address) {
