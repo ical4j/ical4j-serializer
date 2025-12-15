@@ -149,7 +149,6 @@ public class XCalSerializer extends StdSerializer<Calendar> {
             case "DUE":
             case "DTSTAMP":
             case "DTSTART":
-            case "DURATION":
             case "RECURRENCE-ID":
             case "EXDATE":
             case "RDATE":
@@ -157,6 +156,8 @@ public class XCalSerializer extends StdSerializer<Calendar> {
             case "CREATED":
             case "LAST-MODIFIED":
                 return "date-time";
+            case "DURATION":
+                return "duration";
             case "FREEBUSY":
                 return "period";
             case "TZOFFSETFROM":
