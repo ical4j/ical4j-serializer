@@ -9,6 +9,8 @@ import net.fortuna.ical4j.vcard.Entity
 import spock.lang.Shared
 import spock.lang.Specification
 
+import java.nio.ByteBuffer
+
 class AbstractSerializerTest extends Specification {
 
     @Shared
@@ -47,7 +49,7 @@ class AbstractSerializerTest extends Specification {
             organizer 'johnd@example.com'
             dtstart '20090810', parameters: parameters { value 'DATE' }
             action 'DISPLAY'
-            attach new Attach(new File('LICENSE').bytes)
+            attach new Attach(ByteBuffer.wrap(new File('LICENSE').bytes))
         }
 
         event2 = builder.vevent() {
