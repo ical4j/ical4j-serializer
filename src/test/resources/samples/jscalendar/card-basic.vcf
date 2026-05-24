@@ -1,0 +1,8 @@
+BEGIN:VCARD
+VERSION:4.0
+FN:Jane Doe
+N:Doe;Jane;;;
+UID:card-1
+EMAIL:jane@example.com
+TEL:+1-555-0100
+END:VCARD

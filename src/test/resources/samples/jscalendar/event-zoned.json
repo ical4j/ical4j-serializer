@@ -1,0 +1,8 @@
+{
+  "@type": "jsevent",
+  "uid": "zoned-1",
+  "title": "Sydney standup",
+  "start": "2024-05-16T09:00:00",
+  "duration": "PT30M",
+  "timeZone": "Australia/Sydney"
+}

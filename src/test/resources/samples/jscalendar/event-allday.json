@@ -1,0 +1,7 @@
+{
+  "@type": "jsevent",
+  "uid": "allday-1",
+  "title": "New Year's Day",
+  "start": "2024-01-01T00:00:00",
+  "showWithoutTime": true
+}

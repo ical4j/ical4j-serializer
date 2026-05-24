@@ -1,0 +1,8 @@
+{
+  "@type": "jsevent",
+  "uid": "abc@example.com",
+  "title": "Meeting",
+  "start": "2024-05-16T09:00:00",
+  "duration": "PT1H",
+  "timeZone": "Etc/UTC"
+}

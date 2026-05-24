@@ -114,22 +114,36 @@ Result:
 
 #### JSCalendar JSON format:
 
+Register `JSCalendarModule` to enable JSCalendar (RFC 8984) serialization for
+`VEvent`, `VToDo`, `VJournal`, `Calendar`, and JSContact (RFC 9610) serialization
+for vCard `Entity`:
+
 ```java
 VEvent event = ...;
 
-SimpleModule module = new SimpleModule();
-module.addSerializer(VEvent.class, new JSEventSerializer());
 ObjectMapper mapper = new ObjectMapper();
-mapper.registerModule(module);
+mapper.registerModule(new JSCalendarModule());
 
 String serialized = mapper.writeValueAsString(event);
 ```
 
 Result:
 
+```json
+{
+  "@type": "jsevent",
+  "uid": "abc@example.com",
+  "title": "Meeting",
+  "start": "2024-05-16T09:00:00",
+  "duration": "PT1H",
+  "timeZone": "Etc/UTC"
+}
 ```
-{"@type":"jsevent"}
-```
+
+A `Calendar` serialises to a JSCalendar `Group` with an `entries` array of its
+child `jsevent`/`jstask`/`jsjournal` components. For JSContact `CardGroup`
+output (vCard entities with `KIND:group`), register `JSCardGroupSerializer`
+explicitly alongside the module.
 
 #### Jot API serialization
 

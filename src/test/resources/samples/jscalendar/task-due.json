@@ -1,0 +1,8 @@
+{
+  "@type": "jstask",
+  "uid": "task-1",
+  "title": "Pay bills",
+  "due": "2024-05-20T17:00:00",
+  "timeZone": "Etc/UTC",
+  "percentComplete": 50
+}

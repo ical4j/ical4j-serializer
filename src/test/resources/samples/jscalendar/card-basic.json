@@ -1,0 +1,21 @@
+{
+  "@type": "Card",
+  "uid": "card-1",
+  "name": {
+    "full": "Jane Doe",
+    "given": "Jane",
+    "surname": "Doe"
+  },
+  "emails": {
+    "email-1": {
+      "@type": "EmailAddress",
+      "address": "jane@example.com"
+    }
+  },
+  "phones": {
+    "phone-1": {
+      "@type": "Phone",
+      "number": "+1-555-0100"
+    }
+  }
+}

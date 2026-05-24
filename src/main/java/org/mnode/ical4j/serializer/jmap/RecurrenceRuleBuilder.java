@@ -12,6 +12,7 @@ import net.fortuna.ical4j.model.property.RRule;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -141,6 +142,9 @@ final class RecurrenceRuleBuilder {
         }
         if (value instanceof ZonedDateTime) {
             return local.format(((ZonedDateTime) value).toLocalDateTime());
+        }
+        if (value instanceof OffsetDateTime) {
+            return local.format(((OffsetDateTime) value).toLocalDateTime());
         }
         if (value instanceof java.time.Instant) {
             return local.format(((java.time.Instant) value).atZone(ZoneOffset.UTC).toLocalDateTime());

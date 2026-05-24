@@ -1,0 +1,16 @@
+{
+  "@type": "jsevent",
+  "uid": "recurring-1",
+  "title": "Fortnightly catch-up",
+  "start": "2024-05-16T09:00:00",
+  "duration": "PT30M",
+  "timeZone": "Etc/UTC",
+  "recurrenceRules": [
+    {
+      "@type": "RecurrenceRule",
+      "frequency": "weekly",
+      "interval": 2,
+      "count": 10
+    }
+  ]
+}
