@@ -1,17 +1,47 @@
 package org.mnode.ical4j.serializer.jmap;
 
-import java.net.URI;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import net.fortuna.ical4j.model.Parameter;
+import net.fortuna.ical4j.model.Property;
+import net.fortuna.ical4j.model.PropertyContainer;
+import net.fortuna.ical4j.model.parameter.Feature;
+
+import java.util.List;
+import java.util.Optional;
 
 /**
- * Represents a virtual location in a JMAP context, typically used for calendar events or tasks.
- * This class encapsulates the name, description, and URI of the virtual location.
+ * Builds the JSCalendar {@code virtualLocations} map from a component's
+ * {@code CONFERENCE} properties.
  */
-public class VirtualLocationBuilder {
+final class VirtualLocationBuilder {
 
-    private String name;
-    
-    private String description;
+    private VirtualLocationBuilder() {
+    }
 
-    private URI uri;
-    
+    static void applyTo(PropertyContainer source, ObjectNode target) {
+        List<Property> conferences = source.getProperties("CONFERENCE");
+        if (conferences.isEmpty()) {
+            return;
+        }
+        ObjectNode container = target.objectNode();
+        int index = 1;
+        for (Property conference : conferences) {
+            ObjectNode node = target.objectNode();
+            node.put("@type", "VirtualLocation");
+            node.put("uri", conference.getValue());
+            Optional<Parameter> label = conference.getParameter("LABEL");
+            label.ifPresent(value -> node.put("name", value.getValue()));
+            Optional<Feature> feature = conference.getParameter(Parameter.FEATURE);
+            feature.ifPresent(value -> {
+                ObjectNode features = target.objectNode();
+                for (String token : value.getValue().split(",")) {
+                    features.put(token.trim().toLowerCase(), true);
+                }
+                node.set("features", features);
+            });
+            container.set("conference-" + index, node);
+            index++;
+        }
+        target.set("virtualLocations", container);
+    }
 }

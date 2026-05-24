@@ -1,27 +1,47 @@
 package org.mnode.ical4j.serializer.jmap
 
+import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.databind.module.SimpleModule
+import net.fortuna.ical4j.model.ContentBuilder
 import net.fortuna.ical4j.model.component.VToDo
-import org.mnode.ical4j.serializer.AbstractSerializerTest
+import spock.lang.Specification
 
-class JSTaskSerializerTest extends AbstractSerializerTest {
+class JSTaskSerializerTest extends Specification {
 
-    def 'test task serialization'() {
-        given: 'an object mapper'
-        SimpleModule module = []
-        module.addSerializer(VToDo, new JSTaskSerializer())
-        ObjectMapper mapper = []
-        mapper.registerModule(module)
+    ObjectMapper mapper = new ObjectMapper().registerModule(new JSCalendarModule())
 
-        when: 'the task is serialized'
-        String serialized = mapper.writeValueAsString(todo)
+    ContentBuilder builder = new ContentBuilder()
 
-        then: 'serialized string matches expected value'
-        serialized == expectedSerialized
+    def 'serializes task with due date'() {
+        given:
+        VToDo todo = builder.vtodo {
+            uid 't1'
+            summary 'Pay bills'
+            due '20240520T170000Z'
+        }
 
-        where:
-        todo   | expectedSerialized
-        todo1  | '{"@type":"jstask"}'
+        when:
+        JsonNode node = mapper.valueToTree(todo)
+
+        then:
+        node.get('@type').asText() == 'jstask'
+        node.get('uid').asText() == 't1'
+        node.get('title').asText() == 'Pay bills'
+        node.get('due').asText() == '2024-05-20T17:00:00'
+        node.get('timeZone').asText() == 'Etc/UTC'
+    }
+
+    def 'serializes percent-complete'() {
+        given:
+        VToDo todo = builder.vtodo {
+            uid 't1'
+            percentcomplete '50'
+        }
+
+        when:
+        JsonNode node = mapper.valueToTree(todo)
+
+        then:
+        node.get('percentComplete').asInt() == 50
     }
 }

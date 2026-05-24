@@ -1,29 +1,53 @@
 package org.mnode.ical4j.serializer.jmap;
 
-import net.fortuna.ical4j.model.LocationType;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import net.fortuna.ical4j.model.PropertyContainer;
+import net.fortuna.ical4j.model.property.Geo;
+import net.fortuna.ical4j.model.property.Location;
 
-import java.net.URL;
-import java.time.ZoneId;
-import java.util.Map;
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Optional;
 
 /**
- * Represents a location in a JMAP context, typically used for calendar events or tasks.
- * This class encapsulates various attributes of a location, including its name, description,
- * type, relative position, time zone, coordinates, and associated links.
+ * Builds the JSCalendar {@code locations} map from a component's
+ * {@code LOCATION} and {@code GEO} properties.
  */
-public class LocationBuilder {
+final class LocationBuilder {
 
-    private String name;
+    private LocationBuilder() {
+    }
 
-    private String description;
+    static void applyTo(PropertyContainer source, ObjectNode target) {
+        List<Location> locations = source.getProperties("LOCATION");
+        Optional<Geo> geo = source.getProperty("GEO");
+        if (locations.isEmpty() && geo.isEmpty()) {
+            return;
+        }
+        ObjectNode container = target.objectNode();
+        int index = 1;
+        for (Location location : locations) {
+            ObjectNode node = target.objectNode();
+            node.put("@type", "Location");
+            node.put("name", location.getValue());
+            if (index == 1 && geo.isPresent()) {
+                node.put("coordinates", geoToUri(geo.get()));
+            }
+            container.set("location-" + index, node);
+            index++;
+        }
+        if (locations.isEmpty() && geo.isPresent()) {
+            ObjectNode node = target.objectNode();
+            node.put("@type", "Location");
+            node.put("coordinates", geoToUri(geo.get()));
+            container.set("location-1", node);
+        }
+        target.set("locations", container);
+    }
 
-    private LocationType locationType;
-
-    private String relativeTo; // start/end
-
-    private ZoneId timeZone;
-
-    private String coordinates;
-
-    private Map<String, URL> links;
+    private static String geoToUri(Geo geo) {
+        BigDecimal lat = geo.getLatitude();
+        BigDecimal lon = geo.getLongitude();
+        return "geo:" + lat.toPlainString() + "," + lon.toPlainString();
+    }
 }

@@ -3,19 +3,25 @@ package org.mnode.ical4j.serializer.jmap;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import net.fortuna.ical4j.vcard.VCard;
+import net.fortuna.ical4j.vcard.Entity;
 import org.mnode.ical4j.serializer.JsonBuilder;
 
 /**
  * Abstract base class for building JSContact objects in JSON format.
  * This class provides a common structure for contact builders that
- * serialize components into JSON nodes.
+ * serialize vCard {@link Entity} instances into JSON nodes.
  */
 public abstract class AbstractJSContactBuilder implements JsonBuilder {
 
-    protected VCard component;
+    private final String objectType;
 
-    public AbstractJSContactBuilder component(VCard component) {
+    protected Entity component;
+
+    protected AbstractJSContactBuilder(String objectType) {
+        this.objectType = objectType;
+    }
+
+    public AbstractJSContactBuilder component(Entity component) {
         this.component = component;
         return this;
     }
@@ -24,12 +30,13 @@ public abstract class AbstractJSContactBuilder implements JsonBuilder {
         var mapper = new ObjectMapper();
 
         var node = mapper.createObjectNode();
+        node.put("@type", objectType);
         return node;
     }
 
     /**
-     * Build a JSON node representing the JSCalendar object.
-     * @return a JSON representation of a JSCalendar object
+     * Build a JSON node representing the JSContact object.
+     * @return a JSON representation of a JSContact object
      */
     public abstract JsonNode build();
 }
