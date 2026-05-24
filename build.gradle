@@ -17,6 +17,11 @@ repositories {
 }
 
 java {
+    // bnd 7.x requires JDK 17 to run; Gradle's toolchain transparently provisions
+    // a JDK 17 even when the build is launched with an older runtime.
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
     sourceCompatibility = 11
     targetCompatibility = 11
 

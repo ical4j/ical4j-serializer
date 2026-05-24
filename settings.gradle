@@ -1,0 +1,6 @@
+plugins {
+    // Enables transparent JDK auto-provisioning for the java toolchain in build.gradle.
+    id 'org.gradle.toolchains.foojay-resolver-convention' version '0.8.0'
+}
+
+rootProject.name = 'ical4j-serializer'
