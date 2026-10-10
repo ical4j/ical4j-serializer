@@ -179,7 +179,10 @@ public class JCalSerializer extends StdSerializer<Calendar> {
 
         var params = mapper.createObjectNode();
         for (var p : parameterList) {
-            params.put(p.getName().toLowerCase(), p.getValue().toLowerCase());
+            // VALUE is conveyed by the type identifier and parameter values must preserve case (RFC 7265, 3.5)..
+            if (!Parameter.VALUE.equals(p.getName())) {
+                params.put(p.getName().toLowerCase(), p.getValue());
+            }
         }
         return params;
     }
