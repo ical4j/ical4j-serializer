@@ -6,16 +6,12 @@ import net.fortuna.ical4j.model.Month;
 import net.fortuna.ical4j.model.PropertyContainer;
 import net.fortuna.ical4j.model.Recur;
 import net.fortuna.ical4j.model.WeekDay;
+import net.fortuna.ical4j.model.property.DtStart;
 import net.fortuna.ical4j.model.property.ExDate;
 import net.fortuna.ical4j.model.property.RDate;
 import net.fortuna.ical4j.model.property.RRule;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
+import java.time.ZoneId;
 import java.time.temporal.Temporal;
 import java.util.List;
 import java.util.Locale;
@@ -32,21 +28,24 @@ final class RecurrenceRuleBuilder {
     }
 
     static void applyTo(PropertyContainer source, ObjectNode target) {
-        applyRules(source, target);
-        applyOverrides(source, target);
+        // UNTIL and override keys are local date-times in the object's time zone (that of DTSTART)..
+        Optional<DtStart<Temporal>> dtStart = source.getProperty("DTSTART");
+        ZoneId zone = dtStart.map(value -> JSCalendarTemporal.zoneOf(value.getDate())).orElse(null);
+        applyRules(source, target, zone);
+        applyOverrides(source, target, zone);
     }
 
-    private static void applyRules(PropertyContainer source, ObjectNode target) {
+    private static void applyRules(PropertyContainer source, ObjectNode target, ZoneId zone) {
         Optional<RRule<Temporal>> rrule = source.getProperty("RRULE");
         if (rrule.isEmpty()) {
             return;
         }
         ArrayNode rules = target.arrayNode();
-        rules.add(buildRule(rrule.get().getRecur(), target));
+        rules.add(buildRule(rrule.get().getRecur(), target, zone));
         target.set("recurrenceRules", rules);
     }
 
-    private static ObjectNode buildRule(Recur<? extends Temporal> recur, ObjectNode parent) {
+    private static ObjectNode buildRule(Recur<? extends Temporal> recur, ObjectNode parent, ZoneId zone) {
         ObjectNode node = parent.objectNode();
         node.put("@type", "RecurrenceRule");
         if (recur.getFrequency() != null) {
@@ -59,12 +58,19 @@ final class RecurrenceRuleBuilder {
             node.put("count", recur.getCount());
         }
         if (recur.getUntil() != null) {
-            node.put("until", formatTemporal(recur.getUntil()));
+            node.put("until", JSCalendarTemporal.formatLocal(recur.getUntil(), zone));
+        }
+        if (recur.getWeekStartDay() != null) {
+            node.put("firstDayOfWeek", recur.getWeekStartDay().getDay().name().toLowerCase(Locale.ROOT));
         }
         addIntArray(node, "byMonthDay", recur.getMonthDayList());
         addMonthArray(node, "byMonth", recur.getMonthList());
         addWeekDayArray(node, "byDay", recur.getDayList(), parent);
         addIntArray(node, "byYearDay", recur.getYearDayList());
+        addIntArray(node, "byWeekNo", recur.getWeekNoList());
+        addIntArray(node, "byHour", recur.getHourList());
+        addIntArray(node, "byMinute", recur.getMinuteList());
+        addIntArray(node, "bySecond", recur.getSecondList());
         addIntArray(node, "bySetPosition", recur.getSetPosList());
         return node;
     }
@@ -108,7 +114,7 @@ final class RecurrenceRuleBuilder {
         node.set(field, array);
     }
 
-    private static void applyOverrides(PropertyContainer source, ObjectNode target) {
+    private static void applyOverrides(PropertyContainer source, ObjectNode target, ZoneId zone) {
         List<RDate<Temporal>> rdates = source.getProperties("RDATE");
         List<ExDate<Temporal>> exdates = source.getProperties("EXDATE");
         if (rdates.isEmpty() && exdates.isEmpty()) {
@@ -117,38 +123,18 @@ final class RecurrenceRuleBuilder {
         ObjectNode overrides = target.objectNode();
         for (RDate<Temporal> rdate : rdates) {
             for (Temporal date : rdate.getDates()) {
-                overrides.set(formatTemporal(date), target.objectNode());
+                overrides.set(JSCalendarTemporal.formatLocal(date, zone), target.objectNode());
             }
         }
         for (ExDate<Temporal> exdate : exdates) {
             for (Temporal date : exdate.getDates()) {
                 ObjectNode entry = target.objectNode();
                 entry.put("excluded", true);
-                overrides.set(formatTemporal(date), entry);
+                overrides.set(JSCalendarTemporal.formatLocal(date, zone), entry);
             }
         }
         if (!overrides.isEmpty()) {
             target.set("recurrenceOverrides", overrides);
         }
-    }
-
-    private static String formatTemporal(Temporal value) {
-        DateTimeFormatter local = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
-        if (value instanceof LocalDate) {
-            return ((LocalDate) value).atStartOfDay().format(local);
-        }
-        if (value instanceof LocalDateTime) {
-            return local.format((LocalDateTime) value);
-        }
-        if (value instanceof ZonedDateTime) {
-            return local.format(((ZonedDateTime) value).toLocalDateTime());
-        }
-        if (value instanceof OffsetDateTime) {
-            return local.format(((OffsetDateTime) value).toLocalDateTime());
-        }
-        if (value instanceof java.time.Instant) {
-            return local.format(((java.time.Instant) value).atZone(ZoneOffset.UTC).toLocalDateTime());
-        }
-        return value.toString();
     }
 }

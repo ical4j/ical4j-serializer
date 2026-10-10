@@ -85,6 +85,44 @@ class RecurrenceRuleBuilderTest extends Specification {
         override.size() == 0
     }
 
+    def 'UTC EXDATE and UNTIL are converted into the start time zone'() {
+        given:
+        VEvent event = builder.vevent {
+            uid '1'
+            dtstart '20250101T090000', parameters: parameters { tzid_ 'America/New_York' }
+            rrule 'FREQ=DAILY;UNTIL=20250110T140000Z'
+            exdate '20250108T140000Z'
+        }
+
+        when:
+        RecurrenceRuleBuilder.applyTo(event, target)
+
+        then: 'values are local times in New York (UTC-5), matching the recurrence instances'
+        target.get('recurrenceRules').get(0).get('until').asText() == '2025-01-10T09:00:00'
+        target.get('recurrenceOverrides').get('2025-01-08T09:00:00').get('excluded').asBoolean()
+        !target.get('recurrenceOverrides').has('2025-01-08T14:00:00')
+    }
+
+    def 'time, week number and week start rule parts are preserved'() {
+        given:
+        VEvent event = builder.vevent {
+            uid '1'
+            dtstart '20240516T090000Z'
+            rrule 'FREQ=YEARLY;BYWEEKNO=20;BYDAY=MO;BYHOUR=9,17;BYMINUTE=0,30;BYSECOND=15;WKST=SU'
+        }
+
+        when:
+        RecurrenceRuleBuilder.applyTo(event, target)
+        def rule = target.get('recurrenceRules').get(0)
+
+        then:
+        rule.get('byWeekNo')*.asInt() == [20]
+        rule.get('byHour')*.asInt() == [9, 17]
+        rule.get('byMinute')*.asInt() == [0, 30]
+        rule.get('bySecond')*.asInt() == [15]
+        rule.get('firstDayOfWeek').asText() == 'su'
+    }
+
     def 'no recurrence fields when source is empty'() {
         given:
         VEvent event = builder.vevent { uid '1' }

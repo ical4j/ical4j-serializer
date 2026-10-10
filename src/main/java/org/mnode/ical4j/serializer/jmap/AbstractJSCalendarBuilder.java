@@ -10,6 +10,7 @@ import net.fortuna.ical4j.model.property.Due;
 import net.fortuna.ical4j.model.property.Duration;
 import org.mnode.ical4j.serializer.JsonBuilder;
 
+import java.time.ZoneId;
 import java.time.temporal.Temporal;
 import java.util.Optional;
 
@@ -69,7 +70,13 @@ public abstract class AbstractJSCalendarBuilder<T> implements JsonBuilder {
         dtStart.ifPresent(value -> applyTemporal(value, "start", target));
 
         Optional<Due<Temporal>> due = source.getProperty("DUE");
-        due.ifPresent(value -> applyTemporal(value, "due", target));
+        if (due.isPresent() && dtStart.isPresent()) {
+            // JSCalendar has a single timeZone for start and due, so express DUE in the start's zone..
+            ZoneId startZone = JSCalendarTemporal.zoneOf(dtStart.get().getDate());
+            target.put("due", JSCalendarTemporal.formatLocal(due.get().getDate(), startZone));
+        } else {
+            due.ifPresent(value -> applyTemporal(value, "due", target));
+        }
 
         Optional<Duration> duration = source.getProperty("DURATION");
         duration.ifPresent(value -> target.put("duration", JSCalendarDuration.from(value)));

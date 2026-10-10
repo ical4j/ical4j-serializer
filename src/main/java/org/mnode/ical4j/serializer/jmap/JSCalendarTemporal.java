@@ -9,6 +9,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
+import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -99,6 +100,52 @@ final class JSCalendarTemporal {
             date = LocalDate.parse(value.toString());
         }
         return new JSCalendarTemporal(date.atStartOfDay().format(LOCAL), null, true);
+    }
+
+    /**
+     * The zone in which an absolute date-time value is expressed.
+     * @return the value's zone, or null for floating and date-only values
+     */
+    static ZoneId zoneOf(Temporal value) {
+        if (value instanceof ZonedDateTime) {
+            return ((ZonedDateTime) value).getZone();
+        }
+        if (value instanceof OffsetDateTime) {
+            return ((OffsetDateTime) value).getOffset();
+        }
+        if (value instanceof Instant) {
+            return ZoneOffset.UTC;
+        }
+        return null;
+    }
+
+    /**
+     * Format a value as a JSCalendar LocalDateTime. Absolute values (UTC or zoned) are first converted into
+     * the given zone, so they are interpreted correctly relative to the object's {@code timeZone}.
+     * Floating and date-only values have no instant to convert and are formatted as-is.
+     * @param zone the zone of the containing object, or null to keep an absolute value's own zone
+     */
+    static String formatLocal(Temporal value, ZoneId zone) {
+        if (value instanceof LocalDate) {
+            return ((LocalDate) value).atStartOfDay().format(LOCAL);
+        }
+        if (value instanceof LocalDateTime) {
+            return LOCAL.format((LocalDateTime) value);
+        }
+        ZonedDateTime zoned;
+        if (value instanceof ZonedDateTime) {
+            zoned = (ZonedDateTime) value;
+        } else if (value instanceof OffsetDateTime) {
+            zoned = ((OffsetDateTime) value).toZonedDateTime();
+        } else if (value instanceof Instant) {
+            zoned = ((Instant) value).atZone(ZoneOffset.UTC);
+        } else {
+            return value.toString();
+        }
+        if (zone != null) {
+            zoned = zoned.withZoneSameInstant(zone);
+        }
+        return LOCAL.format(zoned.toLocalDateTime());
     }
 
     /**
