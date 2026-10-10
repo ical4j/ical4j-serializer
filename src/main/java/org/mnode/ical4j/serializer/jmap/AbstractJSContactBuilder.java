@@ -1,7 +1,7 @@
 package org.mnode.ical4j.serializer.jmap;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import net.fortuna.ical4j.vcard.Entity;
 import org.mnode.ical4j.serializer.JsonBuilder;
@@ -27,9 +27,7 @@ public abstract class AbstractJSContactBuilder implements JsonBuilder {
     }
 
     protected ObjectNode createObjectNode() {
-        var mapper = new ObjectMapper();
-
-        var node = mapper.createObjectNode();
+        var node = JsonNodeFactory.instance.objectNode();
         node.put("@type", objectType);
         return node;
     }

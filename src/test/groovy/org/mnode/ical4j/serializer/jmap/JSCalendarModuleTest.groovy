@@ -3,6 +3,7 @@ package org.mnode.ical4j.serializer.jmap
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
 import net.fortuna.ical4j.util.Calendars
+import net.fortuna.ical4j.vcard.ContentBuilder
 import net.fortuna.ical4j.vcard.VCardBuilder
 import spock.lang.Specification
 import spock.lang.Unroll
@@ -52,5 +53,30 @@ class JSCalendarModuleTest extends Specification {
 
         then:
         actual == expected
+    }
+
+    @Unroll
+    def 'vCard with KIND #kind serializes as #expectedType'() {
+        given:
+        def entity = new ContentBuilder().entity {
+            fn 'Marketing'
+            uid 'entity-1'
+            if (kind) {
+                delegate.kind kind
+            }
+        }
+
+        when:
+        JsonNode node = new ObjectMapper().registerModule(new JSCalendarModule()).valueToTree(entity)
+
+        then:
+        node.get('@type').asText() == expectedType
+
+        where:
+        kind         | expectedType
+        'group'      | 'CardGroup'
+        'GROUP'      | 'CardGroup'
+        'individual' | 'Card'
+        null         | 'Card'
     }
 }

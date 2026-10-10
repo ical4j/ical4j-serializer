@@ -22,8 +22,7 @@ import net.fortuna.ical4j.vcard.Entity;
  *   <li>{@link VToDo} → {@code jstask}</li>
  *   <li>{@link VJournal} → {@code jsevent} with {@code freeBusyStatus:"free"}</li>
  *   <li>{@link Calendar} → {@code Group} with {@code entries} of child components</li>
- *   <li>{@link Entity} → {@code Card} (registered serializer; for
- *   {@code KIND:group} entities use {@link JSCardGroupSerializer} explicitly)</li>
+ *   <li>{@link Entity} → {@code CardGroup} for {@code KIND:group} entities, otherwise {@code Card}</li>
  * </ul>
  *
  * <p>Known gaps tracked as follow-ups:</p>
@@ -44,6 +43,6 @@ public class JSCalendarModule extends SimpleModule {
         addSerializer(VToDo.class, new JSTaskSerializer());
         addSerializer(VJournal.class, new JSJournalSerializer());
         addSerializer(Calendar.class, new JSGroupSerializer());
-        addSerializer(Entity.class, new JSCardSerializer());
+        addSerializer(Entity.class, new JSContactSerializer());
     }
 }
