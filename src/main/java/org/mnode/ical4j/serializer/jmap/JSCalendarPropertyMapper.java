@@ -59,14 +59,22 @@ final class JSCalendarPropertyMapper {
         priority.ifPresent(value -> target.put("priority", value.getLevel()));
     }
 
+    /**
+     * Map an event STATUS to the JSCalendar {@code status} property, which only supports
+     * confirmed, tentative and cancelled. Other values are omitted.
+     */
     static void applyStatus(PropertyContainer source, ObjectNode target) {
         Optional<Status> status = source.getProperty("STATUS");
-        status.ifPresent(value -> {
-            String mapped = mapStatus(value.getValue());
-            if (mapped != null) {
-                target.put("status", mapped);
-            }
-        });
+        status.map(value -> mapStatus(value.getValue())).ifPresent(value -> target.put("status", value));
+    }
+
+    /**
+     * Map a task STATUS to the JSCalendar {@code progress} property, which supports
+     * needs-action, in-process, completed and cancelled. Other values are omitted.
+     */
+    static void applyProgress(PropertyContainer source, ObjectNode target) {
+        Optional<Status> status = source.getProperty("STATUS");
+        status.map(value -> mapProgress(value.getValue())).ifPresent(value -> target.put("progress", value));
     }
 
     static void applyCategoriesAsKeywords(PropertyContainer source, ObjectNode target) {
@@ -90,14 +98,13 @@ final class JSCalendarPropertyMapper {
         color.ifPresent(value -> target.put("color", value.getValue()));
     }
 
+    /**
+     * Map CLASS to the JSCalendar {@code privacy} property. CONFIDENTIAL has no direct equivalent
+     * and maps to secret, the most restrictive JSCalendar value. Other values are omitted.
+     */
     static void applyPrivacy(PropertyContainer source, ObjectNode target) {
         Optional<Clazz> privacy = source.getProperty("CLASS");
-        privacy.ifPresent(value -> {
-            String raw = value.getValue();
-            if (raw != null && !raw.isEmpty()) {
-                target.put("privacy", raw.toLowerCase(Locale.ROOT));
-            }
-        });
+        privacy.map(value -> mapPrivacy(value.getValue())).ifPresent(value -> target.put("privacy", value));
     }
 
     static void applyLinkFromUrl(PropertyContainer source, ObjectNode target) {
@@ -124,14 +131,42 @@ final class JSCalendarPropertyMapper {
                 return "tentative";
             case "CANCELLED":
                 return "cancelled";
+            default:
+                return null;
+        }
+    }
+
+    private static String mapProgress(String raw) {
+        if (raw == null) {
+            return null;
+        }
+        switch (raw.toUpperCase(Locale.ROOT)) {
+            case "NEEDS-ACTION":
+                return "needs-action";
             case "IN-PROCESS":
                 return "in-process";
             case "COMPLETED":
                 return "completed";
-            case "NEEDS-ACTION":
-                return "needs-action";
+            case "CANCELLED":
+                return "cancelled";
             default:
-                return raw.toLowerCase(Locale.ROOT);
+                return null;
+        }
+    }
+
+    private static String mapPrivacy(String raw) {
+        if (raw == null) {
+            return null;
+        }
+        switch (raw.toUpperCase(Locale.ROOT)) {
+            case "PUBLIC":
+                return "public";
+            case "PRIVATE":
+                return "private";
+            case "CONFIDENTIAL":
+                return "secret";
+            default:
+                return null;
         }
     }
 }

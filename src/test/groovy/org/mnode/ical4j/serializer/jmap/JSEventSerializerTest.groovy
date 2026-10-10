@@ -77,6 +77,22 @@ class JSEventSerializerTest extends Specification {
         !node.has('timeZone')
     }
 
+    def 'serializes all-day event with DTEND derived duration'() {
+        given:
+        VEvent event = builder.vevent {
+            uid '1'
+            dtstart '20240516', parameters: parameters { value 'DATE' }
+            dtend '20240518', parameters: parameters { value 'DATE' }
+        }
+
+        when:
+        JsonNode node = mapper.valueToTree(event)
+
+        then:
+        node.get('start').asText() == '2024-05-16T00:00:00'
+        node.get('duration').asText() == 'P2D'
+    }
+
     def 'serializes event with explicit duration'() {
         given:
         VEvent event = builder.vevent {

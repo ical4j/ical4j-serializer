@@ -30,7 +30,27 @@ class AlertBuilderTest extends Specification {
         alert.get('@type').asText() == 'Alert'
         alert.get('action').asText() == 'display'
         alert.get('trigger').get('@type').asText() == 'OffsetTrigger'
-        alert.get('trigger').get('offset').asText() == 'PT-15M'
+        alert.get('trigger').get('offset').asText() == '-PT15M'
+        !alert.get('trigger').has('relativeTo')
+    }
+
+    def 'trigger related to end sets relativeTo'() {
+        given:
+        VEvent event = builder.vevent {
+            uid '1'
+            valarm {
+                action 'DISPLAY'
+                trigger '-PT5M', parameters: parameters { related 'END' }
+            }
+        }
+
+        when:
+        AlertBuilder.applyTo(event, target)
+        def trigger = target.get('alerts').get('alert-1').get('trigger')
+
+        then:
+        trigger.get('offset').asText() == '-PT5M'
+        trigger.get('relativeTo').asText() == 'end'
     }
 
     def 'no alerts property when no VALARM present'() {

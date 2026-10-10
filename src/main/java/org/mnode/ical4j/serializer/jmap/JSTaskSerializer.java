@@ -54,7 +54,7 @@ public class JSTaskSerializer extends StdSerializer<VToDo> {
             JSCalendarPropertyMapper.applyTimestamps(component, jsTask);
             JSCalendarPropertyMapper.applySequence(component, jsTask);
             JSCalendarPropertyMapper.applyPriority(component, jsTask);
-            JSCalendarPropertyMapper.applyStatus(component, jsTask);
+            JSCalendarPropertyMapper.applyProgress(component, jsTask);
             JSCalendarPropertyMapper.applyCategoriesAsKeywords(component, jsTask);
             JSCalendarPropertyMapper.applyColor(component, jsTask);
             JSCalendarPropertyMapper.applyPrivacy(component, jsTask);
