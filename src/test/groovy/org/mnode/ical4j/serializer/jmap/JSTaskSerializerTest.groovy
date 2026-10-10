@@ -46,6 +46,39 @@ class JSTaskSerializerTest extends Specification {
         !node.has('status')
     }
 
+    def 'DUE in a different zone is expressed in the start time zone'() {
+        given:
+        VToDo todo = builder.vtodo {
+            uid 't1'
+            dtstart '20250101T090000', parameters: parameters { tzid_ 'America/New_York' }
+            due '20250101T170000', parameters: parameters { tzid_ 'Europe/London' }
+        }
+
+        when:
+        JsonNode node = mapper.valueToTree(todo)
+
+        then: '17:00 London is 12:00 New York'
+        node.get('timeZone').asText() == 'America/New_York'
+        node.get('start').asText() == '2025-01-01T09:00:00'
+        node.get('due').asText() == '2025-01-01T12:00:00'
+    }
+
+    def 'zoned DUE does not pin a floating start to its zone'() {
+        given:
+        VToDo todo = builder.vtodo {
+            uid 't1'
+            dtstart '20250101T090000'
+            due '20250101T170000', parameters: parameters { tzid_ 'Europe/London' }
+        }
+
+        when:
+        JsonNode node = mapper.valueToTree(todo)
+
+        then:
+        !node.has('timeZone')
+        node.get('start').asText() == '2025-01-01T09:00:00'
+    }
+
     def 'serializes percent-complete'() {
         given:
         VToDo todo = builder.vtodo {
