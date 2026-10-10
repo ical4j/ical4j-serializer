@@ -2,8 +2,10 @@ package org.mnode.ical4j.serializer.jmap;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import net.fortuna.ical4j.model.ComponentContainer;
+import net.fortuna.ical4j.model.Parameter;
 import net.fortuna.ical4j.model.PropertyContainer;
 import net.fortuna.ical4j.model.component.VAlarm;
+import net.fortuna.ical4j.model.parameter.Related;
 import net.fortuna.ical4j.model.property.Action;
 import net.fortuna.ical4j.model.property.Trigger;
 
@@ -57,7 +59,11 @@ final class AlertBuilder {
             node.put("when", JSCalendarTemporal.formatUtc(trigger.getDate()));
         } else {
             node.put("@type", "OffsetTrigger");
-            node.put("offset", trigger.getDuration().toString());
+            node.put("offset", JSCalendarDuration.format(trigger.getDuration()));
+            Optional<Related> related = trigger.getParameter(Parameter.RELATED);
+            if (related.isPresent() && Related.END.equals(related.get())) {
+                node.put("relativeTo", "end");
+            }
         }
         return node;
     }

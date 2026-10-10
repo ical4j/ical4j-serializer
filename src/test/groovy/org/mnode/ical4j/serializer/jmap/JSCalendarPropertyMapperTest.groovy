@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.node.ObjectNode
 import net.fortuna.ical4j.model.ContentBuilder
 import net.fortuna.ical4j.model.component.VEvent
+import net.fortuna.ical4j.model.component.VToDo
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -73,7 +74,7 @@ class JSCalendarPropertyMapperTest extends Specification {
     }
 
     @Unroll
-    def 'applyStatus remaps #raw to #expected'() {
+    def 'applyStatus maps #raw to #expected'() {
         given:
         VEvent event = builder.vevent { status raw }
         ObjectNode target = node()
@@ -82,28 +83,58 @@ class JSCalendarPropertyMapperTest extends Specification {
         JSCalendarPropertyMapper.applyStatus(event, target)
 
         then:
-        target.get('status').asText() == expected
+        target.path('status').textValue() == expected
 
         where:
         raw            | expected
         'CONFIRMED'    | 'confirmed'
         'TENTATIVE'    | 'tentative'
         'CANCELLED'    | 'cancelled'
-        'IN-PROCESS'   | 'in-process'
-        'COMPLETED'    | 'completed'
-        'NEEDS-ACTION' | 'needs-action'
+        'IN-PROCESS'   | null
+        'COMPLETED'    | null
+        'NEEDS-ACTION' | null
     }
 
-    def 'applyPrivacy lowercases CLASS value'() {
+    @Unroll
+    def 'applyProgress maps #raw to #expected'() {
         given:
-        VEvent event = builder.vevent { 'class' 'PRIVATE' }
+        VToDo todo = builder.vtodo { status raw }
+        ObjectNode target = node()
+
+        when:
+        JSCalendarPropertyMapper.applyProgress(todo, target)
+
+        then:
+        target.path('progress').textValue() == expected
+        !target.has('status')
+
+        where:
+        raw            | expected
+        'NEEDS-ACTION' | 'needs-action'
+        'IN-PROCESS'   | 'in-process'
+        'COMPLETED'    | 'completed'
+        'CANCELLED'    | 'cancelled'
+        'CONFIRMED'    | null
+    }
+
+    @Unroll
+    def 'applyPrivacy maps #raw to #expected'() {
+        given:
+        VEvent event = builder.vevent { 'class' raw }
         ObjectNode target = node()
 
         when:
         JSCalendarPropertyMapper.applyPrivacy(event, target)
 
         then:
-        target.get('privacy').asText() == 'private'
+        target.path('privacy').textValue() == expected
+
+        where:
+        raw            | expected
+        'PUBLIC'       | 'public'
+        'PRIVATE'      | 'private'
+        'CONFIDENTIAL' | 'secret'
+        'X-CUSTOM'     | null
     }
 
     def 'applyLinkFromUrl emits a links.url entry with rel=about'() {
@@ -132,6 +163,7 @@ class JSCalendarPropertyMapperTest extends Specification {
         JSCalendarPropertyMapper.applySequence(event, target)
         JSCalendarPropertyMapper.applyPriority(event, target)
         JSCalendarPropertyMapper.applyStatus(event, target)
+        JSCalendarPropertyMapper.applyProgress(event, target)
         JSCalendarPropertyMapper.applyCategoriesAsKeywords(event, target)
         JSCalendarPropertyMapper.applyColor(event, target)
         JSCalendarPropertyMapper.applyPrivacy(event, target)

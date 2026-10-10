@@ -31,6 +31,21 @@ class JSTaskSerializerTest extends Specification {
         node.get('timeZone').asText() == 'Etc/UTC'
     }
 
+    def 'serializes task status as progress'() {
+        given:
+        VToDo todo = builder.vtodo {
+            uid 't1'
+            status 'COMPLETED'
+        }
+
+        when:
+        JsonNode node = mapper.valueToTree(todo)
+
+        then:
+        node.get('progress').asText() == 'completed'
+        !node.has('status')
+    }
+
     def 'serializes percent-complete'() {
         given:
         VToDo todo = builder.vtodo {
