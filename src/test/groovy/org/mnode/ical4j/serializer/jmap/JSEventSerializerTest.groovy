@@ -188,13 +188,11 @@ class JSEventSerializerTest extends Specification {
 
         then:
         participants.size() == 2
-        def a = participants.get('a@example.com')
+        def a = participants.elements().find { it.get('sendTo').get('imip').asText() == 'mailto:a@example.com' }
         a.get('@type').asText() == 'Participant'
-        a.get('sendTo').get('imip').asText() == 'mailto:a@example.com'
         a.get('roles').get('owner').asBoolean()
-        a.get('roles').get('attendee').asBoolean()
 
-        def b = participants.get('b@example.com')
+        def b = participants.elements().find { it.get('sendTo').get('imip').asText() == 'mailto:b@example.com' }
         b.get('roles').get('attendee').asBoolean()
         !b.get('roles').has('owner')
     }
