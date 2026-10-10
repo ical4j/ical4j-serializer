@@ -141,9 +141,8 @@ Result:
 ```
 
 A `Calendar` serialises to a JSCalendar `Group` with an `entries` array of its
-child `jsevent`/`jstask`/`jsjournal` components. For JSContact `CardGroup`
-output (vCard entities with `KIND:group`), register `JSCardGroupSerializer`
-explicitly alongside the module.
+child `jsevent`/`jstask`/`jsjournal` components. A vCard `Entity` serialises to
+a JSContact `CardGroup` when it has `KIND:group`, and to a `Card` otherwise.
 
 #### Jot API serialization
 
