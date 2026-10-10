@@ -76,6 +76,9 @@ public class JCalMapper extends JsonDeserializer<Calendar> implements JsonMapper
             while (!JsonToken.END_ARRAY.equals(p.nextToken())) {
                 componentBuilder.subComponent(map(p));
             }
+
+            assertNextToken(p, JsonToken.END_ARRAY);
+
             return componentBuilder.build();
         }
     }
@@ -124,12 +127,20 @@ public class JCalMapper extends JsonDeserializer<Calendar> implements JsonMapper
                     break;
                 case "binary":
                     propertyBuilder.parameter(Value.BINARY);
+                    propertyBuilder.value(p.nextTextValue());
+                    break;
                 case "duration":
                     propertyBuilder.parameter(Value.DURATION);
+                    propertyBuilder.value(p.nextTextValue());
+                    break;
                 case "period":
                     propertyBuilder.parameter(Value.PERIOD);
+                    propertyBuilder.value(p.nextTextValue());
+                    break;
                 case "uri":
                     propertyBuilder.parameter(Value.URI);
+                    propertyBuilder.value(p.nextTextValue());
+                    break;
                 default:
                     propertyBuilder.value(p.nextTextValue());
             }

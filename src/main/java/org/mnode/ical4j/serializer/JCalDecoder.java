@@ -20,10 +20,15 @@ public class JCalDecoder implements StringDecoder {
     public static final JCalDecoder DATE = new JCalDecoder(s ->
             DateTimeFormatter.BASIC_ISO_DATE.format(DateTimeFormatter.ISO_LOCAL_DATE.parse(s)));
 
-    public static final JCalDecoder DATE_TIME = new JCalDecoder(s ->
-            DateTimeFormatter.ofPattern("yyyyMMdd'T'HHmmssX").withZone(ZoneOffset.UTC)
-                    .format(DateTimeFormatter.ofPattern("yyyy'-'MM'-'dd'T'HH':'mm[':'ss[X]]")
-                            .parseBest(s, new InstantTemporalQuery(), new LocalDateTimeTemporalQuery())));
+    public static final JCalDecoder DATE_TIME = new JCalDecoder(s -> {
+        var temporal = DateTimeFormatter.ofPattern("yyyy'-'MM'-'dd'T'HH':'mm[':'ss[X]]")
+                .parseBest(s, new InstantTemporalQuery(), new LocalDateTimeTemporalQuery());
+        // only UTC values carry an offset, floating and TZID-local values are encoded without one..
+        if (temporal instanceof Instant) {
+            return DateTimeFormatter.ofPattern("yyyyMMdd'T'HHmmss'Z'").withZone(ZoneOffset.UTC).format(temporal);
+        }
+        return DateTimeFormatter.ofPattern("yyyyMMdd'T'HHmmss").format(temporal);
+    });
 
     public static final JCalDecoder INSTANT = new JCalDecoder(s ->
             DateTimeFormatter.ofPattern("yyyyMMdd'T'HHmmss'Z'").withZone(ZoneOffset.UTC)
