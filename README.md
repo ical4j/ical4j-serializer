@@ -98,7 +98,7 @@ dependencies includes:
 Calendar calendar = ...;
 
 SimpleModule module = new SimpleModule();
-module.addSerializer(Calendar.class, new JCalSerializer());
+module.addSerializer(Calendar.class, new JCalSerializer(Calendar.class));
 ObjectMapper mapper = new ObjectMapper();
 mapper.registerModule(module);
 
@@ -108,7 +108,7 @@ String serialized = mapper.writeValueAsString(calendar);
 Result:
 
 ```
-["vcalendar",[["prodid",{},"text","-//Ben Fortuna//iCal4j 3.1//EN"],["version",{},"text","2.0"],["uid",{},"text","123"]],[["vevent",[["uid",{},"text","1"],["summary",{},"text","Test Event 1"],["dtstart",{"value":"date"},"date","20090810"],["action",{},"text","DISPLAY"],["attach",{"encoding":"base64","value":"binary"},"binary","..."]],[]],["vevent",[["uid",{},"text","2"],["summary",{},"text","Test Event 2"],["dtstart",{"value":"date"},"date","20100810"]],[]]]]
+["vcalendar",[["prodid",{},"text","-//Ben Fortuna//iCal4j 3.1//EN"],["version",{},"text","2.0"],["uid",{},"text","123"]],[["vevent",[["uid",{},"text","1"],["summary",{},"text","Test Event 1"],["dtstart",{},"date","2009-08-10"],["action",{},"text","DISPLAY"],["attach",{"encoding":"BASE64"},"binary","..."]],[]],["vevent",[["uid",{},"text","2"],["summary",{},"text","Test Event 2"],["dtstart",{},"date","2010-08-10"]],[]]]]
 ```
 
 
@@ -151,7 +151,7 @@ explicitly alongside the module.
 VJournal journal  = ...;
 
 SimpleModule module = new SimpleModule();
-module.addSerializer(VJournal.class, new JotJournalSerializer());
+module.addSerializer(VJournal.class, new VJournalSerializer());
 ObjectMapper mapper = new ObjectMapper();
 mapper.registerModule(module);
 
@@ -164,7 +164,7 @@ String serialized = mapper.writeValueAsString(journal);
 String json = ...;
 
 SimpleModule module = new SimpleModule();
-module.addDeserializer(Calendar.class, new JCalMapper())
+module.addDeserializer(Calendar.class, new JCalMapper(Calendar.class));
 ObjectMapper mapper = new ObjectMapper();
 mapper.registerModule(module);
 
