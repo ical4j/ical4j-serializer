@@ -7,6 +7,7 @@ import net.fortuna.ical4j.model.PropertyContainer;
 import net.fortuna.ical4j.model.parameter.Feature;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 /**
@@ -35,7 +36,7 @@ final class VirtualLocationBuilder {
             feature.ifPresent(value -> {
                 ObjectNode features = target.objectNode();
                 for (String token : value.getValue().split(",")) {
-                    features.put(token.trim().toLowerCase(), true);
+                    features.put(token.trim().toLowerCase(Locale.ROOT), true);
                 }
                 node.set("features", features);
             });
