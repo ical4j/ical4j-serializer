@@ -1,5 +1,5 @@
 [versions]
-ical4j = "4.2.4"
+ical4j = "4.4.0"
 ical4j-vcard = "2.1.0"
 ical4j-extensions = "2.0.0"
 jackson = "2.17.1"
